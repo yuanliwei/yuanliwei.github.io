@@ -1,0 +1,14 @@
+.title{
+    text-align: center;
+}
+.code_input, .code_output{
+    display: inline-block;
+    width: 46%;
+    border-radius: 5px;
+    height: 500px;
+    overflow: auto;
+}
+.code_input{float: left;}
+.code_output{
+    float: right;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta content="width=device-width,initial-scale=1.0,user-scalable=no"
+ name="viewport">
+
+<title>生成代码</title>
+<link rel="stylesheet" href="./gen.css" />
+<script src="../js/jquery.js"></script>
+<script src="../js/common.js"></script>
+<!-- highlight -->
+<link rel="stylesheet" href="../highlight/styles/default.css">
+<script src="../highlight/highlight.pack.js"></script>
+<!-- utils -->
+<script src="./util/StringUtil.js"></script>
+<script src="./util/beautify.js"></script>
+<!-- model -->
+<script src="./model/Modifiers.js"></script>
+<script src="./model/Filed.js"></script>
+<script src="./model/ClassModel.js"></script>
+<!-- func -->
+<script src="./gen-model/Fileds2Java.js"></script>
+<!-- local -->
+<script src="./gen.js"></script>
+</head>
+
+<body>
+ <h1 class = "title">生成代码</h1>
+ <textarea id="code_input" height="60%" class="code_input" spellcheck="false"> </textarea>
+  <div class="code_output" contenteditable = "true" spellcheck="false"> 
+ <pre><code class="java" id="code_output">
+
+  </code></pre></div>
+</body>
+ 
+<script type="text/javascript">
+	$(function() {
+		console.log('====================hello==============');
+		initEvent(); 
+		 $('pre code').each(function(i, block) {
+			hljs.highlightBlock(block);
+		  });
+	});
+</script>
+</html>
