@@ -211,7 +211,7 @@ var FiledsJavaDbXutils = (function () {
   };
 
 
-  DbCLassModel = (function (superClass) {
+  var DbCLassModel = (function (superClass) {
     extend(DbCLassModel, superClass);
 
     function DbCLassModel() {
@@ -241,7 +241,7 @@ var FiledsJavaDbXutils = (function () {
 
   })(ClassModel);
 
-  DbFiled = (function (superClass) {
+  var DbFiled = (function (superClass) {
     extend(DbFiled, superClass);
 
     function DbFiled() {
@@ -354,7 +354,7 @@ var FiledsJavaDbXutils3 = (function () {
     return model;
   };
 
-  DbCLassModel = (function (superClass) {
+  var DbCLassModel = (function (superClass) {
     extend(DbCLassModel, superClass);
 
     function DbCLassModel() {
@@ -384,7 +384,7 @@ var FiledsJavaDbXutils3 = (function () {
 
   })(ClassModel);
 
-  DbFiled = (function (superClass) {
+  var DbFiled = (function (superClass) {
     extend(DbFiled, superClass);
 
     function DbFiled() {

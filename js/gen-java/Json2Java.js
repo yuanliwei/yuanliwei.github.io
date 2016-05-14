@@ -96,6 +96,7 @@ var JsonJavaDbOrmlite = (function () {
 
     Json2Java.prototype.getType = function (jsObj, name, model) {
         var innerModel, name_, vstr;
+        if (jsObj === null) return "null type";
         switch (jsObj.constructor) {
             case Object:
                 name_ = StringUtil.format(name, 2, 0);
@@ -146,7 +147,7 @@ var JsonJavaDbOrmlite = (function () {
         console.log(true.constructor == Boolean);
      */
 
-    DbCLassModel = (function (superClass) {
+    var DbCLassModel = (function (superClass) {
         extend(DbCLassModel, superClass);
 
         function DbCLassModel() {
@@ -176,7 +177,7 @@ var JsonJavaDbOrmlite = (function () {
 
     })(ClassModel);
 
-    DbFiled = (function (superClass) {
+    var DbFiled = (function (superClass) {
         extend(DbFiled, superClass);
 
         function DbFiled() {
@@ -302,6 +303,7 @@ var JsonJavaDbXutils = (function () {
 
     Json2Java.prototype.getType = function (jsObj, name, model) {
         var innerModel, name_, vstr;
+        if (jsObj === null) return "null type";
         switch (jsObj.constructor) {
             case Object:
                 name_ = StringUtil.format(name, 2, 0);
@@ -353,7 +355,7 @@ var JsonJavaDbXutils = (function () {
         console.log(true.constructor == Boolean);
      */
 
-    DbCLassModel = (function (superClass) {
+    var DbCLassModel = (function (superClass) {
         extend(DbCLassModel, superClass);
 
         function DbCLassModel() {
@@ -383,7 +385,7 @@ var JsonJavaDbXutils = (function () {
 
     })(ClassModel);
 
-    DbFiled = (function (superClass) {
+    var DbFiled = (function (superClass) {
         extend(DbFiled, superClass);
 
         function DbFiled() {
@@ -514,6 +516,7 @@ var JsonJavaDbXutils3 = (function () {
 
     Json2Java.prototype.getType = function (jsObj, name, model) {
         var innerModel, name_, vstr;
+        if (jsObj === null) return "null type";
         switch (jsObj.constructor) {
             case Object:
                 name_ = StringUtil.format(name, 2, 0);
@@ -564,7 +567,7 @@ var JsonJavaDbXutils3 = (function () {
 		console.log(true.constructor == Boolean);
 	 */
 
-    DbCLassModel = (function (superClass) {
+    var DbCLassModel = (function (superClass) {
         extend(DbCLassModel, superClass);
 
         function DbCLassModel() {
@@ -594,7 +597,7 @@ var JsonJavaDbXutils3 = (function () {
 
     })(ClassModel);
 
-    DbFiled = (function (superClass) {
+    var DbFiled = (function (superClass) {
         extend(DbFiled, superClass);
 
         function DbFiled() {
@@ -729,6 +732,7 @@ var JsonJava = (function () {
 
     Json2Java.prototype.getType = function (jsObj, name, model) {
         var innerModel, name_, vstr;
+        if (jsObj === null) return "null type";
         switch (jsObj.constructor) {
             case Object:
                 name_ = StringUtil.format(name, 2, 0);
@@ -881,6 +885,7 @@ var JsonJavaUrl = (function () {
 
     Json2Java.prototype.getType = function (jsObj, name, model) {
         var innerModel, name_, vstr;
+        if (jsObj === null) return "null type";
         switch (jsObj.constructor) {
             case Object:
                 name_ = StringUtil.format(name, 2, 0);
@@ -931,7 +936,7 @@ var JsonJavaUrl = (function () {
         console.log(true.constructor == Boolean);
      */
 
-    UrlCLassModel = (function (superClass) {
+    var UrlCLassModel = (function (superClass) {
         extend(UrlCLassModel, superClass);
 
         function UrlCLassModel() {
