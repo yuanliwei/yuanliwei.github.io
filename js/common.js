@@ -24,7 +24,7 @@ document.addEventListener('touchmove', function() {
 document.addEventListener('mousedown', function() {
 	cancleClick = false;
 }, false);
-
+format.extend(String.prototype);
 String.prototype.trim = function() {
 	return this.replace(/(^\s*)|(\s*$)/g, "");
 };
@@ -35,12 +35,6 @@ String.prototype.startsWith = function(str) {
 
 String.prototype.endsWith = function(str) {
 	return (this.match(str + "$") == str)
-};
-String.prototype.format = function() {
-	var args = arguments;
-	return this.replace(/{(\d+)}/g, function(match, number) {
-		return typeof args[number] != 'undefined' ? args[number] : match;
-	});
 };
 String.prototype.repeat = function(num) {
 	var str = '';

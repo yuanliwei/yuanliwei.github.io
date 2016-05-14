@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+
+	<title>生成代码</title>
+	<link rel="stylesheet" href="./gen.css" />
+	<script src="../js/jquery.js"></script>
+	<!--bootstrap-->
+	<link rel="stylesheet" href="../bootstrap-3.3.6-dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="../bootstrap-3.3.6-dist/css/bootstrap.css" />
+	<script src="../bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+	<!-- highlight -->
+	<link rel="stylesheet" href="../highlight/styles/default.css">
+	<script src="../highlight/highlight.pack.js"></script>
+	<!-- utils -->
+	<script src="../js/utils/StringUtil.js"></script>
+	<script src="../js/utils/string-format.js"></script>
+	<script src="../js/utils/beautify.js"></script>
+	<!-- common -->
+	<script src="../js/common.js"></script>
+	<!-- model -->
+	<script src="../js/java-model/Modifiers.js"></script>
+	<script src="../js/java-model/Filed.js"></script>
+	<script src="../js/java-model/ClassModel.js"></script>
+	<!-- func -->
+	<script src="../js/gen-java/Fileds2Java.js"></script>
+	<script src="../js/gen-java/Json2Java.js"></script>
+	<!-- local -->
+	<script src="./gen.js"></script>
+</head>
+
+<body>
+	<h2 class="title">生成代码</h2>
+	<div class="head-config-panel">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="inputPackageName" class="col-sm-2 control-label">package name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="inputPackageName" placeholder="包名">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputClassName" class="col-sm-2 control-label">class name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="inputClassName" placeholder="类名">
+				</div>
+			</div>
+			<div id="mode-option-group" class="form-group col-sm-offset-2 col-sm-10">
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="1"> Fileds2JavaDbOrmlite </label>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="2"> Fileds2JavaDbXutils </label>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="3"> Fileds2JavaDbXutils3 </label>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="4"> Fileds2Java </label>
+				<br/>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="5"> Json2JavaDbOrmlite </label>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="6"> Json2JavaDbXutils </label>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="7"> Json2JavaDbXutils3 </label>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="8"> Json2Java </label>
+				<label class="radio-inline">
+				  <input type="radio" name="inlineRadioOptions" value="9"> Json2JavaUrl </label>
+			</div>
+		</form>
+	</div>
+	<div class="input-code-panel">
+		<textarea id="code_input" class="form-control" rows="5" spellcheck="false"> </textarea>
+
+	</div>
+	<div class="output-code-panel">
+		<div class="code_output" contenteditable="true" spellcheck="false">
+			<pre><code class="java" id="code_output"> </code></pre>
+		</div>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	$(function() {
+		console.log('====================hello==============');
+		initEvent(); 
+		 $('pre code').each(function(i, block) {
+			hljs.highlightBlock(block);
+		  });
+	});
+
+</script>
+
+</html>
