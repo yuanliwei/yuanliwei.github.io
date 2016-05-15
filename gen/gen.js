@@ -51,7 +51,7 @@ function onChange() {
     opts.genGetter = $('#genGetter')[0].checked;
     opts.genInnerClass = $('#genInnerClass')[0].checked;
 
-    var fileds2Java = new JsonJavaUrl();
+    var fileds2Java = new FiledsJavaDbXutils();
     var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
     switch (mode) {
@@ -69,7 +69,7 @@ function onChange() {
         case 10: fileds2Java = new StyleXML(); break;
         case 11: fileds2Java = new AlignComment(); break;
         default:
-            fileds2Java = new JsonJavaUrl();
+            fileds2Java = new FiledsJavaDbXutils();
             break;
     }
 
