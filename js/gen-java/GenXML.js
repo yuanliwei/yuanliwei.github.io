@@ -47,3 +47,20 @@ var StyleXML = (function () {
 })();
 
 
+
+var AlignComment = (function () {
+    function AlignComment() {
+
+    }
+
+    StyleXML.prototype.alignComment = function (text, opts) {
+        return text;
+    };
+
+    StyleXML.prototype.toJava = StyleXML.prototype.alignComment;
+
+    return StyleXML;
+
+})();
+
+

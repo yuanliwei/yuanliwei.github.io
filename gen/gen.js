@@ -67,13 +67,14 @@ function onChange() {
         case 9: fileds2Java = new JsonJavaUrl(); break;
 
         case 10: fileds2Java = new StyleXML(); break;
+        case 11: fileds2Java = new AlignComment(); break;
         default:
             fileds2Java = new JsonJavaUrl();
             break;
     }
 
     fileds = input;
-    javaSrc = fileds2Java.toJava(fileds, opts);
+    var javaSrc = fileds2Java.toJava(fileds, opts);
     //     console.log('ssssssssss' + javaSrc);
     javaSrc = CodeFormat.alignComment(javaSrc);
     $('pre code').text(javaSrc);
