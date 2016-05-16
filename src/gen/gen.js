@@ -9,6 +9,7 @@ function loadConfig() {
         $('#genInnerClass')[0].checked = Config.genInnerClass;
         $('#mode-option-group input[value="{0}"]'.format(Config.mode))[0].checked = true;
         $('#code_input').val(Config.input);
+        onChange();
     }
     return Config;
 }

@@ -6,6 +6,7 @@ function loadConfig() {
             var selStr = '#mode-option-group input[value="{0}"]'.format(Config.mode);
             $(selStr)[0].checked = true;
             $('#code_input').val(Config.input);
+            onChange();
         }
     } catch (e) {
         console.error(e);
