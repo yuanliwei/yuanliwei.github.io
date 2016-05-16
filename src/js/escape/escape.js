@@ -42,6 +42,19 @@ Escape.sha1 = function(text) {
     return CryptoJS.SHA1(text).toString();
 };
 
+/*
+ * SHA256
+ */
+Escape.sha256 = function(text) {
+    return CryptoJS.SHA256(text).toString();
+};
+/*
+ * SHA512
+ */
+Escape.sha512 = function(text) {
+    return CryptoJS.SHA512(text).toString();
+};
+
 
 /*
  * ascii2native

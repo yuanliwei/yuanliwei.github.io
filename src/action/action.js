@@ -1,10 +1,10 @@
 function loadConfig() {
     var Config = {};
     try {
-        if (localStorage && localStorage.getItem('config_escape')) {
-            Config = JSON.parse(localStorage.getItem('config_escape'));
+        if (localStorage && localStorage.getItem('config_action')) {
+            Config = JSON.parse(localStorage.getItem('config_action'));
             var selStr = '#mode-option-group input[value="{0}"]'.format(Config.mode);
-            $(selStr)[0].checked = true;
+//             $(selStr)[0].checked = true;
             $('#code_input').val(Config.input);
             onChange();
         }
@@ -19,7 +19,7 @@ function saveConfig() {
     var Config = {};
     Config.input = $('#code_input').val();
     Config.mode = $('#mode-option-group input[name="genMode"]:checked').val();
-    localStorage.setItem("config_escape", JSON.stringify(Config));
+    localStorage.setItem("config_action", JSON.stringify(Config));
 }
 
 function initEvent() {
@@ -33,7 +33,7 @@ function initEvent() {
 
 function onChange() {
     var input = $('#code_input').val();
-
+    ajaxTest();
     var fun = Escape.encodeURIComponent;
     var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
@@ -49,8 +49,6 @@ function onChange() {
 
         case 9: fun = Escape.md5; break;
         case 10: fun = Escape.sha1; break;
-        case 11: fun = Escape.sha256; break;
-        case 12: fun = Escape.sha512; break;
         
         default:
             fun = Escape.encodeURIComponent;
@@ -73,3 +71,6 @@ function onChange() {
     saveConfig();
 }
 
+function ajaxTest(){
+    
+}
