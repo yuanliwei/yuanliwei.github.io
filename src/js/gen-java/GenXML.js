@@ -19,6 +19,7 @@ var StyleXML = (function () {
     }
 
     StyleXML.prototype.toStyleXML = function (text, opts) {
+        var arr, lines, tem;
         lines = text.trim().split(/\n/g);
         if (!((lines != null ? lines.length : void 0) > 0)) {
             return "lines is null";
