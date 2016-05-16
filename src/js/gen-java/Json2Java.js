@@ -121,11 +121,11 @@ var JsonJavaDbOrmlite = (function () {
                 return "String";
             case Number:
                 vstr = "" + jsObj;
-                if (vstr.match(/^\d{1,10}$/)) {
+                if (vstr.match(/^-?\d{1,10}$/)) {
                     return "int";
-                } else if (vstr.match(/^\d+$/)) {
+                } else if (vstr.match(/^-?\d+$/)) {
                     return "long";
-                } else if (vstr.match(/^\d+\.\d+$/)) {
+                } else if (vstr.match(/^-?\d+\.\d+$/)) {
                     return "float";
                 } else {
                     return "Number";
@@ -328,11 +328,11 @@ var JsonJavaDbXutils = (function () {
                 return "String";
             case Number:
                 vstr = "" + jsObj;
-                if (vstr.match(/^\d{1,10}$/)) {
+                if (vstr.match(/^-?\d{1,10}$/)) {
                     return "int";
-                } else if (vstr.match(/^\d+$/)) {
+                } else if (vstr.match(/^-?\d+$/)) {
                     return "long";
-                } else if (vstr.match(/^\d+\.\d+$/)) {
+                } else if (vstr.match(/^-?\d+\.\d+$/)) {
                     return "float";
                 } else {
                     return "Number";
@@ -541,11 +541,11 @@ var JsonJavaDbXutils3 = (function () {
                 return "String";
             case Number:
                 vstr = "" + jsObj;
-                if (vstr.match(/^\d{1,10}$/)) {
+                if (vstr.match(/^-?\d{1,10}$/)) {
                     return "int";
-                } else if (vstr.match(/^\d+$/)) {
+                } else if (vstr.match(/^-?\d+$/)) {
                     return "long";
-                } else if (vstr.match(/^\d+\.\d+$/)) {
+                } else if (vstr.match(/^-?\d+\.\d+$/)) {
                     return "float";
                 } else {
                     return "Number";
@@ -756,11 +756,11 @@ var JsonJava = (function () {
                 return "String";
             case Number:
                 vstr = "" + jsObj;
-                if (vstr.match(/^\d{1,10}$/)) {
+                if (vstr.match(/^-?\d{1,10}$/)) {
                     return "int";
-                } else if (vstr.match(/^\d+$/)) {
+                } else if (vstr.match(/^-?\d+$/)) {
                     return "long";
-                } else if (vstr.match(/^\d+\.\d+$/)) {
+                } else if (vstr.match(/^-?\d+\.\d+$/)) {
                     return "float";
                 } else {
                     return "Number";
@@ -909,11 +909,11 @@ var JsonJavaUrl = (function () {
                 return "String";
             case Number:
                 vstr = "" + jsObj;
-                if (vstr.match(/^\d{1,10}$/)) {
+                if (vstr.match(/^-?\d{1,10}$/)) {
                     return "int";
-                } else if (vstr.match(/^\d+$/)) {
+                } else if (vstr.match(/^-?\d+$/)) {
                     return "long";
-                } else if (vstr.match(/^\d+\.\d+$/)) {
+                } else if (vstr.match(/^-?\d+\.\d+$/)) {
                     return "float";
                 } else {
                     return "Number";
