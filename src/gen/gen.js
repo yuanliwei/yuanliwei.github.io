@@ -69,6 +69,7 @@ function onChange() {
 
         case 10: fileds2Java = new StyleXML(); break;
         case 11: fileds2Java = new AlignComment(); break;
+        case 12: fileds2Java = new GetLogUrl(); break;
         default:
             fileds2Java = new FiledsJavaDbXutils();
             break;

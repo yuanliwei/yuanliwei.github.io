@@ -34,6 +34,7 @@ function initEvent() {
 function onChange() {
     var input = $('#code_input').val();
     ajaxTest();
+    return;
     var fun = Escape.encodeURIComponent;
     var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
@@ -72,5 +73,7 @@ function onChange() {
 }
 
 function ajaxTest(){
-    
+    var htmlobj=$.ajax({url:"http://www.w3school.com.cn/jquery/test1.txt",async:false});
+
+    $('pre code').html(htmlobj.responseText);
 }

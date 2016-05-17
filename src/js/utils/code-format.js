@@ -17,8 +17,11 @@ CodeFormat.alignComment = function (input) {
     });
     console.log('max length : ' + maxLength);
     var newLines = [];
+    var m = /http.?:\/\//;
     lines.forEach(function (item) {
-        item = item.replace('//', '#sp#//');
+        if(!m.test(item)){
+            item = item.replace('//', '#sp#//');   
+        }
         var items = item.split('#sp#');
         var newLine = items[0];
         if (items.length == 2) {

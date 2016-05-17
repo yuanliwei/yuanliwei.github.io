@@ -65,3 +65,30 @@ var AlignComment = (function () {
 })();
 
 
+
+
+var GetLogUrl = (function () {
+    function GetLogUrl() {
+
+    }
+
+    GetLogUrl.prototype.getLogUrl = function (text, opts) {
+        var r=/Mapped "\{\[(.*?)\]/;
+        var arr = text.split(/\n/g);
+        var resultArr = [];
+        arr.forEach(function(item){
+            if(r.test(item)){
+                var m = item.match(r);
+                resultArr.push(opts.packageName + m[1]);
+          }
+        });
+        return resultArr.join('\n');
+    };
+
+    GetLogUrl.prototype.toJava = GetLogUrl.prototype.getLogUrl;
+
+    return GetLogUrl;
+
+})();
+
+
