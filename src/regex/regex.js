@@ -43,7 +43,7 @@ function onChange() {
     
     switch (mode) {
         case 1: reg = 'Mapped "\\{\\[(.*?)\\]'; break;
-        case 2: reg = '^(\\d\\.\\d.*)$'; break;
+        case 2: reg = '^(\\d+\\.\\d+.*)$'; break;
     }
     var javaSrc;
     try {
