@@ -67,27 +67,18 @@ var AlignComment = (function () {
 
 
 
-var GetLogUrl = (function () {
-    function GetLogUrl() {
+var FormatCode = (function () {
+    function FormatCode() {
 
     }
 
-    GetLogUrl.prototype.getLogUrl = function (text, opts) {
-        var r=/Mapped "\{\[(.*?)\]/;
-        var arr = text.split(/\n/g);
-        var resultArr = [];
-        arr.forEach(function(item){
-            if(r.test(item)){
-                var m = item.match(r);
-                resultArr.push(opts.packageName + m[1]);
-          }
-        });
-        return resultArr.join('\n');
+    FormatCode.prototype.getLogUrl = function (text, opts) {
+        return js_beautify(text);
     };
 
-    GetLogUrl.prototype.toJava = GetLogUrl.prototype.getLogUrl;
+    FormatCode.prototype.toJava = FormatCode.prototype.getLogUrl;
 
-    return GetLogUrl;
+    return FormatCode;
 
 })();
 
