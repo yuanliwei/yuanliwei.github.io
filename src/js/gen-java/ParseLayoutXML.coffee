@@ -9,7 +9,6 @@ class ParseLayoutXML
         """
     results = []
     eles.each (num, item)->
-      # console.log no
       viewName = item.localName
       viewName = viewName.match(/\.?([^\.]*$)/)[1]
       viewId = item.getAttribute 'android:id'
@@ -18,7 +17,6 @@ class ParseLayoutXML
       origName = xml.match  new RegExp viewName,'i'
       varName = viewId.match(/(_?[a-z|A-Z|0-9]*?){0,2}$/)[0]
       varName = StringUtil.format(varName,2)
-      # console.log "origName:#{oralName} - name:#{viewName} - id:#{viewId}"
       obj = {
         id : viewId
         view : origName
