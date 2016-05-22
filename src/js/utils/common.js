@@ -6,9 +6,9 @@ String.prototype.trim = function() {
 	return this.replace(/(^\s*)|(\s*$)/g, "");
 };
 
-String.prototype.startsWith = function(str) {
-	return (this.match("^" + str) == str)
-};
+// String.prototype.startsWith = function(str) {
+// 	return (this.match("^" + str) == str)
+// };
 
 String.prototype.endsWith = function(str) {
 	return (this.match(str + "$") == str)

@@ -83,3 +83,40 @@ var FormatCode = (function () {
 })();
 
 
+var ParseLayoutXML = (function() {
+  function ParseLayoutXML() {}
+
+  ParseLayoutXML.prototype.parseXML = function(xml, opts) {
+    var eles, results, templ, x;
+    x = $(xml);
+    eles = x.find('*[android\\:id]');
+    templ = "@ViewInject(R.id.{id})\nprivate {view} {name};";
+    results = [];
+    eles.each(function(num, item) {
+      var obj, origName, result, varName, viewId, viewName;
+      viewName = item.localName;
+      viewName = viewName.match(/\.?([^\.]*$)/)[1];
+      viewId = item.getAttribute('android:id');
+      if (!viewId.startsWith('@+id/')) {
+        return;
+      }
+      viewId = viewId.substring(5);
+      origName = xml.match(new RegExp(viewName, 'i'));
+      varName = viewId.match(/(_?[a-z|A-Z|0-9]*?){0,2}$/)[0];
+      varName = StringUtil.format(varName, 2);
+      obj = {
+        id: viewId,
+        view: origName,
+        name: varName
+      };
+      result = templ.format(obj);
+      return results.push(result);
+    });
+    return results.join('\n');
+  };
+
+  ParseLayoutXML.prototype.toJava = ParseLayoutXML.prototype.parseXML;
+
+  return ParseLayoutXML;
+
+})();
