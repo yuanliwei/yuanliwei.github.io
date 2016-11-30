@@ -54,11 +54,11 @@ var AlignComment = (function () {
 
     }
 
-    StyleXML.prototype.alignComment = function (text, opts) {
+    AlignComment.prototype.alignComment = function (text, opts) {
         return text;
     };
 
-    StyleXML.prototype.toJava = StyleXML.prototype.alignComment;
+    AlignComment.prototype.toJava = AlignComment.prototype.alignComment;
 
     return StyleXML;
 
