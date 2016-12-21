@@ -48,13 +48,19 @@ function getBookListHtml(json) {
         </div>
         <div class="col-md-8 col-sm-8 col-xs-8 bg-success">
           <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 text-left">
+            <div class="col-xs-10 col-sm-10 col-md-10 text-left">
               book_name : {book_name}
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 text-left bg-warning">
+              price : {price}
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 text-left">
+            <div class="col-xs-10 col-sm-10 col-md-10 text-left">
               book_id : {book_id}
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 text-left bg-primary">
+              version : {version}
             </div>
           </div>
           <div class="row">
