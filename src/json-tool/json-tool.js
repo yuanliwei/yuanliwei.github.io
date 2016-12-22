@@ -239,7 +239,7 @@ BookChapterList = (function () {
     function parseChapterTree(chapters) {
       chapters.sort(function(l, h){ return parseInt(l.orderNo) - parseInt(h.orderNo); });
       chapters.forEach(function (chapter) {
-        if(!chapter.parent_id){
+        if(!chapter.parent_id && chapter.id){
           chapter.childs = [];
           parseChapterChilds(chapters, chapter, 0);
         }
@@ -247,7 +247,7 @@ BookChapterList = (function () {
     }
 
     function parseChapterChilds(chapters, chapter_, deep) {
-      if(deep > 20) {
+      if(deep > 10) {
         console.error("chapter tree deep > 20");
         return;
       }
