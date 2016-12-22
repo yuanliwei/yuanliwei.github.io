@@ -28,34 +28,51 @@
     <link rel="stylesheet" href="./json-tool.css">
   </head>
   <body>
-    <div class="page-header">
-        <h1>JSON <small>TOOL</small></h1>
+    <div class="container bg-primary hide">
+      container container-fluid
+      row
+      col-xs-12 col-sm-12 col-md-12
+      col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+      bg-info bg-primary bg-success bg-warning bg-danger
+      text-left text-center text-right text-justify text-nowrap
+      text-muted text-muted text-primary text-success text-info text-warning text-danger
+      img-responsive img-rounded img-circle img-thumbnail
+      pull-left pull-right
+      center-block clearfix
+      show hidden
+      text-lowercase text-uppercase text-capitalize
+      dl-horizontal
     </div>
-    <div class="head-config-panel">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="input_json_text" class="col-sm-2 text-left control-label">输入JSON数据</label>
-                <textarea class="form-control col-sm-10" id="input_json_text"></textarea>
-            </div>
-            <div id="mode-option-group" class="form-group col-sm-offset-2 col-sm-12">
-                <label class="radio-inline"><input type="radio" name="genMode" value="1"> 格式化 </label>
-                <label class="radio-inline"><input type="radio" name="genMode" value="2"> 飞书列表 </label>
-            </div>
-        </form>
-    </div>
-
-    <div class="output-code-panel">
-        <div class="code_output" contenteditable="true" spellcheck="false">
-            <pre><code class="java" id="code_output"> </code></pre>
+    <div class="container">
+      <div class="page-header">
+          <h1>JSON <small>TOOL</small></h1>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+          <dl class="dl-horizontal">
+            <dt>输入JSON数据</dt>
+            <dd><textarea class="form-control" id="input_json_text"></textarea></dd>
+          </dl>
         </div>
-    </div>
-    <div class="output-code-panel">
-        <div class="code_output" contenteditable="true" spellcheck="false">
-            <div id="result_content">
-
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+          <div id="mode-option-group" class="form-group">
+              <label class="radio-inline"><input type="radio" name="genMode" value="1"> 格式化 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="2"> 飞书列表 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="3"> 课程列表 </label>
+          </div>
         </div>
-    </div>
+      </div>
+      <div class="code_output" contenteditable="true" spellcheck="false">
+          <pre><code class="java" id="code_output"> </code></pre>
+      </div>
+      <div class="code_output" contenteditable="true" spellcheck="false">
+          <div id="result_content">
+
+          </div>
+      </div>
+  </div>
 
     <script type="text/javascript">
         $(function() {
@@ -64,7 +81,5 @@
             initEvent();
         });
     </script>
-
-
   </body>
 </html>
