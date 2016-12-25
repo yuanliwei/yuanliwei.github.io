@@ -1,0 +1,19 @@
+.model_content{
+  /*background-color: #8888FF;*/
+  position: relative;
+}
+.model_item{
+  display: inline-block;
+  border: #338833 3px solid;
+  background-color: #FF8888;
+  width: 200px;
+  /*height: 100px;*/
+  position: absolute;
+  left: 300px;
+  top: 130px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.handle:hover{
+  cursor: move;
+}
