@@ -42,6 +42,7 @@ function onChange() {
       }
     } catch (e) {
       result = e.stack;
+      console.error(e);
       mode = 1;
     }
     switch (mode) {
