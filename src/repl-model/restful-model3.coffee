@@ -72,9 +72,7 @@ class RESTfulModelView
                     "zIndex": 100            # 元素层级
                     "iframeFix": true
                     "opacity": 0.85
-                    "start": (e) ->
-                      counts[ 0 ]++
-                      console.dir(e)
+                    "start": (e) -> counts[ 0 ]++
                     "drag": -> counts[ 1 ]++
                     "stop": -> counts[ 2 ]++
                    })

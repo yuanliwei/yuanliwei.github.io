@@ -60,8 +60,7 @@ RESTfulModelView = (function() {
       "iframeFix": true,
       "opacity": 0.85,
       "start": function(e) {
-        counts[0]++;
-        return console.dir(e);
+        return counts[0]++;
       },
       "drag": function() {
         return counts[1]++;
