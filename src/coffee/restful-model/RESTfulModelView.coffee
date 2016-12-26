@@ -64,14 +64,15 @@ class RESTfulModelView
       """
       dom = $(source0.format(node))
       view = dom[0]
-      @views.push new ViewModel(dom, view, node)
+      viewModel = new ViewModel(dom, view, node)
+      @views.push viewModel
       view.style.left = left
       view.style.top = top
       initDragEvent dom
-      initClickEvent dom, node
+      initClickEvent dom, node, viewModel
       $('#model_content').append(dom);
 
-  initClickEvent = (dom, node) ->
+  initClickEvent = (dom, node, viewModel) ->
     dom.find('.editor-action').click ->
       console.log 'click dom'
       $('.editor').toggleClass('editor-hide editor-show')
@@ -86,7 +87,9 @@ class RESTfulModelView
       $('#editor-cancle').unbind('click').click ->
         $('.editor').toggleClass('editor-hide editor-show')
     dom.find('.editor-delete').click ->
-      deleteNodeView(node)
+      deleteNodeView(viewModel)
+    dom.find('.editor-select').click ->
+      relationModel.click(viewModel)
 
   initDragEvent = (dom) ->
     counts = [ 0, 0, 0 ]

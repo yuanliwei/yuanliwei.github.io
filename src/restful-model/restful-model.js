@@ -14,8 +14,7 @@ text-lowercase text-uppercase text-capitalize
 dl-horizontal
 */
 
-var BookChapterList, BookList, CourseList;
-var modelView;
+var modelView, relationModel;
 
 function initEvent() {
     // var input = $('#input_json_text')[0];
@@ -45,6 +44,7 @@ function onChange() {
         case 6:
           if (!modelView){
             modelView = new RESTfulModelView();
+            relationModel = new RelationModel();
             initData();
           }
           break;
@@ -98,11 +98,11 @@ function initData() {
 function saveSourceData() {
   var views = modelView.views;
   var nodeDataArr = [];
-  views.forEach(function (viewMode) {
+  views.forEach(function (viewModel) {
     // @dom, @view, @node
-    viewMode.notify();
-    var source = viewMode.node.source;
-    var dom = viewMode.dom[0];
+    viewModel.notify();
+    var source = viewModel.node.source;
+    var dom = viewModel.dom[0];
     nodeDataArr.push({"left": dom.style.left, "top": dom.style.top, "source": source });
   });
   var sourceNode = $('#source_node');
@@ -110,16 +110,8 @@ function saveSourceData() {
   saveConfig();
 }
 
-function deleteNodeView(node) {
-  var views = modelView.views;
-  var nodeDataArr = [];
-  for (var i = 0; i < views.length; i++) {
-    var viewMode = views[i];
-    if(viewMode.node == node){
-      views.splice(i, 1);
-      viewMode.dom.remove();
-      break;
-    }
-  }
+function deleteNodeView(viewModel) {
+  modelView.views.remove(viewModel);
+  viewModel.dom.remove();
   saveSourceData();
 }
