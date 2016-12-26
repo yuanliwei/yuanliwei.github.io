@@ -18,9 +18,9 @@ var BookChapterList, BookList, CourseList;
 var modelView;
 
 function initEvent() {
-    var input = $('#input_json_text')[0];
-    input.onchange = onChange;
-    input.onkeyup = onChange;
+    // var input = $('#input_json_text')[0];
+    // input.onchange = onChange;
+    // input.onkeyup = onChange;
     $('#mode-option-group input, #gen-option-group input').click(function () {
         onChange();
     });

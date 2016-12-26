@@ -43,6 +43,7 @@ class RESTfulModelView
   initClickEvent = (dom) ->
     dom.click ->
       console.log 'click dom'
+      $('.editor').toggleClass('hide')
 
 
   initDragEvent = (dom) ->

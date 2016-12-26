@@ -32,7 +32,8 @@ RESTfulModelView = (function() {
 
   initClickEvent = function(dom) {
     return dom.click(function() {
-      return console.log('click dom');
+      console.log('click dom');
+      return $('.editor').toggleClass('hide');
     });
   };
 

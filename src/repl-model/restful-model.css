@@ -17,3 +17,22 @@
 .handle:hover{
   cursor: move;
 }
+.editor{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  margin: 5% 0 0 10%;
+  width: 80%;
+  height: 80%;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #F0F0F0;
+  border: #AAAAAA 2px solid;
+}
+.editor-close{
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  padding: 20px!important;
+  /*background-color: #FF6666!important;*/
+}

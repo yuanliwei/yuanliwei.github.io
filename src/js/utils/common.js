@@ -89,5 +89,5 @@ function saveConfig() {
     index++;
   });
   localStorage.setItem(configName, JSON.stringify(Config));
-  console.log(configName + " - " + JSON.stringify(Config));
+  // console.log(configName + " - " + JSON.stringify(Config));
 }
