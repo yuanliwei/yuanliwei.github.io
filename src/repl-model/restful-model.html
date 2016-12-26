@@ -53,15 +53,9 @@
           <h1>RESTful <small>model</small></h1>
       </div>
       <div class="row">
-        <div class="col-xs-9 col-sm-9 col-md-9">
-          <dl class="dl-horizontal">
-            <dt>输入JSON数据</dt>
-            <dd><textarea class="form-control" id="input_json_text"></textarea></dd>
-          </dl>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <button type="button" class="btn btn-primary" onclick="addSource()">addSource</button>
-          <input type="text" class="show" id="source_node">
+        <div class="col-xs-12 col-sm-12 col-md-12 text-right">
+          <button type="button" class="btn btn-primary" onclick="addView()">addView</button>
+          <input type="text" class="hidden" id="source_node">
         </div>
       </div>
       <div class="row">
@@ -83,13 +77,18 @@
           </div>
       </div>
       <div class="code_output" contenteditable="true" spellcheck="false">
-          <div id="model_content" class="model_content">
-
-          </div>
+        <div id="model_content" class="model_content">
+        </div>
       </div>
-      <div id="editor" class="editor">
+      <div id="editor" class="editor editor-hide">
         <button id="editor-close" type="button" class="editor-close close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        editor
+        <div class="editor-content" spellcheck="false">
+          <textarea id="editor-source" class="editor-source" rows="10"></textarea>
+        </div>
+        <div class="text-center">
+          <button id="editor-cancle" type="button" class="btn btn-default">Cancle</button>
+          <button id="editor-save" type="button" class="btn btn-success">Save</button>
+        </div>
       </div>
   </div>
 
@@ -97,7 +96,6 @@
         $(function() {
             console.log('====================hello==============');
             loadConfig();
-            initData();
             initEvent();
         });
     </script>

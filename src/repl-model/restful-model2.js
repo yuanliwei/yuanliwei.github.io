@@ -66,6 +66,14 @@ NodeModel = (function() {
         return _this.exec(modelMap);
       };
     })(this);
+    this.onSourceChange = (function(_this) {
+      return function() {
+        SrcNode = eval(_this.source);
+        _this.node = new SrcNode();
+        _this.key = _this.node.key;
+        return _this.name = _this.node.name;
+      };
+    })(this);
     this.parentsSize = (function(_this) {
       return function() {
         var count, key, ref, value;

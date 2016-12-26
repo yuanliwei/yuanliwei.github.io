@@ -84,6 +84,12 @@ class NodeModel
       return unless modelMap.length == @parentsSize()
       @exec modelMap
 
+    @onSourceChange = =>
+      SrcNode = eval(@source)
+      @node = new SrcNode()
+      @key = @node.key
+      @name = @node.name
+
     @parentsSize = =>
       count = 0
       for key, value of @parents
