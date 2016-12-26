@@ -14,7 +14,7 @@ text-lowercase text-uppercase text-capitalize
 dl-horizontal
 */
 
-var BookChapterList, BookList, CourseList;
+var BookChapterList, BookList, CourseList, HomeworkList;
 
 function initEvent() {
     var input = $('#input_json_text')[0];
@@ -29,6 +29,7 @@ function initEvent() {
 function onChange() {
     saveConfig();
     var json = $('#input_json_text').val();
+
     var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
     var result;
@@ -36,8 +37,9 @@ function onChange() {
       switch (mode) {
         case 1: result = js_beautify(json, {}); break;
         case 2: result = new BookList(json).html(); break;
-        case 3: result = getCourseListHtml(json); break;
+        case 3: result = new CourseList(json).html(); break;
         case 4: result = new BookChapterList(json).html(); break;
+        case 5: result = new HomeworkList(json).html(); break;
       }
     } catch (e) {
       result = e.stack;
@@ -54,6 +56,7 @@ function onChange() {
       case 2:
       case 3:
       case 4:
+      case 5:
         $('pre code').text('');
         $('#result_content').html(result);
         break;
@@ -291,7 +294,7 @@ CourseList = (function () {
                     <dt>createTime</dt> <dd>{createTime}</dd>
                     <dt>joinTime</dt> <dd>{joinTime}</dd>
                     <dt>ownerId</dt> <dd>{ownerId}</dd>
-                    <dt>status</dt> <dd>{status}</dd>
+                    <dt>stustatus</dt> <dd>{stustatus}</dd>
                   </dl>
                 </div>
               </div>
@@ -326,4 +329,90 @@ CourseList = (function () {
     }
   }
   return CourseList;
+})();
+
+HomeworkList = (function () {
+  function HomeworkList(json) {
+    this.json = json;
+    this.html = function () {
+      return getHomeworkListHtml(json);
+    }
+    function getHomeworkListHtml(json) {
+      var homeworkTempl = `
+        <div class="container">
+          <div class="row bg-info">
+            <div class="col-xs-11 col-sm-11 col-md-11 bg-danger">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>test_id</dt> <dd>{test_id}</dd>
+                    <dt>test_name</dt> <dd>{test_name}</dd>
+                    <dt>course_id</dt> <dd>{course_id}</dd>
+                    <dt>question_render_type</dt> <dd>{xot_param.question_render_type}</dd>
+                    <dt>class_id</dt> <dd>{class_id}</dd>
+                  </dl>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>create_time</dt> <dd>{create_time}</dd>
+                    <dt>begin_time</dt> <dd>{begin_time}</dd>
+                    <dt>end_time</dt> <dd>{end_time}</dd>
+                    <dt>status</dt> <dd>{status}</dd>
+                    <dt>status2</dt> <dd>{status2}</dd>
+                    <dt>stustatus</dt> <dd>{stustatus}</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+              col-md-2
+            </div>
+          </div>
+        </div>
+       `;
+      var homeworks = JSON.parse(json);
+      if(typeof homeworks.data != "undefined"
+        && typeof homeworks.data.list != "undefined") homeworks = homeworks.data.list;
+      var results = [];
+      homeworks.forEach(function (homework) {
+        castCourseVar(homework);
+        results.push(homeworkTempl.format(homework));
+      });
+      return results.join('<br>');
+    }
+    function castCourseVar(homework) {
+      var create_time = homework.create_time;
+      homework.create_time = new Date(create_time).Format("yyyy-MM-dd hh:mm:ss");
+      homework.begin_time = new Date(homework.begin_time).Format("yyyy-MM-dd hh:mm:ss");
+      homework.end_time = new Date(homework.end_time).Format("yyyy-MM-dd hh:mm:ss");
+
+      var params = homework.xot_param;
+      params = params.substr(1,params.length);
+      var ps = params.split(",");
+      homework.xot_param = {};
+      ps.forEach(function (item) {
+        let items = item.split(":");
+        homework.xot_param[items[0]] = parseInt(items[1]);
+      });
+      switch (homework.xot_param.question_render_type) {
+        case 1: homework.xot_param.question_render_type = "1 - 顺序";break;
+        case 2: homework.xot_param.question_render_type = "2 - 随机";break;
+        default: homework.xot_param.question_render_type = homework.xot_param.question_render_type + " - 错误";break;
+      }
+      // 0-未开始，1-已开始，2-已交卷，3-已阅卷
+      switch (homework.stustatus) {
+        case 0: homework.stustatus = "0-未开始";break;
+        case 1: homework.stustatus = "1-已开始";break;
+        case 2: homework.stustatus = "2-已交卷";break;
+        case 3: homework.stustatus = "3-已阅卷";break;
+        default: homework.stustatus = homework.stustatus + " - 错误";break;
+      }
+      // 0-未开始，1-已开始，2-已交卷，3-已阅卷
+      switch (homework.status) {
+        case 3: homework.status = "3-已结束";break;
+        default : homework.status = "0-未结束";break;
+      }
+    }
+  }
+  return HomeworkList;
 })();
