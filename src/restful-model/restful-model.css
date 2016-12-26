@@ -13,8 +13,24 @@
   padding-left: 15px;
   padding-right: 15px;
 }
+
 .handle:hover{
   cursor: move;
+  background-color: #33AA33;
+  transition: all 500ms;
+}
+.editor-action:hover{
+  cursor: pointer;
+  background-color: #AA3333;
+  transition: all 500ms;
+}
+.editor-delete:hover{
+  background-color: red;
+  cursor: pointer;
+  transition: all 500ms;
+}
+.editor-select{
+  cursor: default;
 }
 .editor{
   position: absolute;

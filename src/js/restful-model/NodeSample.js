@@ -1,9 +1,9 @@
-var Node1;
+var NodeSample;
 
-Node1 = (function() {
-  function Node1() {
-    this.name = "Node1{0}";
-    this.key = "{0}";
+NodeSample = (function() {
+  function NodeSample() {
+    this.name = "NodeSample";
+    this.key = "000";
     this.run = (function(_this) {
       return function(params, childs, callback) {
         var key, mIndex, mKey, mNotifyKeys, mResult, resultModel, value;
@@ -26,6 +26,6 @@ Node1 = (function() {
     })(this);
   }
 
-  return Node1;
+  return NodeSample;
 
 })();

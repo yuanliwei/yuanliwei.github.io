@@ -72,15 +72,14 @@ function onChange() {
     }
 }
 
-var nodeViews = [];
-
+var viewLeft = 0;
+var viewTop = 0;
 function addView() {
-  var source = "var Node1;\n\nNode1 = (function() {\n  function Node1() {\n    this.name = \"Node1{0}\";\n    this.key = \"{0}\";\n    this.run = (function(_this) {\n      return function(params, childs, callback) {\n        var key, mIndex, mKey, mNotifyKeys, mResult, resultModel, value;\n        console.log(\"run in source {0}\");\n        console.dir(params);\n        mKey = _this.key;\n        mIndex = 0;\n        mResult = {\n          'key1{0}': 'value1{0}',\n          'key2{0}': 'value2{0}'\n        };\n        mNotifyKeys = [];\n        for (key in childs) {\n          value = childs[key];\n          mNotifyKeys.push(value.key);\n        }\n        resultModel = new NodeResultModel(mKey, mIndex, mResult, mNotifyKeys);\n        return callback(resultModel);\n      };\n    })(this);\n  }\n\n  return Node1;\n\n})();";
-  var node = new NodeModel(source);
-  modelView.addView(0, 0, node);
+  viewLeft += 20;
+  viewTop += 20;
+  modelView.createAddView(viewLeft + "px", viewTop + "px");
   saveSourceData();
 }
-
 
 function initData() {
   var nodeDataArr = [];
@@ -99,7 +98,6 @@ function initData() {
 function saveSourceData() {
   var views = modelView.views;
   var nodeDataArr = [];
-  var posArr = [];
   views.forEach(function (viewMode) {
     // @dom, @view, @node
     viewMode.notify();
@@ -110,4 +108,18 @@ function saveSourceData() {
   var sourceNode = $('#source_node');
   sourceNode.val(JSON.stringify(nodeDataArr));
   saveConfig();
+}
+
+function deleteNodeView(node) {
+  var views = modelView.views;
+  var nodeDataArr = [];
+  for (var i = 0; i < views.length; i++) {
+    var viewMode = views[i];
+    if(viewMode.node == node){
+      views.splice(i, 1);
+      viewMode.dom.remove();
+      break;
+    }
+  }
+  saveSourceData();
 }

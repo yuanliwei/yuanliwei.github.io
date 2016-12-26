@@ -1,9 +1,9 @@
-class Node1
+class NodeSample
 
   constructor: () ->
     # body...
-    @name = "Node1{0}"
-    @key = "{0}"
+    @name = "NodeSample"
+    @key = "000"
 
     @run = (params, childs, callback) =>
       console.log "run in source {0}"
