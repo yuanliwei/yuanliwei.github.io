@@ -1,4 +1,4 @@
-var RESTfulModelView, ViewModel;
+var RESTfulModelView;
 
 RESTfulModelView = (function() {
   var initClickEvent, initDragEvent;
@@ -76,7 +76,7 @@ RESTfulModelView = (function() {
         return counts[0]++;
       },
       "drag": function() {
-        return counts[1]++;
+        return relationModel.redraw();
       },
       "stop": function() {
         return saveSourceData();
@@ -85,22 +85,5 @@ RESTfulModelView = (function() {
   };
 
   return RESTfulModelView;
-
-})();
-
-ViewModel = (function() {
-  function ViewModel(dom1, view1, node1) {
-    this.dom = dom1;
-    this.view = view1;
-    this.node = node1;
-    this.notify = (function(_this) {
-      return function() {
-        _this.dom.find('.key').text(_this.node.key);
-        return _this.dom.find('.name').text(_this.node.name);
-      };
-    })(this);
-  }
-
-  return ViewModel;
 
 })();

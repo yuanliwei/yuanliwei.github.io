@@ -1,6 +1,7 @@
 .model_content{
   /*background-color: #8888FF;*/
-  position: relative;;;
+  position: relative;
+  z-index: 10;
 }
 .model_item{
   display: inline-block;

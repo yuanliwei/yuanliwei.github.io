@@ -1,8 +1,9 @@
 var RelationModel;
 
 RelationModel = (function() {
-  function RelationModel() {
-    this.drawLine = new DrawLine();
+  function RelationModel(modelView) {
+    this.modelView = modelView;
+    this.drawLine = new DrawLine(this.modelView);
     this.lastViewModel;
     this.click = (function(_this) {
       return function(viewModel) {
@@ -16,11 +17,19 @@ RelationModel = (function() {
           _this.lastViewModel = null;
           return;
         }
-        delete _this.lastViewModel.node.parents[viewModel.node.key];
-        delete viewModel.node.childs[_this.lastViewModel.node.key];
-        _this.lastViewModel.node.addChild(viewModel.node);
+        _this.lastViewModel.addChild(viewModel);
         _this.lastViewModel.dom.toggleClass('view-model-select');
         _this.lastViewModel = null;
+        return _this.drawLine.draw();
+      };
+    })(this);
+    this.update = (function(_this) {
+      return function() {
+        return _this.drawLine.update();
+      };
+    })(this);
+    this.redraw = (function(_this) {
+      return function() {
         return _this.drawLine.draw();
       };
     })(this);

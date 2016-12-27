@@ -44,8 +44,9 @@ function onChange() {
         case 6:
           if (!modelView){
             modelView = new RESTfulModelView();
-            relationModel = new RelationModel();
+            relationModel = new RelationModel(modelView);
             initData();
+            relationModel.update();
           }
           break;
       }
@@ -73,7 +74,7 @@ function onChange() {
 }
 
 var viewLeft = 0;
-var viewTop = 0;
+var viewTop = 300;
 function addView() {
   viewLeft += 20;
   viewTop += 20;
@@ -108,6 +109,7 @@ function saveSourceData() {
   var sourceNode = $('#source_node');
   sourceNode.val(JSON.stringify(nodeDataArr));
   saveConfig();
+  relationModel.redraw();
 }
 
 function deleteNodeView(viewModel) {

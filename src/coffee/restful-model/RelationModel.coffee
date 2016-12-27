@@ -1,8 +1,8 @@
 class RelationModel
 
-  constructor: () ->
+  constructor: (@modelView) ->
     # body...
-    @drawLine = new DrawLine()
+    @drawLine = new DrawLine(@modelView)
     @lastViewModel
     @click = (viewModel) =>
       if not @lastViewModel?
@@ -15,10 +15,12 @@ class RelationModel
         @lastViewModel = null
         return
 
-      delete @lastViewModel.node.parents[viewModel.node.key]
-      delete viewModel.node.childs[@lastViewModel.node.key]
-
-      @lastViewModel.node.addChild viewModel.node
+      @lastViewModel.addChild viewModel
       @lastViewModel.dom.toggleClass 'view-model-select'
       @lastViewModel = null
+      @drawLine.draw()
+
+    @update = =>
+      @drawLine.update()
+    @redraw = =>
       @drawLine.draw()

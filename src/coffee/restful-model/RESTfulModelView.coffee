@@ -119,14 +119,6 @@ class RESTfulModelView
                     "iframeFix": true
                     "opacity": 0.85
                     "start": (e) -> counts[ 0 ]++
-                    "drag": -> counts[ 1 ]++
+                    "drag": -> relationModel.redraw()
                     "stop": -> saveSourceData()
                    })
-
-class ViewModel
-
-  constructor: (@dom, @view, @node) ->
-    # body...
-    @notify = =>
-      @dom.find('.key').text(@node.key)
-      @dom.find('.name').text(@node.name)
