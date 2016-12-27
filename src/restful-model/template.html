@@ -10,6 +10,7 @@
     <script src="../js/utils/beautify.js"></script>
     <script src="../js/utils/code-format.js"></script>
     <script src="../js/utils/common.js"></script>
+    <script src="https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js"></script>
     <!--bootstrap-->
     <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap.css" />
     <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap-theme.css" />
@@ -60,9 +61,26 @@
         </div>
       </div>
     </div>
+    <button type="button" class="btn btn-primary" onclick="addView()">addView</button>
 
     <script>
     	$(function () { $("[data-toggle='tooltip']").tooltip(); });
+      // 初始化
+      var config = {
+        authDomain: "ylw-wuziqi.wilddog.com",
+        syncURL: "https://ylw-wuziqi.wilddogio.com"
+      };
+      wilddog.initializeApp(config);
+      var ref = wilddog.sync().ref("/rest");
+      // child() 用来定位到某个节点。
+
+      function addView() {
+        ref.child("Jobs").set({
+            "full_name": "Steve Jobs",
+            "gender": "male"
+        });
+        ref.once('value').then(function(s){console.dir(s.val());});
+      }
     </script>
   </body>
 </html>
