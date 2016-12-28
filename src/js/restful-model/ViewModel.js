@@ -24,6 +24,23 @@ ViewModel = (function() {
         return viewModel.parents[_this.node.key] = _this;
       };
     })(this);
+    this.deleteRelations = (function(_this) {
+      return function() {
+        var child, key, parent, ref, ref1, results;
+        ref = _this.parents;
+        for (key in ref) {
+          parent = ref[key];
+          delete parent.childs[_this.node.key];
+        }
+        ref1 = _this.childs;
+        results = [];
+        for (key in ref1) {
+          child = ref1[key];
+          results.push(delete child.parents[_this.node.key]);
+        }
+        return results;
+      };
+    })(this);
   }
 
   return ViewModel;

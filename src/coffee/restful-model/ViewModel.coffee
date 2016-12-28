@@ -17,3 +17,8 @@ class ViewModel
       @node.addChild viewModel.node
       @childs[viewModel.node.key] = viewModel
       viewModel.parents[@node.key] = @
+    @deleteRelations = () =>
+      for key, parent of @parents
+        delete parent.childs[@node.key]
+      for key, child of @childs
+        delete child.parents[@node.key]

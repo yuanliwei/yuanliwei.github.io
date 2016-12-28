@@ -11,7 +11,7 @@ class RESTfulModelView
         NodeSample = (function() {
           function NodeSample() {
             this.name = "NodeSample";
-            this.key = "000";
+            this.key = "{0}";
             this.run = (function(_this) {
               return function(params, childs, callback) {
                 var key, mIndex, mKey, mNotifyKeys, mResult, resultModel, value;
@@ -38,7 +38,7 @@ class RESTfulModelView
 
         })();
       """
-      node = new NodeModel(source)
+      node = new NodeModel(source.format(@getUniqueKey()))
       @addView left, top, node
 
     @addView = (left, top, node)->
@@ -71,6 +71,16 @@ class RESTfulModelView
       initDragEvent dom
       initClickEvent dom, node, viewModel
       $('#model_content').append(dom);
+    @getUniqueKey = ()=>
+      keys = []
+      for viewModel in @views
+        keys.push viewModel.node.key
+      for index in [0..1000]
+        key = "#{index}" if index < 1000
+        key = "0#{index}" if index < 100
+        key = "00#{index}" if index < 10
+        return key if keys.indexOf(key) < 0
+      '????'
 
   initClickEvent = (dom, node, viewModel) ->
     dom.find('.editor-action').click ->

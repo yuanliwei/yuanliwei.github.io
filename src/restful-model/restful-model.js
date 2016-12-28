@@ -87,9 +87,8 @@ function initData() {
   var sourceNode = $('#source_node');
   if(!sourceNode || !sourceNode.val()) return;
   nodeDataArr = JSON.parse(sourceNode.val());
-  if(Object.prototype.toString.call(nodeDataArr) != '[object Array]') nodeDataArr = [];
+  if(!$.isArray(nodeDataArr)) nodeDataArr = [];
 
-  // nodeDataArr = [];
   nodeDataArr.forEach(function (nodeData) {
     var node = new NodeModel(nodeData.source);
     modelView.addView(nodeData.left, nodeData.top, node);
@@ -113,7 +112,9 @@ function saveSourceData() {
 }
 
 function deleteNodeView(viewModel) {
+  viewModel.deleteRelations()
   modelView.views.remove(viewModel);
   viewModel.dom.remove();
   saveSourceData();
+  relationModel.update();
 }

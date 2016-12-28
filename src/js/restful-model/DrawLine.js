@@ -1,13 +1,13 @@
 var DrawLine;
 
 DrawLine = (function() {
-  function DrawLine(modelView) {
-    this.modelView = modelView;
+  function DrawLine(relationModel) {
+    this.relationModel = relationModel;
     this.canvas;
     this.g;
     this.draw = (function(_this) {
       return function() {
-        var g, i, len, line, lines;
+        var g, i, j, len, len1, line, lines;
         console.log("draw");
         _this.initCanvas();
         g = _this.g;
@@ -16,16 +16,36 @@ DrawLine = (function() {
         g.lineCap = 'round';
         g.clearRect(0, 0, canvas.width, canvas.height);
         g.fillStyle = 'rgba(222,111,111,1)';
-        lines = _this.countLines();
+        lines = _this.countLines(_this.relationModel.relations);
         g.beginPath();
         for (i = 0, len = lines.length; i < len; i++) {
           line = lines[i];
           g.moveTo(line[0], line[1]);
           g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7]);
           g.moveTo(line[6], line[7]);
+          g.lineTo(line[8], line[9]);
+          g.moveTo(line[6], line[7]);
+          g.lineTo(line[10], line[11]);
+          g.moveTo(line[6], line[7]);
         }
         g.closePath();
-        return g.stroke();
+        g.stroke();
+        lines = _this.countLines(_this.relationModel.repeatRelations);
+        g.strokeStyle = 'rgba(222,11,11,1)';
+        g.beginPath();
+        for (j = 0, len1 = lines.length; j < len1; j++) {
+          line = lines[j];
+          g.moveTo(line[0], line[1]);
+          g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7]);
+          g.moveTo(line[6], line[7]);
+          g.lineTo(line[8], line[9]);
+          g.moveTo(line[6], line[7]);
+          g.lineTo(line[10], line[11]);
+          g.moveTo(line[6], line[7]);
+        }
+        g.closePath();
+        g.stroke();
+        return console.log("draw repeat line size : " + lines.length);
       };
     })(this);
     this.initCanvas = (function(_this) {
@@ -39,8 +59,9 @@ DrawLine = (function() {
             'top': _this.content.offsetTop + "px"
           });
           _this.canvas[0].width = document.body.scrollWidth;
-          return _this.canvas[0].height = document.body.scrollHeight;
+          _this.canvas[0].height = document.body.scrollHeight;
         }
+        return 0;
       };
     })(this);
     this.update = (function(_this) {
@@ -52,27 +73,29 @@ DrawLine = (function() {
         });
         _this.canvas[0].width = document.body.scrollWidth;
         _this.canvas[0].height = document.body.scrollHeight;
-        return _this.draw();
+        _this.draw();
+        return 0;
       };
     })(this);
-    this.countLines = function() {
-      var c, dx, dy, i, j, len, len1, line, lines, p, ref, relation, relations, viewModel;
+    this.countLines = function(relations) {
+      var c, dx, dy, i, len, line, lines, p, r, rad, relation, x, x1, x2, y, y1, y2;
       lines = [];
-      relations = [];
-      ref = this.modelView.views;
-      for (i = 0, len = ref.length; i < len; i++) {
-        viewModel = ref[i];
-        if ($.isEmptyObject(viewModel.parents)) {
-          this.getViewModelRelations(viewModel, relations);
-        }
-      }
-      for (j = 0, len1 = relations.length; j < len1; j++) {
-        relation = relations[j];
+      for (i = 0, len = relations.length; i < len; i++) {
+        relation = relations[i];
         p = this.getNodePosition(relation[0]);
         c = this.getNodePosition(relation[1]);
         dx = c.x - p.x;
         dy = c.y - p.y;
-        line = [p.x, p.y, p.x + dx / 3, p.y, c.x - dx / 3, c.y, c.x, c.y];
+        x = p.x - c.x;
+        y = p.y - c.y;
+        r = Math.sqrt(x * x + y * y);
+        rad = 0.4 / 3 * Math.PI;
+        x1 = (x * Math.cos(rad) - y * Math.sin(rad)) / r * 50 + c.x;
+        y1 = (x * Math.sin(rad) + y * Math.cos(rad)) / r * 50 + c.y;
+        rad = -rad;
+        x2 = (x * Math.cos(rad) - y * Math.sin(rad)) / r * 50 + c.x;
+        y2 = (x * Math.sin(rad) + y * Math.cos(rad)) / r * 50 + c.y;
+        line = [p.x, p.y, p.x + dx / 3, p.y, c.x - dx / 3, c.y, c.x, c.y, x1, y1, x2, y2];
         lines.push(line);
       }
       return lines;
@@ -89,25 +112,6 @@ DrawLine = (function() {
         y: top
       };
     };
-    this.getViewModelRelations = (function(_this) {
-      return function(viewModel, relations) {
-        var childViewModel, childs, key, results;
-        childs = viewModel.childs;
-        if ($.isEmptyObject(childs)) {
-          return;
-        }
-        if (relations.length > 1000) {
-          return;
-        }
-        results = [];
-        for (key in childs) {
-          childViewModel = childs[key];
-          relations.push([viewModel, childViewModel]);
-          results.push(_this.getViewModelRelations(childViewModel, relations));
-        }
-        return results;
-      };
-    })(this);
   }
 
   return DrawLine;

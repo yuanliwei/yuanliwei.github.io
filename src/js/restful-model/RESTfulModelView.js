@@ -7,8 +7,8 @@ RESTfulModelView = (function() {
     this.views = [];
     this.createAddView = function(left, top) {
       var node, source;
-      source = "var NodeSample;\n\nNodeSample = (function() {\n  function NodeSample() {\n    this.name = \"NodeSample\";\n    this.key = \"000\";\n    this.run = (function(_this) {\n      return function(params, childs, callback) {\n        var key, mIndex, mKey, mNotifyKeys, mResult, resultModel, value;\n        console.log(\"run in source {0}\");\n        console.dir(params);\n        mKey = _this.key;\n        mIndex = 0;\n        mResult = {\n          'key1{0}': 'value1{0}',\n          'key2{0}': 'value2{0}'\n        };\n        mNotifyKeys = [];\n        for (key in childs) {\n          value = childs[key];\n          mNotifyKeys.push(value.key);\n        }\n        resultModel = new NodeResultModel(mKey, mIndex, mResult, mNotifyKeys);\n        return callback(resultModel);\n      };\n    })(this);\n  }\n\n  return NodeSample;\n\n})();";
-      node = new NodeModel(source);
+      source = "var NodeSample;\n\nNodeSample = (function() {\n  function NodeSample() {\n    this.name = \"NodeSample\";\n    this.key = \"{0}\";\n    this.run = (function(_this) {\n      return function(params, childs, callback) {\n        var key, mIndex, mKey, mNotifyKeys, mResult, resultModel, value;\n        console.log(\"run in source {0}\");\n        console.dir(params);\n        mKey = _this.key;\n        mIndex = 0;\n        mResult = {\n          'key1{0}': 'value1{0}',\n          'key2{0}': 'value2{0}'\n        };\n        mNotifyKeys = [];\n        for (key in childs) {\n          value = childs[key];\n          mNotifyKeys.push(value.key);\n        }\n        resultModel = new NodeResultModel(mKey, mIndex, mResult, mNotifyKeys);\n        return callback(resultModel);\n      };\n    })(this);\n  }\n\n  return NodeSample;\n\n})();";
+      node = new NodeModel(source.format(this.getUniqueKey()));
       return this.addView(left, top, node);
     };
     this.addView = function(left, top, node) {
@@ -24,6 +24,32 @@ RESTfulModelView = (function() {
       initClickEvent(dom, node, viewModel);
       return $('#model_content').append(dom);
     };
+    this.getUniqueKey = (function(_this) {
+      return function() {
+        var i, index, j, key, keys, len, ref, viewModel;
+        keys = [];
+        ref = _this.views;
+        for (i = 0, len = ref.length; i < len; i++) {
+          viewModel = ref[i];
+          keys.push(viewModel.node.key);
+        }
+        for (index = j = 0; j <= 1000; index = ++j) {
+          if (index < 1000) {
+            key = "" + index;
+          }
+          if (index < 100) {
+            key = "0" + index;
+          }
+          if (index < 10) {
+            key = "00" + index;
+          }
+          if (keys.indexOf(key) < 0) {
+            return key;
+          }
+        }
+        return '????';
+      };
+    })(this);
   }
 
   initClickEvent = function(dom, node, viewModel) {
