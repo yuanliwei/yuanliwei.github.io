@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="width=device-width,initial-scale=1.0" name="viewport">
 
     <title>生成代码</title>
     <!-- utils -->
@@ -90,7 +90,7 @@
         $(function() {
             console.log('====================hello==============');
             loadConfig();
-            initEvent(); 
+            initEvent();
             $('pre code').each(function(i, block) {
                 hljs.highlightBlock(block);
             });
