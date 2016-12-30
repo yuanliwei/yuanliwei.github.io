@@ -71,6 +71,7 @@ class DrawLine
         # body...
         p = @getNodePosition(relation[0])
         c = @getNodePosition(relation[1])
+        line = @getLine(p, c)
         dx = c.x - p.x
         dy = c.y - p.y
         # 箭头
@@ -94,4 +95,19 @@ class DrawLine
       top = view.offsetTop
       width = view.clientWidth
       height = view.clientHeight
-      {x:left, y:top}
+      halfWidth = width / 2
+      halfHeight = height / 2
+      {
+        top:   {x:left+halfWidth,y:top           }
+        right: {x:left+width,    y:top+halfHeight}
+        bottom:{x:left+halfWidth,y:top+height    }
+        left:  {x:left,          y:top+halfHeight}
+      }
+
+    @getLine = (p, c) ->
+      p1 = p.top
+      c2 = c.top
+      length = 9999999
+      for key, value of p
+        # body...
+        lineLength = @getLength

@@ -84,6 +84,7 @@ DrawLine = (function() {
         relation = relations[i];
         p = this.getNodePosition(relation[0]);
         c = this.getNodePosition(relation[1]);
+        line = this.getLine(p, c);
         dx = c.x - p.x;
         dy = c.y - p.y;
         x = p.x - c.x;
@@ -101,16 +102,44 @@ DrawLine = (function() {
       return lines;
     };
     this.getNodePosition = function(viewModel) {
-      var height, left, top, view, width;
+      var halfHeight, halfWidth, height, left, top, view, width;
       view = viewModel.view;
       left = view.offsetLeft;
       top = view.offsetTop;
       width = view.clientWidth;
       height = view.clientHeight;
+      halfWidth = width / 2;
+      halfHeight = height / 2;
       return {
-        x: left,
-        y: top
+        top: {
+          x: left + halfWidth,
+          y: top
+        },
+        right: {
+          x: left + width,
+          y: top + halfHeight
+        },
+        bottom: {
+          x: left + halfWidth,
+          y: top + height
+        },
+        left: {
+          x: left,
+          y: top + halfHeight
+        }
       };
+    };
+    this.getLine = function(p, c) {
+      var c2, key, length, lineLength, p1, results, value;
+      p1 = p.top;
+      c2 = c.top;
+      length = 9999999;
+      results = [];
+      for (key in p) {
+        value = p[key];
+        results.push(lineLength = this.getLength);
+      }
+      return results;
     };
   }
 
