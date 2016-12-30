@@ -7,19 +7,19 @@ DrawLine = (function() {
     this.g;
     this.draw = (function(_this) {
       return function() {
-        var g, i, j, len, len1, line, lines;
+        var g, k, l, len, len1, line, lines;
         console.log("draw");
         _this.initCanvas();
         g = _this.g;
         g.strokeStyle = 'rgba(11,222,11,1)';
-        g.lineWidth = 10;
+        g.lineWidth = 3;
         g.lineCap = 'round';
         g.clearRect(0, 0, canvas.width, canvas.height);
         g.fillStyle = 'rgba(222,111,111,1)';
         lines = _this.countLines(_this.relationModel.relations);
         g.beginPath();
-        for (i = 0, len = lines.length; i < len; i++) {
-          line = lines[i];
+        for (k = 0, len = lines.length; k < len; k++) {
+          line = lines[k];
           g.moveTo(line[0], line[1]);
           g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7]);
           g.moveTo(line[6], line[7]);
@@ -33,8 +33,8 @@ DrawLine = (function() {
         lines = _this.countLines(_this.relationModel.repeatRelations);
         g.strokeStyle = 'rgba(222,11,11,1)';
         g.beginPath();
-        for (j = 0, len1 = lines.length; j < len1; j++) {
-          line = lines[j];
+        for (l = 0, len1 = lines.length; l < len1; l++) {
+          line = lines[l];
           g.moveTo(line[0], line[1]);
           g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7]);
           g.moveTo(line[6], line[7]);
@@ -77,30 +77,20 @@ DrawLine = (function() {
         return 0;
       };
     })(this);
-    this.countLines = function(relations) {
-      var c, dx, dy, i, len, line, lines, p, r, rad, relation, x, x1, x2, y, y1, y2;
-      lines = [];
-      for (i = 0, len = relations.length; i < len; i++) {
-        relation = relations[i];
-        p = this.getNodePosition(relation[0]);
-        c = this.getNodePosition(relation[1]);
-        line = this.getLine(p, c);
-        dx = c.x - p.x;
-        dy = c.y - p.y;
-        x = p.x - c.x;
-        y = p.y - c.y;
-        r = Math.sqrt(x * x + y * y);
-        rad = 0.4 / 3 * Math.PI;
-        x1 = (x * Math.cos(rad) - y * Math.sin(rad)) / r * 50 + c.x;
-        y1 = (x * Math.sin(rad) + y * Math.cos(rad)) / r * 50 + c.y;
-        rad = -rad;
-        x2 = (x * Math.cos(rad) - y * Math.sin(rad)) / r * 50 + c.x;
-        y2 = (x * Math.sin(rad) + y * Math.cos(rad)) / r * 50 + c.y;
-        line = [p.x, p.y, p.x + dx / 3, p.y, c.x - dx / 3, c.y, c.x, c.y, x1, y1, x2, y2];
-        lines.push(line);
-      }
-      return lines;
-    };
+    this.countLines = (function(_this) {
+      return function(relations) {
+        var c, k, len, line, lines, p, relation;
+        lines = [];
+        for (k = 0, len = relations.length; k < len; k++) {
+          relation = relations[k];
+          p = _this.getNodePosition(relation[0]);
+          c = _this.getNodePosition(relation[1]);
+          line = _this.getLine(p, c);
+          lines.push(line);
+        }
+        return lines;
+      };
+    })(this);
     this.getNodePosition = function(viewModel) {
       var halfHeight, halfWidth, height, left, top, view, width;
       view = viewModel.view;
@@ -110,37 +100,107 @@ DrawLine = (function() {
       height = view.clientHeight;
       halfWidth = width / 2;
       halfHeight = height / 2;
-      return {
-        top: {
+      return [
+        {
           x: left + halfWidth,
           y: top
-        },
-        right: {
+        }, {
           x: left + width,
           y: top + halfHeight
-        },
-        bottom: {
+        }, {
           x: left + halfWidth,
           y: top + height
-        },
-        left: {
+        }, {
           x: left,
           y: top + halfHeight
         }
-      };
+      ];
     };
     this.getLine = function(p, c) {
-      var c2, key, length, lineLength, p1, results, value;
-      p1 = p.top;
-      c2 = c.top;
-      length = 9999999;
-      results = [];
-      for (key in p) {
-        value = p[key];
-        results.push(lineLength = this.getLength);
+      var dx, dy, i, j, k, l, length, line, r, rad, s, short, x, x1, x2, y, y1, y2;
+      s = {
+        p: p[0],
+        c: c[0],
+        i: 0,
+        j: 0
+      };
+      short = 99999;
+      for (i = k = 0; k < 4; i = ++k) {
+        for (j = l = 0; l < 4; j = ++l) {
+          length = this.getLength(p[i], c[j]);
+          if (length < short) {
+            short = length;
+            s = {
+              p: p[i],
+              c: c[j],
+              i: i,
+              j: j
+            };
+          }
+        }
       }
-      return results;
+      dx = Math.abs(s.p.x - s.c.x) / 3;
+      dy = Math.abs(s.p.y - s.c.y) / 3;
+      line = [];
+      line.push(s.p.x);
+      line.push(s.p.y);
+      if (s.i === 0) {
+        line.push(s.p.x);
+        line.push(s.p.y - dy);
+      }
+      if (s.i === 1) {
+        line.push(s.p.x + dx);
+        line.push(s.p.y);
+      }
+      if (s.i === 2) {
+        line.push(s.p.x);
+        line.push(s.p.y + dy);
+      }
+      if (s.i === 3) {
+        line.push(s.p.x - dy);
+        line.push(s.p.y);
+      }
+      if (s.j === 0) {
+        line.push(s.c.x);
+        line.push(s.c.y - dy);
+      }
+      if (s.j === 1) {
+        line.push(s.c.x + dx);
+        line.push(s.c.y);
+      }
+      if (s.j === 2) {
+        line.push(s.c.x);
+        line.push(s.c.y + dy);
+      }
+      if (s.j === 3) {
+        line.push(s.c.x - dy);
+        line.push(s.c.y);
+      }
+      line.push(s.c.x);
+      line.push(s.c.y);
+      x = line[4] - s.c.x;
+      y = line[5] - s.c.y;
+      r = Math.sqrt(x * x + y * y);
+      rad = 0.4 / 3 * Math.PI;
+      x1 = (x * Math.cos(rad) - y * Math.sin(rad)) / r * 50 + s.c.x;
+      y1 = (x * Math.sin(rad) + y * Math.cos(rad)) / r * 50 + s.c.y;
+      rad = -rad;
+      x2 = (x * Math.cos(rad) - y * Math.sin(rad)) / r * 50 + s.c.x;
+      y2 = (x * Math.sin(rad) + y * Math.cos(rad)) / r * 50 + s.c.y;
+      line.push(x1);
+      line.push(y1);
+      line.push(x2);
+      line.push(y2);
+      return line;
     };
+    this.getLength = (function(_this) {
+      return function(p, c) {
+        var x, y;
+        x = p.x - c.x;
+        y = p.y - c.y;
+        return Math.sqrt(x * x + y * y);
+      };
+    })(this);
   }
 
   return DrawLine;
