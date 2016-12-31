@@ -10,40 +10,61 @@ class DrawLine
       @initCanvas()
       g = @g
       g.strokeStyle = 'rgba(11,222,11,1)'
-      g.lineWidth = 3
+      g.lineWidth = 2
       g.lineCap = 'round'
+      g.fillStyle = '#FFFFFF'
       g.clearRect(0, 0, canvas.width, canvas.height)
-      g.fillStyle = 'rgba(222,111,111,1)'
       # g.fillRect(0, 0, canvas.width, canvas.height)
       lines = @countLines(@relationModel.relations)
+      g.strokeStyle = 'rgba(11,222,11,1)'
+      g.fillStyle = 'rgba(11,222,11,1)'
       g.beginPath()
       for line in lines
         # body...
         g.moveTo line[0], line[1]
-        # g.lineTo line[6], line[7]
         g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7])
         g.moveTo line[6], line[7]
-        g.lineTo line[8], line[9]
-        g.moveTo line[6], line[7]
-        g.lineTo line[10], line[11]
-        g.moveTo line[6], line[7]
-      g.closePath()
-      g.stroke()
+        g.closePath()
+        g.stroke()
+        g.save()
+        g.beginPath()
+        g.translate line[8], line[9]
+        x = line[8] - line[6]
+        y = line[9] - line[7]
+        g.rotate(line[10]+Math.PI/2)
+        g.moveTo 0, 0
+        g.lineTo -15, -20
+        g.lineTo 0, 30
+        g.lineTo 15, -20
+        g.lineTo 0, 0
+        g.fill()
+        g.closePath()
+        g.restore()
+
       lines = @countLines(@relationModel.repeatRelations)
       g.strokeStyle = 'rgba(222,11,11,1)'
-      g.beginPath()
+      g.fillStyle = 'rgba(222,11,11,1)'
       for line in lines
         # body...
         g.moveTo line[0], line[1]
-        # g.lineTo line[6], line[7]
         g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7])
         g.moveTo line[6], line[7]
-        g.lineTo line[8], line[9]
-        g.moveTo line[6], line[7]
-        g.lineTo line[10], line[11]
-        g.moveTo line[6], line[7]
-      g.closePath()
-      g.stroke()
+        g.closePath()
+        g.stroke()
+        g.save()
+        g.beginPath()
+        g.translate line[8], line[9]
+        x = line[8] - line[6]
+        y = line[9] - line[7]
+        g.rotate(line[10]+Math.PI/2)
+        g.moveTo 0, 0
+        g.lineTo -15, -20
+        g.lineTo 0, 30
+        g.lineTo 15, -20
+        g.lineTo 0, 0
+        g.fill()
+        g.closePath()
+        g.restore()
       console.log "draw repeat line size : #{lines.length}"
 
     @initCanvas = =>
@@ -134,22 +155,59 @@ class DrawLine
       line.push s.c.y
 
       # 箭头
-      x = line[4] - s.c.x
-      y = line[5] - s.c.y
+      cursor = @getCursor line, 50
+      cursorEnd = @getCursor line, 20
+      x = cursor.x - cursorEnd.x
+      y = cursor.y - cursorEnd.y
       r = Math.sqrt(x*x+y*y)
-      rad = 0.4/3*Math.PI
-      x1 = (x*Math.cos(rad) - y*Math.sin(rad))/r*50+s.c.x
-      y1 = (x*Math.sin(rad) + y*Math.cos(rad))/r*50+s.c.y
-      rad = -rad
-      x2 = (x*Math.cos(rad) - y*Math.sin(rad))/r*50+s.c.x
-      y2 = (x*Math.sin(rad) + y*Math.cos(rad))/r*50+s.c.y
-      line.push x1
-      line.push y1
-      line.push x2
-      line.push y2
+      rad = Math.acos(x/r)
+      rad = 2*Math.PI - rad if y<0
+      line.push cursor.x
+      line.push cursor.y
+      line.push rad
       line
 
     @getLength = (p, c) =>
       x = p.x - c.x
       y = p.y - c.y
       Math.sqrt(x*x+y*y)
+    @getCursor = (line, end) =>
+      x0 = line[0]
+      x1 = line[2]
+      x2 = line[4]
+      x3 = line[6]
+      y0 = line[1]
+      y1 = line[3]
+      y2 = line[5]
+      y3 = line[7]
+      dt = 0.5
+      t = 0.5
+      count = 0
+      for i in [0..10]
+        #-----------------
+        x11 = t*x1-t*x0+x0
+        x12 = t*x2-t*x1+x1
+        x13 = t*x3-t*x2+x2
+        y11 = t*y1-t*y0+y0
+        y12 = t*y2-t*y1+y1
+        y13 = t*y3-t*y2+y2
+        #-----------------
+        x21 = t*x12-t*x11+x11
+        x22 = t*x13-t*x12+x12
+        y21 = t*y12-t*y11+y11
+        y22 = t*y13-t*y12+y12
+        #-----------------
+        x = t*x22-t*x21+x21
+        y = t*y22-t*y21+y21
+        # ----------------
+        length = @getLength {x:x,y:y},{x:x3,y:y3}
+        dt = dt / 2
+        if length > end
+          t += dt
+        else
+          t -= dt
+        count++
+        console.log "count:#{count} t:#{t} length:#{length}"
+        if Math.abs(length-end) < 1
+          break;
+      {x:x,y:y}
