@@ -8,7 +8,6 @@ DrawLine = (function() {
     this.draw = (function(_this) {
       return function() {
         var g, k, l, len, len1, line, lines, x, y;
-        console.log("draw");
         _this.initCanvas();
         g = _this.g;
         g.strokeStyle = 'rgba(11,222,11,1)';
@@ -19,9 +18,9 @@ DrawLine = (function() {
         lines = _this.countLines(_this.relationModel.relations);
         g.strokeStyle = 'rgba(11,222,11,1)';
         g.fillStyle = 'rgba(11,222,11,1)';
-        g.beginPath();
         for (k = 0, len = lines.length; k < len; k++) {
           line = lines[k];
+          g.beginPath();
           g.moveTo(line[0], line[1]);
           g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7]);
           g.moveTo(line[6], line[7]);
@@ -47,6 +46,7 @@ DrawLine = (function() {
         g.fillStyle = 'rgba(222,11,11,1)';
         for (l = 0, len1 = lines.length; l < len1; l++) {
           line = lines[l];
+          g.beginPath();
           g.moveTo(line[0], line[1]);
           g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7]);
           g.moveTo(line[6], line[7]);
@@ -67,7 +67,7 @@ DrawLine = (function() {
           g.closePath();
           g.restore();
         }
-        return console.log("draw repeat line size : " + lines.length);
+        return 0;
       };
     })(this);
     this.initCanvas = (function(_this) {
@@ -263,7 +263,6 @@ DrawLine = (function() {
             t -= dt;
           }
           count++;
-          console.log("count:" + count + " t:" + t + " length:" + length);
           if (Math.abs(length - end) < 1) {
             break;
           }

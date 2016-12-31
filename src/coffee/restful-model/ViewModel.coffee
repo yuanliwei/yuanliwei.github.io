@@ -21,6 +21,10 @@ class ViewModel
       for key, parent of @parents
         delete parent.childs[@node.key]
         delete @parents[key]
+        delete parent.node.childs[@node.key]
+        delete @node.parents[key]
       for key, child of @childs
         delete child.parents[@node.key]
         delete @childs[key]
+        delete child.node.parents[@node.key]
+        delete @node.childs[key]

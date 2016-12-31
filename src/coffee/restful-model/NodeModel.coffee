@@ -14,6 +14,9 @@ class NodeModel
       @childs[node.key] = node
       node.parents[@key] = @
 
+    @resetRun = ()=>
+      @resultModelMap = {}
+
     @onNotify = (resultModel) =>
       console.log "notify key #{@key}"
       modelMap = @resultModelMap[resultModel.index] if resultModel?

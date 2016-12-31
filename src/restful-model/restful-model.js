@@ -86,13 +86,17 @@ function initData() {
   var nodeDataArr = [];
   var sourceNode = $('#source_node');
   if(!sourceNode || !sourceNode.val()) return;
-  nodeDataArr = JSON.parse(sourceNode.val());
+  var saveData = JSON.parse(sourceNode.val());
+  if(!saveData) saveData = {}
+  nodeDataArr = saveData.nodes;
   if(!$.isArray(nodeDataArr)) nodeDataArr = [];
-
   nodeDataArr.forEach(function (nodeData) {
     var node = new NodeModel(nodeData.source);
     modelView.addView(nodeData.left, nodeData.top, node);
   });
+  var relations = saveData.relations;
+  if(!relations) relations = [];
+  relationModel.loadRelationData(relations);
 }
 
 function saveSourceData() {
@@ -106,7 +110,11 @@ function saveSourceData() {
     nodeDataArr.push({"left": dom.style.left, "top": dom.style.top, "source": source });
   });
   var sourceNode = $('#source_node');
-  sourceNode.val(JSON.stringify(nodeDataArr));
+  var saveData = {
+    "nodes":nodeDataArr,
+    "relations":relationModel.getRelationData()
+  }
+  sourceNode.val(JSON.stringify(saveData));
   saveConfig();
   relationModel.redraw();
 }
@@ -115,12 +123,24 @@ function deleteNodeView(viewModel) {
   viewModel.deleteRelations()
   modelView.views.remove(viewModel);
   viewModel.dom.remove();
-  saveSourceData();
   relationModel.update();
+  saveSourceData();
 }
 function deleteNodeViewRelation(viewModel) {
   console.log("deleteNodeViewRelation");
   viewModel.deleteRelations()
-  saveSourceData();
   relationModel.update();
+  saveSourceData();
+}
+
+function run() {
+  var views = modelView.views;
+  views.forEach(function (viewModel) {
+    viewModel.node.resetRun();
+  });
+  views.forEach(function (viewModel) {
+    if($.isEmptyObject(viewModel.parents)){
+      viewModel.node.onNotify();
+    }
+  });
 }

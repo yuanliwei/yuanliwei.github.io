@@ -6,7 +6,7 @@ class DrawLine
     @g
 
     @draw = =>
-      console.log "draw"
+      # console.log "draw"
       @initCanvas()
       g = @g
       g.strokeStyle = 'rgba(11,222,11,1)'
@@ -18,9 +18,9 @@ class DrawLine
       lines = @countLines(@relationModel.relations)
       g.strokeStyle = 'rgba(11,222,11,1)'
       g.fillStyle = 'rgba(11,222,11,1)'
-      g.beginPath()
       for line in lines
         # body...
+        g.beginPath()
         g.moveTo line[0], line[1]
         g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7])
         g.moveTo line[6], line[7]
@@ -46,6 +46,7 @@ class DrawLine
       g.fillStyle = 'rgba(222,11,11,1)'
       for line in lines
         # body...
+        g.beginPath()
         g.moveTo line[0], line[1]
         g.bezierCurveTo(line[2], line[3], line[4], line[5], line[6], line[7])
         g.moveTo line[6], line[7]
@@ -65,7 +66,7 @@ class DrawLine
         g.fill()
         g.closePath()
         g.restore()
-      console.log "draw repeat line size : #{lines.length}"
+      0
 
     @initCanvas = =>
       if not @canvas?
@@ -207,7 +208,7 @@ class DrawLine
         else
           t -= dt
         count++
-        console.log "count:#{count} t:#{t} length:#{length}"
+        # console.log "count:#{count} t:#{t} length:#{length}"
         if Math.abs(length-end) < 1
           break;
       {x:x,y:y}

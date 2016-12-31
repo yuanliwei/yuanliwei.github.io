@@ -32,13 +32,17 @@ ViewModel = (function() {
           parent = ref[key];
           delete parent.childs[_this.node.key];
           delete _this.parents[key];
+          delete parent.node.childs[_this.node.key];
+          delete _this.node.parents[key];
         }
         ref1 = _this.childs;
         results = [];
         for (key in ref1) {
           child = ref1[key];
           delete child.parents[_this.node.key];
-          results.push(delete _this.childs[key]);
+          delete _this.childs[key];
+          delete child.node.parents[_this.node.key];
+          results.push(delete _this.node.childs[key]);
         }
         return results;
       };

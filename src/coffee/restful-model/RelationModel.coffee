@@ -21,6 +21,7 @@ class RelationModel
       @lastViewModel.dom.toggleClass 'view-model-select'
       @lastViewModel = null
       @update()
+      saveSourceData()
 
     @update = =>
       @relations = []
@@ -51,7 +52,7 @@ class RelationModel
         else
           continue
         @getViewModelRelations childViewModel, relationsKeys, relations
-      console.log "line count #{relations.length}"
+      # console.log "line count #{relations.length}"
 
     @getRepeatViewModelRelations = (uniqueKey, viewModel, relationsKeys, repeatRelations) =>
       childs = viewModel.childs
@@ -64,3 +65,21 @@ class RelationModel
           continue
         relationsKeys.push relationsKey
         @getRepeatViewModelRelations uniqueKey, childViewModel, relationsKeys, repeatRelations
+      # console.log "repeat line count #{relations.length}"
+
+
+    @getRelationData = ()=>
+      relationDatas = []
+      for relation in @relations
+        relationDatas.push [relation[0].node.key,relation[1].node.key]
+      relationDatas
+
+    @loadRelationData = (relationDatas)=>
+      return if not relationDatas?
+      relationMap = {}
+      for viewModel in @modelView.views
+        relationMap[viewModel.node.key] = viewModel
+      for relation in relationDatas
+        pViewModel = relationMap[relation[0]]
+        cViewModel = relationMap[relation[1]]
+        pViewModel.addChild cViewModel

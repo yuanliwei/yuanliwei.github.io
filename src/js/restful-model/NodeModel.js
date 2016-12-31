@@ -17,6 +17,11 @@ NodeModel = (function() {
         return node.parents[_this.key] = _this;
       };
     })(this);
+    this.resetRun = (function(_this) {
+      return function() {
+        return _this.resultModelMap = {};
+      };
+    })(this);
     this.onNotify = (function(_this) {
       return function(resultModel) {
         var modelMap;
