@@ -57,7 +57,7 @@ function loadConfig() {
       var index = 0;
       var inputs = $('input');
       inputs.each(function (ind, input) {
-        let type = input.type;
+        var type = input.type;
         switch (type) {
           case "text": input.value = Config[index]; break;
           case "radio":
@@ -81,7 +81,7 @@ function saveConfig() {
   var index = 0;
   var inputs = $('input');
   inputs.each(function (ind, input) {
-    let type = input.type;
+    var type = input.type;
     switch (type) {
       case "text": Config[index] = input.value; break;
       case "radio":

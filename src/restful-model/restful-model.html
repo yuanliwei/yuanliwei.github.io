@@ -103,6 +103,16 @@
     </div>
 
     <script type="text/javascript">
+        function onPageLoaded() {
+          jsObj.HTTP({url:"http://blog.csdn.net/wcyoot/article/details/33310329",
+              onSuccess:function (msg) {
+                console.log(msg);
+              },
+              onError:function (msg) {
+                console.log("onError : "+msg);
+              }
+            });
+        }
         $(function() {
             console.log('====================hello==============');
             loadConfig();

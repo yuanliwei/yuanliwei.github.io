@@ -28,6 +28,9 @@ function initEvent() {
     $('#mode-option-group input, #gen-option-group input').click(function () {
         onChange();
     });
+    $(window).resize(function() {
+      relationModel.update();
+    });
     onChange();
 }
 
@@ -52,7 +55,9 @@ function onChange() {
       }
     } catch (e) {
       result = e.stack;
+      jsObj.log(result);
       console.error(e);
+
       mode = 1;
     }
     switch (mode) {
@@ -126,6 +131,7 @@ function deleteNodeView(viewModel) {
   relationModel.update();
   saveSourceData();
 }
+
 function deleteNodeViewRelation(viewModel) {
   console.log("deleteNodeViewRelation");
   viewModel.deleteRelations()
