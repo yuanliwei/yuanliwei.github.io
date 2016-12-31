@@ -13,7 +13,7 @@ RESTfulModelView = (function() {
     };
     this.addView = function(left, top, node) {
       var dom, source0, view, viewModel;
-      source0 = "<div class=\"model_item draggable\">\n  <div class=\"row\">\n    <div class=\"key col-xs-10 col-sm-10 col-md-10 bg-success handle\">\n      {key}\n    </div>\n    <div class=\"col-xs-2 col-sm-2 col-md-2 bg-info editor-delete\">\n      -\n    </div>\n    <div class=\"name col-xs-12 col-sm-12 col-md-12 bg-danger editor-action\">\n      {name}\n    </div>\n  </div>\n  <div class=\"row editor-select\">\n    <div class=\"col-xs-12 col-sm-12 col-md-12 bg-primary\">\n      description <br><br><br><br>\n    </div>\n  </div>\n</div>";
+      source0 = "<div class=\"model_item draggable\">\n  <div class=\"row\">\n    <div class=\"key col-xs-8 col-sm-8 col-md-8 bg-success handle\">\n      {key}\n    </div>\n    <div class=\"col-xs-2 col-sm-2 col-md-2 bg-info editor-delete-relation\">\n      -\n    </div>\n    <div class=\"col-xs-2 col-sm-2 col-md-2 bg-warning editor-delete\">\n      -\n    </div>\n    <div class=\"name col-xs-12 col-sm-12 col-md-12 bg-danger editor-action\">\n      {name}\n    </div>\n  </div>\n  <div class=\"row editor-select\">\n    <div class=\"col-xs-12 col-sm-12 col-md-12 bg-primary\">\n      description <br><br><br><br>\n    </div>\n  </div>\n</div>";
       dom = $(source0.format(node));
       view = dom[0];
       viewModel = new ViewModel(dom, view, node);
@@ -69,6 +69,9 @@ RESTfulModelView = (function() {
     });
     dom.find('.editor-delete').click(function() {
       return deleteNodeView(viewModel);
+    });
+    dom.find('.editor-delete-relation').click(function() {
+      return deleteNodeViewRelation(viewModel);
     });
     return dom.find('.editor-select').click(function() {
       return relationModel.click(viewModel);

@@ -34,6 +34,11 @@
   cursor: pointer;
   transition: all 500ms;
 }
+.editor-delete-relation:hover{
+  background-color: red;
+  cursor: pointer;
+  transition: all 500ms;
+}
 .editor-select{
   cursor: default;
 }

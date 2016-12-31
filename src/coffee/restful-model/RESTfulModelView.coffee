@@ -45,10 +45,13 @@ class RESTfulModelView
       source0 = """
       <div class="model_item draggable">
         <div class="row">
-          <div class="key col-xs-10 col-sm-10 col-md-10 bg-success handle">
+          <div class="key col-xs-8 col-sm-8 col-md-8 bg-success handle">
             {key}
           </div>
-          <div class="col-xs-2 col-sm-2 col-md-2 bg-info editor-delete">
+          <div class="col-xs-2 col-sm-2 col-md-2 bg-info editor-delete-relation">
+            -
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 bg-warning editor-delete">
             -
           </div>
           <div class="name col-xs-12 col-sm-12 col-md-12 bg-danger editor-action">
@@ -98,6 +101,8 @@ class RESTfulModelView
         $('.editor').toggleClass('editor-hide editor-show')
     dom.find('.editor-delete').click ->
       deleteNodeView(viewModel)
+    dom.find('.editor-delete-relation').click ->
+      deleteNodeViewRelation(viewModel)
     dom.find('.editor-select').click ->
       relationModel.click(viewModel)
 

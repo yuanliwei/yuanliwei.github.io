@@ -31,12 +31,14 @@ ViewModel = (function() {
         for (key in ref) {
           parent = ref[key];
           delete parent.childs[_this.node.key];
+          delete _this.parents[key];
         }
         ref1 = _this.childs;
         results = [];
         for (key in ref1) {
           child = ref1[key];
-          results.push(delete child.parents[_this.node.key]);
+          delete child.parents[_this.node.key];
+          results.push(delete _this.childs[key]);
         }
         return results;
       };

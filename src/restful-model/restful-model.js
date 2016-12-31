@@ -118,3 +118,9 @@ function deleteNodeView(viewModel) {
   saveSourceData();
   relationModel.update();
 }
+function deleteNodeViewRelation(viewModel) {
+  console.log("deleteNodeViewRelation");
+  viewModel.deleteRelations()
+  saveSourceData();
+  relationModel.update();
+}
