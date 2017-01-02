@@ -22,23 +22,25 @@ function initEvent() {
 //     $('#mode-option-group input, #gen-option-group input').click(function () {
 //         onChange();
 //     });
-    $('input').change(function(input){
+    $('input,select').change(function(input){
       if(input.target.value == ''){
         input.target.value = '0';
       }
       if(!parseFloat(input.target.value)){
         input.target.value = '0';
       }
+      countAvg();
     });
     $('.tcount').change(function(){
       showSum();
     });
+
     templ = $('#out-table').html();
 
 //     onChange();
-    GBData = JSON.parse($('#input_json_text').val());
-    showTable();
-    showSum();
+    //GBData = JSON.parse($('#input_json_text').val());
+//     showTable();
+//     showSum();
 }
 
 function onCount(){
@@ -185,6 +187,26 @@ function showTable(){
     html.push(templ.format(row));
   });
   $('#out-table').html(html.join(''));
+}
+
+function countAvg(){
+  $('input').each(function(ind,input){
+      if(!parseFloat(input.value)){
+        input.value = '0';
+      }
+    });
+  var inputs = $('input');
+  var selects = $('select');
+  var sum = parseFloat(inputs[0].value)
+          + parseFloat(inputs[1].value)
+          + parseFloat(inputs[2].value)
+          + parseFloat(inputs[3].value)
+          + parseFloat(inputs[4].value);
+  var price = parseFloat(selects[0].value);
+  var count = parseFloat(selects[1].value);
+  var avg = sum * price / count;
+  avg = avg.toFixed(2);
+  $("#result").html('<h1>'+avg+'</h1>');
 }
 
 function onClickRow(date){
