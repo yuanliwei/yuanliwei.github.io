@@ -83,17 +83,17 @@ function onSave() {
     var row = {
       date:inputs[0].value,
       type1:{
-        name:"tc",
+        name:"TC",
         count:parseFloat(inputs[1].value),
         price:parseFloat(selects[0].value)
       },
       type2:{
-        name:"tcm",
+        name:"TCM",
          count:parseFloat(inputs[2].value),
          price:parseFloat(selects[1].value)
        },
       type3:{
-        name:"ec",
+        name:"EC",
          count:parseFloat(inputs[3].value),
          price:parseFloat(selects[2].value)
        },
