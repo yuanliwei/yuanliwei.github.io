@@ -155,9 +155,7 @@ function saveToDog(row){
       var ref = wilddog.sync().ref("/account");
       // child() 用来定位到某个节点。
 
-        ref.child(row.date).set({
-            "date": JSON.stringify(row)
-        });
+        ref.child(row.date).set(JSON.stringify(row));
 
 }
 
