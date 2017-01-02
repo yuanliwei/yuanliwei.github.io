@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0" name="viewport">
+    <title>XML Java</title>
+    <!-- utils -->
+    <script src="../js/utils/jquery.js"></script>
+    <script src="../js/utils/StringUtil.js"></script>
+    <script src="../js/utils/string-format.js"></script>
+    <script src="../js/utils/beautify.js"></script>
+    <script src="../js/utils/code-format.js"></script>
+    <script src="../js/utils/common.js"></script>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap-theme.css" />
+    <script src="../../bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <!-- jquery-ui -->
+    <link rel="stylesheet" href="../../jquery-ui-1.11.4/jquery-ui.min.css" />
+    <script src="../../jquery-ui-1.11.4/jquery-ui.js"></script>
+    <!-- highlight -->
+    <link rel="stylesheet" href="../../highlight/styles/default.css">
+    <script src="../../highlight/highlight.pack.js"></script>
+    <!-- func -->
+    <script src="../js/escape/MD5.js"></script>
+    <script src="../js/escape/Base64.js"></script>
+    <script src="../js/escape/he.js"></script>
+    <script src="../js/escape/crypto-js.js"></script>
+    <script src="../js/escape/escape.js"></script>
+    <!-- model -->
+    <script src="../js/restful-model/NodeModel.js"></script>
+    <script src="../js/restful-model/NodeResultModel.js"></script>
+    <script src="../js/restful-model/RESTfulModel.js"></script>
+    <script src="../js/restful-model/RESTfulModelView.js"></script>
+    <script src="../js/restful-model/ViewModel.js"></script>
+    <script src="../js/restful-model/DrawLine.js"></script>
+    <script src="../js/restful-model/RelationModel.js"></script>
+    <script src="https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js"></script>
+    <!-- local -->
+    <script src="./account-book.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="./account-book.css">
+  </head>
+  <body>
+    <div class="container bg-primary hide">
+      container container-fluid
+      row
+      col-xs-12 col-sm-12 col-md-12
+      col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+      bg-info bg-primary bg-success bg-warning bg-danger
+      text-left text-center text-right text-justify text-nowrap
+      text-muted text-muted text-primary text-success text-info text-warning text-danger
+      img-responsive img-rounded img-circle img-thumbnail
+      pull-left pull-right
+      center-block clearfix
+      show hidden
+      text-lowercase text-uppercase text-capitalize
+      dl-horizontal
+    </div>
+    <div class="container">
+      <div class="page-header">
+          <h1>ACCOUNT <small>Book</small></h1>
+      </div>
+        <div class="alert-result">
+
+        </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 bg-success">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              Date: <input class="form-control" type="text" id="datepicker">
+             </div>
+             <div class="col-xs-12 col-sm-12 col-md-12 text-right">
+              <button class="btn btn-danger" type="button " onClick="onDelete()">Delete</button>
+              <button class="btn btn-primary" type="button" onClick="onCount()">Count</button>
+              <button class="btn btn-primary" type="button" onClick="onSave()">Save</button>
+             </div>
+           </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+              RESULT
+              <table class="table table-bordered table-hover text-center">
+                <tr>
+                  <th class="text-center">TYPE</th>
+                  <th>count</th>
+                  <th width="100px">price</th>
+                </tr>
+                <tr>
+                  <td>
+                    TC
+                  </td>
+                  <td>
+                    <input type="text" class="form-control">
+                  </td>
+                  <td>
+                    <select id="basic" class="form-control">
+                      <option>0.4</option>
+                      <option>0.35</option>
+                      <option>0.8</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    TCM
+                  </td>
+                  <td>
+                    <input type="text" class="form-control">
+                  </td>
+                  <td>
+                   <select id="basic" class="form-control">
+                      <option>0.4</option>
+                      <option>0.35</option>
+                      <option>0.8</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    EC
+                  </td>
+                  <td>
+                    <input type="text" class="form-control">
+                  </td>
+                  <td>
+                   <select id="basic" class="form-control">
+                      <option>0.4</option>
+                      <option>0.35</option>
+                      <option>0.8</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+              EVERYONE
+              <table class="table table-bordered table-hover text-center">
+                <tr>
+                  <th class="text-center">TYPE</th>
+                  <th>M1</th>
+                  <th>M2</th>
+                  <th>M3</th>
+                  <th>M4</th>
+                </tr>
+                <tr>
+                  <td>
+                    TC
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    TCM
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    EC
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control text-center">
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8">
+          <table id="out-table" class="table table-hover bg-info">
+            <tr onclick="onClickRow('{date}')" class="{bg}">
+                <td class="date-obj {bg}">{date}</td>
+                <td>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>TYPE</th>
+                            <th>COUNT</th>
+                            <th>PRICE</th>
+                        </tr>
+                        <tr>
+                            <td>{type1.name}</td>
+                            <td>{type1.count}</td>
+                            <td>{type1.price}</td>
+                        </tr>
+                        <tr>
+                            <td>{type2.name}</td>
+                            <td>{type2.count}</td>
+                            <td>{type2.price}</td>
+                        </tr>
+                        <tr>
+                            <td>{type3.name}</td>
+                            <td>{type3.count}</td>
+                            <td>{type3.price}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>M1</th>
+                            <th>M2</th>
+                            <th>M3</th>
+                            <th>M4</th>
+                        </tr>
+                        <tr>
+                            <td>{etype1.m1}</td>
+                            <td>{etype1.m2}</td>
+                            <td>{etype1.m3}</td>
+                            <td>{etype1.m4}</td>
+                        </tr>
+                        <tr>
+                            <td>{etype2.m1}</td>
+                            <td>{etype2.m2}</td>
+                            <td>{etype2.m3}</td>
+                            <td>{etype2.m4}</td>
+                        </tr>
+                        <tr>
+                            <td>{etype3.m1}</td>
+                            <td>{etype3.m2}</td>
+                            <td>{etype3.m3}</td>
+                            <td>{etype3.m4}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <input id="input_json_text" type="text" class="hide"/>
+    <script type="text/javascript">
+        var GBData = {};
+        $(function() {
+            console.log('====================hello==============');
+            loadConfig();
+            initEvent();
+            initDatepicker();
+        });
+    </script>
+  </body>
+</html>

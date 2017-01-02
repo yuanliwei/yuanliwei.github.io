@@ -1,0 +1,27 @@
+.model_content{
+  /*background-color: #8888FF;*/
+  position: relative;
+  z-index: 10;
+}
+.model_item{
+  display: inline-block;
+  border: #338833 3px solid;
+  background-color: #FF8888;
+  width: 200px;
+  position: absolute!important;
+  left: 300px;
+  top: 130px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/*.model_item:active{
+  transform: scale(1.1);
+  transition: all 100ms;
+}*/
+input{
+/*   padding:0px!important; */
+}
+
+.error_bg{
+  background-color: #B70404!important;
+}
