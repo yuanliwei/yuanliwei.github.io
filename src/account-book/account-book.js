@@ -22,6 +22,14 @@ function initEvent() {
 //     $('#mode-option-group input, #gen-option-group input').click(function () {
 //         onChange();
 //     });
+    $('input').change(function(input){
+      if(input.target.value == ''){
+        input.target.value = '0';
+      }
+      if(!parseFloat(input.target.value)){
+        input.target.value = '0';
+      }
+    });
     $('.tcount').change(function(){
       showSum();
     });
@@ -214,10 +222,9 @@ function showSum(){
     var c1 = parseFloat(inputs[1].value);
     var c2 = parseFloat(inputs[2].value);
     var c3 = parseFloat(inputs[3].value);
-  var t = `<td colspan="3"> SUM:{0}　AVG:{1} </td>`;
-
-   var TCount = c1+c2+c3;
-  $('#count_sum').html(t.format(TCount,TCount/3));
+    var t = `<td colspan="3"> SUM:{0}　AVG:{1} </td>`;
+    var TCount = c1+c2+c3;
+    $('#count_sum').html(t.format(TCount,TCount/3));
 }
 
 function initDatepicker(){
