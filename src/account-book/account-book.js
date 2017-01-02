@@ -22,12 +22,15 @@ function initEvent() {
 //     $('#mode-option-group input, #gen-option-group input').click(function () {
 //         onChange();
 //     });
+    $('.tcount').change(function(){
+      showSum();
+    });
     templ = $('#out-table').html();
 
 //     onChange();
     GBData = JSON.parse($('#input_json_text').val());
     showTable();
-
+    showSum();
 }
 
 function onCount(){
@@ -204,6 +207,17 @@ function onClickRow(date){
     inputs[14].value = row.etype3.m3;
     inputs[15].value = row.etype3.m4;
 
+}
+
+function showSum(){
+    var inputs = $('input');
+    var c1 = parseFloat(inputs[1].value);
+    var c2 = parseFloat(inputs[2].value);
+    var c3 = parseFloat(inputs[3].value);
+  var t = `<td colspan="3"> SUM:{0}　AVG:{1} </td>`;
+
+   var TCount = c1+c2+c3;
+  $('#count_sum').html(t.format(TCount,TCount/3));
 }
 
 function initDatepicker(){
