@@ -22,3 +22,9 @@ input,select{
 .error_bg{
   background-color: #B70404!important;
 }
+.sum-table-text{
+  font-size:20px;
+  width:100%;
+  display:inline-block;
+  line-height: 31px;
+}
