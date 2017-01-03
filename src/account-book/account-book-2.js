@@ -29,6 +29,36 @@ function initEvent() {
       input.target.value = parseFloat(input.target.value);
       countAvg();
     });
+    $('input.t-count-quick').keyup(function(input){
+//       if(!parseFloat(input.target.value)){
+//         input.target.value = '0';
+//       }
+//       input.target.value = parseFloat(input.target.value);
+//       countAvg();
+         if(input.keyCode>47&&input.keyCode<58||input.keyCode==8||input.keyCode==46){
+           // 输入数字 计算
+           var nums = input.target.value.split('+');
+           var inputs = $('input.tcount');
+           for(var i=0;i<inputs.length;i++){
+             inputs[i].value = 0;
+             if(parseInt(nums[i])){
+               inputs[i].value = parseInt(nums[i]);
+             }
+           }
+           countAvg();
+           return;
+         }
+         var value = input.target.value;
+         input.target.value = value.substr(0,value.length-1);
+         if(input.keyCode==32){
+           input.target.value += '+';
+         }
+         if(input.keyCode==13){
+           input.target.value = value + '+';
+         }
+         console.log(input.keyCode);
+    });
+
     $('input.sum-count').keyup(function(input){
       if(input.keyCode==13){
         // 回车
@@ -79,6 +109,7 @@ function deleteAllAvgNums(){
   inputs[2].value = '0';
   inputs[3].value = '0';
   inputs[4].value = '0';
+  $('input.t-count-quick').val('');
   countAvg();
 }  
 
@@ -107,7 +138,7 @@ function deleteAllNums(){
 }
 
 function countAvg(){
-  $('input').each(function(ind,input){
+  $('input.sum-count,input.tcount').each(function(ind,input){
       if(!parseFloat(input.value)){
         input.value = '0';
       }
