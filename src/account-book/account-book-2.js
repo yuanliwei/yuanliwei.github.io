@@ -33,6 +33,7 @@ function initEvent() {
       if(input.keyCode==13){
         // 回车
         addNumToTable(parseFloat(input.target.value));
+        $('input.sum-count').select();
       }
       if(input.target.value == ''){
         input.target.value = '0';
@@ -69,6 +70,17 @@ function deleteNum(num){
   delete numMap[num];
   showNumsTable();
 }
+
+function deleteAllAvgNums(){
+  var inputs = $('input.tcount');
+  var selects = $('select');
+  inputs[0].value = '0';
+  inputs[1].value = '0';
+  inputs[2].value = '0';
+  inputs[3].value = '0';
+  inputs[4].value = '0';
+  countAvg();
+}  
 
 function showNumsTable(){
    var nums = [];
