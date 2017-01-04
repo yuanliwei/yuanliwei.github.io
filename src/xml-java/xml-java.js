@@ -32,40 +32,11 @@ function initEvent() {
 
       templManager.addTempl('type', name, code);
       $('.editor').toggleClass('editor-hide editor-show');
-
     });
     $('#mode-option-group input, #gen-option-group input').click(function () {
         onChange();
     });
     onChange();
-}
-
-function onChange() {
-    saveConfig();
-    var json = $('#input_json_text').val();
-    var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
-
-    var result;
-    try {
-      switch (mode) {
-        case 1: result = js_beautify(json, {}); break;
-        case 2: result = TemplActivity.generate(''); break;
-      }
-    } catch (e) {
-      result = e.stack;
-      console.error(e);
-      mode = 1;
-    }
-    switch (mode) {
-      case 1:
-      case 2:
-        $('#result_content').html('');
-        $('pre code').text(result);
-        $('pre code').each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
-        break;
-    }
 }
 
 function onItemClick(name) {
