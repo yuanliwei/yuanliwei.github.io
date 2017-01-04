@@ -53,7 +53,7 @@ function onCount(){
   var M2 = 0;
   var M3 = 0;
   var M4 = 0;
-  
+
   rows.forEach(function(row){
     T += row.type1.sum + row.type2.sum + row.type3.sum;
     M1 += row.summ1;
@@ -150,7 +150,7 @@ function onSave() {
                + row.etype1.m2 + row.etype2.m2 + row.etype3.m2
                + row.etype1.m3 + row.etype2.m3 + row.etype3.m3
                + row.etype1.m4 + row.etype2.m4 + row.etype3.m4;
-    row.bg = (TCount == OCount)?"":"error_bg"; 
+    row.bg = (TCount == OCount)?"":"error_bg";
     GBData[row.date] = row;
     $('#input_json_text').val(JSON.stringify(GBData));
     saveToDog(row);
@@ -221,7 +221,7 @@ function onClickRow(date){
     selects[1].value = row.type2.price;
     inputs[3].value = row.type3.count;
     selects[2].value = row.type3.price;
-        
+
     inputs[4].value = row.etype1.m1;
     inputs[5].value = row.etype1.m2;
     inputs[6].value = row.etype1.m3;
@@ -250,26 +250,26 @@ function showSum(){
 }
 
 function initDatepicker(){
-    $("#datepicker").datepicker({//添加日期选择功能  
-      numberOfMonths:1,//显示几个月  
-      showButtonPanel:true,//是否显示按钮面板  
-      dateFormat: 'yy-mm-dd',//日期格式  
-      clearText:"清除",//清除日期的按钮名称  
-      closeText:"关闭",//关闭选择框的按钮名称  
-      // todayText:"今天",//关闭选择框的按钮名称              
-      yearSuffix: '年', //年的后缀  
-      showMonthAfterYear:true,//是否把月放在年的后面  
-      // defaultDate:'2011-03-10',//默认日期  
-      // minDate:'2011-03-05',//最小日期  
-      // maxDate:'2011-03-20',//最大日期  
-      monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],  
-      dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],  
-      dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],  
-      dayNamesMin: ['日','一','二','三','四','五','六'],  
-      onSelect: function(selectedDate) {//选择日期后执行的操作  
-        console.log(selectedDate); 
-      }  
-    });  
+    $("#datepicker").datepicker({//添加日期选择功能
+      numberOfMonths:1,//显示几个月
+      showButtonPanel:true,//是否显示按钮面板
+      dateFormat: 'yy-mm-dd',//日期格式
+      clearText:"清除",//清除日期的按钮名称
+      closeText:"关闭",//关闭选择框的按钮名称
+      // todayText:"今天",//关闭选择框的按钮名称
+      yearSuffix: '年', //年的后缀
+      showMonthAfterYear:true,//是否把月放在年的后面
+      // defaultDate:'2011-03-10',//默认日期
+      // minDate:'2011-03-05',//最小日期
+      // maxDate:'2011-03-20',//最大日期
+      monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+      dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+      dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+      dayNamesMin: ['日','一','二','三','四','五','六'],
+      onSelect: function(selectedDate) {//选择日期后执行的操作
+        console.log(selectedDate);
+      }
+    });
 }
 
 function onDelete(){

@@ -14,16 +14,25 @@ text-lowercase text-uppercase text-capitalize
 dl-horizontal
 */
 
-var modelView, relationModel;
+var templManager;
 
 function initEvent() {
-    var input = $('#input_json_text')[0];
-    input.onchange = onChange;
-    input.onkeyup = onChange;
-    $('#editor-close').click(function () {
-      var editor;
-      console.log('click dom');
+    templManager = new TemplManager();
+    // var input = $('#input_json_text')[0];
+    // input.onchange = onChange;
+    // input.onkeyup = onChange;
+    $('#add-templ, #editor-close, #editor-cancle').click(function () {
+      $('#editor-source').val('');
       $('.editor').toggleClass('editor-hide editor-show');
+    });
+    $('#editor-save').click(function () {
+      var name = $('#templ-name').val();
+      var code = $('#editor-source').val();
+      if(!name || !code) return;
+
+      templManager.addTempl('type', name, code);
+      $('.editor').toggleClass('editor-hide editor-show');
+
     });
     $('#mode-option-group input, #gen-option-group input').click(function () {
         onChange();
@@ -40,7 +49,7 @@ function onChange() {
     try {
       switch (mode) {
         case 1: result = js_beautify(json, {}); break;
-        case 2: result = new RESTfulModel().start(); break;
+        case 2: result = TemplActivity.generate(''); break;
       }
     } catch (e) {
       result = e.stack;
@@ -59,12 +68,10 @@ function onChange() {
     }
 }
 
-var viewLeft = 0;
-var viewTop = 300;
-function addView() {
-  viewLeft += 20;
-  viewTop += 20;
-  modelView.createAddView(viewLeft + "px", viewTop + "px");
-  saveSourceData();
+function onItemClick(name) {
+  var code = templManager.maps[name];
+  $('pre code').text(code);
+  $('pre code').each(function (i, block) {
+      hljs.highlightBlock(block);
+  });
 }
-

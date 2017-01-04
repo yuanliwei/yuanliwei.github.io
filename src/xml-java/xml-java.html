@@ -27,14 +27,9 @@
     <script src="../js/escape/he.js"></script>
     <script src="../js/escape/crypto-js.js"></script>
     <script src="../js/escape/escape.js"></script>
-    <!-- model -->
-    <script src="../js/restful-model/NodeModel.js"></script>
-    <script src="../js/restful-model/NodeResultModel.js"></script>
-    <script src="../js/restful-model/RESTfulModel.js"></script>
-    <script src="../js/restful-model/RESTfulModelView.js"></script>
-    <script src="../js/restful-model/ViewModel.js"></script>
-    <script src="../js/restful-model/DrawLine.js"></script>
-    <script src="../js/restful-model/RelationModel.js"></script>
+    <!-- xml-model -->
+    <script src="https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js"></script>
+    <script src="../js/xml-java/TemplManager.js"></script>
     <!-- local -->
     <script src="./xml-java.js" charset="utf-8"></script>
     <link rel="stylesheet" href="./xml-java.css">
@@ -60,40 +55,32 @@
           <h1>XML <small>Java</small></h1>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 text-right">
-          <button type="button" class="btn btn-primary" onclick="addView()">addView</button>
-          <button type="button" class="btn btn-primary" onclick="run()">Run</button>
-          <input type="text" class="hidden" id="source_node">
+        <div id="navlist" class="col-xs-12 col-sm-4 col-md-3">
+          <table id="table-templ" class="table table-hover">
+            <tr onclick="onItemClick('{name}')">
+              <td>{name}</td>
+            </tr>
+          </table>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-          <dl class="dl-horizontal">
-            <dt>输入JSON数据</dt>
-            <dd><textarea class="form-control" id="input_json_text"></textarea></dd>
-          </dl>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-          <div id="mode-option-group" class="form-group">
-              <label class="radio-inline"><input type="radio" name="genMode" value="1"> 格式化 </label>
-              <label class="radio-inline"><input type="radio" name="genMode" value="2"> XML </label>
+        <div class="col-xs-12 col-sm-8 col-md-9"><br>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 text-right">
+              <button id="add-templ" class="btn btn-primary" type="button">ADD</button>
+              <br><br>
+            </div>
+            <div class="code_output" contenteditable="true" spellcheck="false">
+              <pre><code class="java" id="code_output"> xx</code></pre>
+            </div>
           </div>
         </div>
       </div>
-      <div class="code_output" contenteditable="true" spellcheck="false">
-          <pre><code class="java" id="code_output"> </code></pre>
-      </div>
-      <div class="code_output" contenteditable="true" spellcheck="false">
-          <div id="result_content">
-
-          </div>
-      </div>
-
       <div id="editor" class="editor editor-hide">
         <button id="editor-close" type="button" class="editor-close close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="editor-content" spellcheck="false">
+          <div class="form-group">
+            <label for="templ-name">Template name</label>
+            <input type="text" class="form-control" id="templ-name" placeholder="template name">
+          </div>
           <textarea id="editor-source" class="editor-source" rows="10"></textarea>
         </div>
         <div class="text-center">
@@ -101,12 +88,14 @@
           <button id="editor-save" type="button" class="btn btn-success">Save</button>
         </div>
       </div>
+
     </div>
 
     <script type="text/javascript">
         $(function() {
             console.log('====================hello==============');
             loadConfig();
+            // loadTemplData();
             initEvent();
         });
     </script>
