@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0" name="viewport">
+    <title>RESTful Model</title>
+    <!-- utils -->
+    <script src="../js/utils/jquery.js"></script>
+    <script src="../js/utils/StringUtil.js"></script>
+    <script src="../js/utils/string-format.js"></script>
+    <script src="../js/utils/beautify.js"></script>
+    <script src="../js/utils/code-format.js"></script>
+    <script src="../js/utils/common.js"></script>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap-theme.css" />
+    <script src="../../bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <!-- jquery-ui -->
+    <link rel="stylesheet" href="../../jquery-ui-1.11.4/jquery-ui.min.css" />
+    <script src="../../jquery-ui-1.11.4/jquery-ui.min.js"></script>
+    <!-- highlight -->
+    <link rel="stylesheet" href="../../highlight/styles/default.css">
+    <script src="../../highlight/highlight.pack.js"></script>
+    <!-- func -->
+    <script src="../js/escape/MD5.js"></script>
+    <script src="../js/escape/Base64.js"></script>
+    <script src="../js/escape/he.js"></script>
+    <script src="../js/escape/crypto-js.js"></script>
+    <script src="../js/escape/escape.js"></script>
+    <!-- model -->
+    <script src="../js/restful-model/NodeModel.js"></script>
+    <script src="../js/restful-model/NodeResultModel.js"></script>
+    <script src="../js/restful-model/RESTfulModel.js"></script>
+    <script src="../js/restful-model/RESTfulModelView.js"></script>
+    <script src="../js/restful-model/ViewModel.js"></script>
+    <script src="../js/restful-model/DrawLine.js"></script>
+    <script src="../js/restful-model/RelationModel.js"></script>
+    <!-- javafx -->
+    <script src="../js/javafx/Login.js"></script>
+    <script src="../js/javafx/JavaFX.js"></script>
+  </head>
+  <body>
+    <div class="container bg-primary hide">
+      container container-fluid
+      row
+      col-xs-12 col-sm-12 col-md-12
+      col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+      bg-info bg-primary bg-success bg-warning bg-danger
+      text-left text-center text-right text-justify text-nowrap
+      text-muted text-muted text-primary text-success text-info text-warning text-danger
+      img-responsive img-rounded img-circle img-thumbnail
+      pull-left pull-right
+      center-block clearfix
+      show hidden
+      text-lowercase text-uppercase text-capitalize
+      dl-horizontal
+    </div>
+    <div class="container">
+      <div class="page-header">
+          <h1>JAVAFX <small>test</small></h1>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 text-left">
+          <button type="button" class="btn btn-primary" onclick="run()">Run</button>
+          <button type="button" class="btn btn-primary" onclick="refresh()">Refresh</button>
+          <button type="button" class="btn btn-primary" onclick="get()">GET</button>
+          <button type="button" class="btn btn-primary" onclick="post()">POST</button>
+        </div>
+      </div>
+      <div class="code_output" contenteditable="true" spellcheck="false">
+          <pre><code id="code_output" class="java" > </code></pre>
+      </div>
+      <div class="code_output" contenteditable="true" spellcheck="false">
+          <div id="result_content">
+
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
