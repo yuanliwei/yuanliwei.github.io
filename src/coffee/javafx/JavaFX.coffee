@@ -17,7 +17,7 @@ get = ->
 
 post = ->
   jsObj.POST({
-    url: 'http:\\www.baidu.com'
+    url: 'http://www.baidu.com'
     params: 'name=yyy'
     onSuccess: (headers, body) ->
       alert body

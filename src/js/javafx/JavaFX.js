@@ -25,7 +25,7 @@ get = function() {
 
 post = function() {
   return jsObj.POST({
-    url: 'http:\\www.baidu.com',
+    url: 'http://www.baidu.com',
     params: 'name=yyy',
     onSuccess: function(headers, body) {
       return alert(body);

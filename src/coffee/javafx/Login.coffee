@@ -3,11 +3,11 @@ class Login
   constructor: (@username, @password) ->
 
     @doLogin = =>
-      @GET('http://www.baidu.com/login', (headers, body)=>
+      @GET 'http://www.baidu.com/login', (headers, body)=>
         b = $(body)
         lt = b.find('input[name="lt"]').val()
         execution = b.find('input[name="execution"]').val()
-        @POST('http://www.baidu.com/login',{
+        @POST 'http://www.baidu.com/login',{
           username:@username
           password:@password
           captcha: 9527
@@ -17,8 +17,6 @@ class Login
           _eventId:'submit'
         }, (headers, body)->
           @body = JSON.stringify(headers)
-          )
-        )
 
     @GET = (url, onSuccess, onError) =>
       jsObj.GET({
