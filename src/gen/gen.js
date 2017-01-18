@@ -1,32 +1,3 @@
-function loadConfig() {
-    var Config = {};
-    if (localStorage && localStorage.getItem('config')) {
-        Config = JSON.parse(localStorage.config);
-        $('#inputPackageName').val(Config.packageName);
-        $('#inputClassName').val(Config.className);
-        $('#genSetter')[0].checked = Config.genSetter;
-        $('#genGetter')[0].checked = Config.genGetter;
-        $('#genInnerClass')[0].checked = Config.genInnerClass;
-        $('#mode-option-group input[value="{0}"]'.format(Config.mode))[0].checked = true;
-        $('#code_input').val(Config.input);
-        onChange();
-    }
-    return Config;
-}
-
-function saveConfig() {
-    if (!localStorage) return;
-    var Config = {};
-    Config.packageName = $('#inputPackageName').val();
-    Config.className = $('#inputClassName').val();
-    Config.genSetter = $('#genSetter')[0].checked;
-    Config.genGetter = $('#genGetter')[0].checked;
-    Config.genInnerClass = $('#genInnerClass')[0].checked;
-    Config.input = $('#code_input').val();
-    Config.mode = $('#mode-option-group input[name="genMode"]:checked').val();
-    localStorage.config = JSON.stringify(Config);
-}
-
 function initEvent() {
     var input = $('#code_input')[0];
     input.onchange = onChange;
@@ -51,6 +22,7 @@ function onChange() {
     opts.genSetter = $('#genSetter')[0].checked;
     opts.genGetter = $('#genGetter')[0].checked;
     opts.genInnerClass = $('#genInnerClass')[0].checked;
+    opts.simple = $('#GenJavaTemplateSimple')[0].checked;
 
     var fileds2Java = new FiledsJavaDbXutils();
     var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());

@@ -28,6 +28,14 @@ class GenJavaTemplate
 
           }
         """
+    simpleTemplItem = """  b.append("{0}\\r\\n");"""
+    simpleTempl = """
+          public String build() {
+            StringBuilder b = new StringBuilder();
+          {0}
+            return b.toString();
+          }
+          """
     text = text.replace(/\r\n/g,'\n')
     text = text.replace(/\\/g,'\\\\')
     text = text.replace(/"/g,'\\"')
@@ -35,7 +43,13 @@ class GenJavaTemplate
 
     results = []
     lines.forEach (item)->
-      results.push templItem.format(item)
-    templ.format results.join '\n'
+      if opts.simple
+        results.push simpleTemplItem.format(item)
+      else
+        results.push templItem.format(item)
+    if opts.simple
+      simpleTempl.format results.join '\n'
+    else
+      templ.format results.join '\n'
 
   toJava: @.prototype.generate
