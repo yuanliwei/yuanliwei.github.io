@@ -60,7 +60,7 @@ var AlignComment = (function () {
 
     AlignComment.prototype.toJava = AlignComment.prototype.alignComment;
 
-    return StyleXML;
+    return AlignComment;
 
 })();
 
