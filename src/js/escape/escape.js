@@ -111,3 +111,6 @@ Escape.HtmlDecode = function(text) {
   return he.decode(text);
 };
 
+Escape.formatDate = function (dataValue) {
+  return new Date(parseInt(dataValue)).Format('yyyy-MM-dd hh:mm:ss.S');
+}
