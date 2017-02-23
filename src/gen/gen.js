@@ -44,6 +44,7 @@ function onChange() {
         case 12: fileds2Java = new FormatCode(); break;
         case 13: fileds2Java = new ParseLayoutXML(); break;
         case 14: fileds2Java = new GenJavaTemplate(); break;
+        case 15: fileds2Java = new SQLJavaDbOrmlite(); break;
         default:
             fileds2Java = new FiledsJavaDbXutils();
             break;
