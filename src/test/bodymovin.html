@@ -6,6 +6,7 @@
   <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"></script>
   <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
   <style media="screen">
   #container{
     width: 100%;
@@ -23,24 +24,83 @@
     </div>
     <br>
     <div class="row ">
-      <div class="col-md-12 text-center">
+      <div class="col-md-6 text-right">
         <div class="btn-group" role="group" aria-label="...">
           <button type="button" class="btn btn-primary" onclick="play()">play</button>
           <button type="button" class="btn btn-primary" onclick="pause()">pause</button>
           <button type="button" class="btn btn-primary" onclick="stop()">stop</button>
         </div>
       </div>
+      <div class="col-md-6 text-left">
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Dropdown
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+            <li onclick="changeModel('./res/9squares-AlBoardman.json')">AlBoardman</li>
+            <li onclick="changeModel('./res/EmptyState.json')">EmptyState</li>
+            <li onclick="changeModel('./res/HamburgerArrow.json')">HamburgerArrow</li>
+            <li onclick="changeModel('./res/LottieLogo1.json')">LottieLogo1</li>
+            <li onclick="changeModel('./res/LottieLogo2.json')">LottieLogo2</li>
+            <li onclick="changeModel('./res/MotionCorpse-Jrcanest.json')">Jrcanest</li>
+            <li onclick="changeModel('./res/PinJump.json')">PinJump</li>
+            <li onclick="changeModel('./res/TwitterHeart.json')">TwitterHeart</li>
+            <li onclick="changeModel('./res/Logo/LogoSmall.json')">LogoSmall</li>
+            <li onclick="changeModel('./res/Mobilo/Apostrophe.json')">Apostrophe</li>
+            <li onclick="changeModel('./res/Mobilo/BlinkingCursor.json')">BlinkingCursor</li>
+            <li onclick="changeModel('./res/Mobilo/Colon.json')">Colon</li>
+            <li onclick="changeModel('./res/Mobilo/Comma.json')">Comma</li>
+            <li onclick="changeModel('./res/Mobilo/A.json')">A</li>
+            <li onclick="changeModel('./res/Mobilo/B.json')">B</li>
+            <li onclick="changeModel('./res/Mobilo/C.json')">C</li>
+            <li onclick="changeModel('./res/Mobilo/D.json')">D</li>
+            <li onclick="changeModel('./res/Mobilo/E.json')">E</li>
+            <li onclick="changeModel('./res/Mobilo/F.json')">F</li>
+            <li onclick="changeModel('./res/Mobilo/G.json')">G</li>
+            <li onclick="changeModel('./res/Mobilo/H.json')">H</li>
+            <li onclick="changeModel('./res/Mobilo/I.json')">I</li>
+            <li onclick="changeModel('./res/Mobilo/J.json')">J</li>
+            <li onclick="changeModel('./res/Mobilo/K.json')">K</li>
+            <li onclick="changeModel('./res/Mobilo/L.json')">L</li>
+            <li onclick="changeModel('./res/Mobilo/M.json')">M</li>
+            <li onclick="changeModel('./res/Mobilo/N.json')">N</li>
+            <li onclick="changeModel('./res/Mobilo/O.json')">O</li>
+            <li onclick="changeModel('./res/Mobilo/P.json')">P</li>
+            <li onclick="changeModel('./res/Mobilo/Q.json')">Q</li>
+            <li onclick="changeModel('./res/Mobilo/R.json')">R</li>
+            <li onclick="changeModel('./res/Mobilo/S.json')">S</li>
+            <li onclick="changeModel('./res/Mobilo/T.json')">T</li>
+            <li onclick="changeModel('./res/Mobilo/U.json')">U</li>
+            <li onclick="changeModel('./res/Mobilo/V.json')">V</li>
+            <li onclick="changeModel('./res/Mobilo/W.json')">W</li>
+            <li onclick="changeModel('./res/Mobilo/X.json')">X</li>
+            <li onclick="changeModel('./res/Mobilo/Y.json')">Y</li>
+            <li onclick="changeModel('./res/Mobilo/Z.json')">Z</li>
+            <li onclick="changeModel('./res/Tests/Alarm.json')">Alarm</li>
+            <li onclick="changeModel('./res/Tests/CheckSwitch.json')">CheckSwitch</li>
+            <li onclick="changeModel('./res/Tests/EllipseTrimPath.json')">EllipseTrimPath</li>
+            <li onclick="changeModel('./res/Tests/Hosts.json')">Hosts</li>
+            <li onclick="changeModel('./res/Tests/LightBulb.json')">LightBulb</li>
+            <li onclick="changeModel('./res/Tests/LoopPlayOnce.json')">LoopPlayOnce</li>
+            <li onclick="changeModel('./res/Tests/SplitDimensions.json')">SplitDimensions</li>
+            <li onclick="changeModel('./res/Walkthrough/Walkthrough.json')">Walkthrough</li>
+            <li role="separator" class="divider"></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
   <script type="text/javascript">
     var anim = null;
+    var path = './res/TwitterHeart.json';
     function play() {
       var animData = {
         container: document.getElementById('container'),
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: './res/TwitterHeart.json'
+        path: path
       };
       // path: 'https://labs.nearpod.com/bodymovin/demo/the_lady/data.json'
       anim = bodymovin.loadAnimation(animData);
@@ -49,7 +109,12 @@
       anim.pause();
     }
     function stop() {
-      anim.stop();
+      if(anim) anim.stop();
+    }
+    function changeModel(path_) {
+      path = path_;
+      stop();
+      paly();
     }
   </script>
 </body>
