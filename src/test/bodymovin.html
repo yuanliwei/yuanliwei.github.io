@@ -17,6 +17,9 @@
     cursor: pointer;
     background-color:#000;
   }
+  .btn-item{
+    margin: 5px;
+  }
   </style>
 </head>
 <body>
@@ -26,70 +29,64 @@
     </div>
     <br>
     <div class="row ">
-      <div class="col-md-6 text-right">
+      <div class="col-md-12 text-center">
         <div class="btn-group" role="group" aria-label="...">
           <button type="button" class="btn btn-primary" onclick="play()">play</button>
           <button type="button" class="btn btn-primary" onclick="pause()">pause</button>
           <button type="button" class="btn btn-primary" onclick="stop()">stop</button>
         </div>
       </div>
-      <div class="col-md-6 text-left">
-        <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Dropdown
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/9squares-AlBoardman.json')">AlBoardman</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/EmptyState.json')">EmptyState</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/HamburgerArrow.json')">HamburgerArrow</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/LottieLogo1.json')">LottieLogo1</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/LottieLogo2.json')">LottieLogo2</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/MotionCorpse-Jrcanest.json')">Jrcanest</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/PinJump.json')">PinJump</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/TwitterHeart.json')">TwitterHeart</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Logo/LogoSmall.json')">LogoSmall</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Apostrophe.json')">Apostrophe</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/BlinkingCursor.json')">BlinkingCursor</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Colon.json')">Colon</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Comma.json')">Comma</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/A.json')">A</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/B.json')">B</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/C.json')">C</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/D.json')">D</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/E.json')">E</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/F.json')">F</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/G.json')">G</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/H.json')">H</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/I.json')">I</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/J.json')">J</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/K.json')">K</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/L.json')">L</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/M.json')">M</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/N.json')">N</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/O.json')">O</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/P.json')">P</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Q.json')">Q</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/R.json')">R</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/S.json')">S</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/T.json')">T</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/U.json')">U</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/V.json')">V</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/W.json')">W</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/X.json')">X</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Y.json')">Y</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Z.json')">Z</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/Alarm.json')">Alarm</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/CheckSwitch.json')">CheckSwitch</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/EllipseTrimPath.json')">EllipseTrimPath</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/Hosts.json')">Hosts</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/LightBulb.json')">LightBulb</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/LoopPlayOnce.json')">LoopPlayOnce</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/SplitDimensions.json')">SplitDimensions</li>
-            <li onclick="changeModel('https://yuanliwei.github.io/src/test/res/Walkthrough/Walkthrough.json')">Walkthrough</li>
-            <li role="separator" class="divider"></li>
-          </ul>
-        </div>
+    </div>
+    <br>
+    <div class="row ">
+      <div class="col-md-12 text-center">
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/9squares-AlBoardman.json')">AlBoardman</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/EmptyState.json')">EmptyState</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/HamburgerArrow.json')">HamburgerArrow</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/LottieLogo1.json')">LottieLogo1</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/LottieLogo2.json')">LottieLogo2</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/MotionCorpse-Jrcanest.json')">Jrcanest</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/PinJump.json')">PinJump</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/TwitterHeart.json')">TwitterHeart</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Logo/LogoSmall.json')">LogoSmall</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Apostrophe.json')">Apostrophe</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/BlinkingCursor.json')">BlinkingCursor</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Colon.json')">Colon</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Comma.json')">Comma</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/A.json')">A</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/B.json')">B</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/C.json')">C</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/D.json')">D</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/E.json')">E</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/F.json')">F</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/G.json')">G</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/H.json')">H</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/I.json')">I</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/J.json')">J</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/K.json')">K</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/L.json')">L</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/M.json')">M</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/N.json')">N</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/O.json')">O</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/P.json')">P</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Q.json')">Q</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/R.json')">R</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/S.json')">S</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/T.json')">T</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/U.json')">U</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/V.json')">V</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/W.json')">W</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/X.json')">X</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Y.json')">Y</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Z.json')">Z</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/Alarm.json')">Alarm</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/CheckSwitch.json')">CheckSwitch</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/EllipseTrimPath.json')">EllipseTrimPath</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/Hosts.json')">Hosts</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/LightBulb.json')">LightBulb</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/LoopPlayOnce.json')">LoopPlayOnce</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/SplitDimensions.json')">SplitDimensions</button>
+        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Walkthrough/Walkthrough.json')">Walkthrough</button>
       </div>
     </div>
   </div>
