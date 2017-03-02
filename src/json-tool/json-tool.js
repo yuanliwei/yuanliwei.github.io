@@ -16,6 +16,11 @@ dl-horizontal
 
 var BookChapterList, BookList, CourseList, HomeworkList;
 
+function onClickPause(e) {
+  console.dir(e);
+  console.log(e.clipboardData);
+}
+
 function initEvent() {
     var input = $('#input_json_text')[0];
     input.onchange = onChange;
@@ -24,6 +29,19 @@ function initEvent() {
         onChange();
     });
     onChange();
+
+    $('#selectAll').click(function () {
+      var input = $('#input_json_text')[0];
+      input.select();
+    });
+}
+
+function copy(str, mimetype) {
+  document.oncopy = function(event) {
+    event.clipboardData.setData(mimetype, str);
+    event.preventDefault();
+  };
+  document.execCommand("Copy", false, null);
 }
 
 function onChange() {
@@ -182,6 +200,8 @@ BookChapterList = (function () {
           <th>{is_free}</th>
           <th>{version}</th>
           <th>{versionTest}</th>
+          <th>{chapterType}</th>
+          <th>{xotPaperId}</th>
         </tr>`);
       chapters.forEach(function (chapter) {
         if(!chapter.parent_id){
@@ -212,6 +232,8 @@ BookChapterList = (function () {
           <td>{is_free}</td>
           <td>{version}</td>
           <td>{versionTest}</td>
+          <td>{chapterType}</td>
+          <td>{xotPaperId}</td>
         </tr>`;
       return chapterTempl.format(chapter);
     }
@@ -236,6 +258,13 @@ BookChapterList = (function () {
         case 0: chapter.is_free = "不免费"; break;
         case 1: chapter.is_free = "免费"; break;
         default : chapter.is_free = "不免费"; break;
+      }
+      switch (parseInt(chapter.chapterType)) {
+        case 1: chapter.chapterType = "普通"; break;
+        case 2: chapter.chapterType = "口语测评"; break;
+        case 3: chapter.chapterType = "语音产品"; break;
+        case 4: chapter.chapterType = "在线试卷"; break;
+        default: chapter.chapterType = parseInt(chapter.chapterType); break;
       }
     }
 
