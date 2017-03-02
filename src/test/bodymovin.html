@@ -34,6 +34,8 @@
           <button type="button" class="btn btn-primary" onclick="play()">play</button>
           <button type="button" class="btn btn-primary" onclick="pause()">pause</button>
           <button type="button" class="btn btn-primary" onclick="stop()">stop</button>
+          <button type="button" class="btn btn-primary" onclick="changeColor('#000000')">黑</button>
+          <button type="button" class="btn btn-primary" onclick="changeColor('#FFFFFF')">白</button>
         </div>
       </div>
     </div>
@@ -114,6 +116,9 @@
       path = path_;
       stop();
       play();
+    }
+    function changeColor(color) {
+      $('#container').css('background-color', color);
     }
   </script>
 </body>
