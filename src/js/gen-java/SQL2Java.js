@@ -31,7 +31,7 @@ SQLJavaDbOrmlite = (function(superClass) {
   };
 
   SQLJavaDbOrmlite.prototype.parseSql2FiledsStr = function(sqlStr, opts) {
-    var className, i, key, keyStr, len, ref, reg, regKey, regName, regNote, regType, resultArr, sqlS, strFile, strFiles, strKeyName, strName, strNote, strType, value;
+    var className, i, key, keyStr, len, ref, reg, regBrackets, regKey, regName, regNote, regType, resultArr, sqlS, strFile, strFiles, strKeyName, strName, strNote, strType, strTypeValue, value;
     reg = /CREATE +TABLE +([`|\S]+) +\(/i;
     className = (ref = sqlStr.match(reg)) != null ? ref[1] : void 0;
     reg = /`(\S+)`/;
@@ -49,6 +49,7 @@ SQLJavaDbOrmlite = (function(superClass) {
     regType = /\S+\(/i;
     regNote = /'\S+'/i;
     regKey = /PRIMARY KEY/i;
+    regBrackets = /\(/i;
     strFiles = {};
     strKeyName = '';
     for (key = i = 0, len = sqlS.length; i < len; key = ++i) {
@@ -56,14 +57,45 @@ SQLJavaDbOrmlite = (function(superClass) {
       if (value.match(reg)) {
         strName = value.match(regName);
         strName = strName[0].substring(1, strName[0].length - 1);
-        strType = value.match(regType);
-        strType = strType[0].substring(0, strType[0].length - 1);
+        value = value.replace(/^\s+/g, "");
+        strTypeValue = value.split(' ');
+        strType = strTypeValue[1];
+        if (strType.match(regBrackets)) {
+          strType = strType.match(regType);
+          strType = strType[0].substring(0, strType[0].length - 1);
+        }
         strNote = value.match(regNote);
         strNote = strNote[0].substring(1, strNote[0].length - 1);
-        if ('varchar' === strType) {
-          strType = "String";
-        } else if ('smallint' === strType) {
-          strType = "int";
+        switch (strType) {
+          case "varchar":
+          case "char":
+          case "nchar":
+          case "nvarchar":
+          case "longtext":
+          case "text":
+          case "ntext":
+          case "sql_variant":
+          case "uniqueidentifier":
+            strType = "String";
+            break;
+          case "smallint":
+          case "int":
+          case "tinyint":
+            strType = "int";
+            break;
+          case 'bit':
+            strType = "boolean";
+            break;
+          case 'bigint':
+          case "datetime":
+            strType = "long";
+            break;
+          case 'float':
+          case "real":
+            strType = "float";
+            break;
+          case 'double':
+            strType = "double";
         }
         strFile = "private " + strType + " " + strName + ";//" + strNote + "\n";
         strFiles[strName] = strFile;

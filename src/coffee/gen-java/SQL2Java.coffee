@@ -40,20 +40,28 @@ class SQLJavaDbOrmlite extends FiledsJavaDbOrmlite
     regType =  /\S+\(/i
     regNote =  /'\S+'/i
     regKey =  /PRIMARY KEY/i
+    regBrackets = /\(/i
     strFiles = {}
     strKeyName=''
     for value,key in sqlS
       if(value.match(reg))
         strName = value.match(regName)
         strName = strName[0].substring(1,strName[0].length-1)
-        strType = value.match(regType)
-        strType = strType[0].substring(0,strType[0].length-1)
+        value = value.replace /^\s+/g, ""
+        strTypeValue = value.split(' ');
+        strType = strTypeValue[1]
+        if(strType.match(regBrackets))
+          strType = strType.match(regType)
+          strType = strType[0].substring(0,strType[0].length-1)
         strNote = value.match(regNote)
         strNote = strNote[0].substring(1,strNote[0].length-1)
-        if ('varchar'==strType)
-          strType = "String"
-        else if ('smallint'==strType)
-          strType = "int"
+        switch strType
+          when "varchar","char","nchar","nvarchar","longtext","text","ntext","sql_variant","uniqueidentifier" then strType = "String"
+          when "smallint","int","tinyint" then strType = "int"
+          when 'bit' then strType = "boolean"
+          when 'bigint',"datetime" then strType = "long"
+          when 'float',"real" then strType = "float"
+          when 'double' then strType = "double"
         strFile = "private " +strType+" "+strName+";//"+strNote+"\n"
         strFiles[strName] = strFile
       else if(value.match(regKey))
