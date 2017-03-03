@@ -15,7 +15,7 @@ CREATE TABLE `wrd_word_info` (
 PRIMARY KEY (`word_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='词汇基本信息表';
  */
-var SQLJavaDbOrmlite,
+var SQLJava, SQLJavaDbOrmlite, SQLJavaDbXutils, SQLJavaDbXutils3,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -103,7 +103,6 @@ SQLJavaDbOrmlite = (function(superClass) {
         strKeyName = value.match(regName);
         strKeyName = strKeyName[0].substring(1, strKeyName[0].length - 1);
       }
-      console.log(strFiles);
     }
     keyStr = strFiles[strKeyName];
     delete strFiles[strKeyName];
@@ -113,10 +112,54 @@ SQLJavaDbOrmlite = (function(superClass) {
       value = strFiles[key];
       resultArr.push(value);
     }
-    console.log(resultArr.join('\n'));
     return resultArr.join('\n');
   };
 
   return SQLJavaDbOrmlite;
 
 })(FiledsJavaDbOrmlite);
+
+SQLJavaDbXutils = (function(superClass) {
+  extend(SQLJavaDbXutils, superClass);
+
+  function SQLJavaDbXutils() {}
+
+  SQLJavaDbXutils.prototype.toJava = function(sqlStr, opts) {
+    var filedStr;
+    filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr(sqlStr, opts);
+    return SQLJavaDbXutils.__super__.toJava.call(this, filedStr, opts);
+  };
+
+  return SQLJavaDbXutils;
+
+})(FiledsJavaDbXutils);
+
+SQLJavaDbXutils3 = (function(superClass) {
+  extend(SQLJavaDbXutils3, superClass);
+
+  function SQLJavaDbXutils3() {}
+
+  SQLJavaDbXutils3.prototype.toJava = function(sqlStr, opts) {
+    var filedStr;
+    filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr(sqlStr, opts);
+    return SQLJavaDbXutils3.__super__.toJava.call(this, filedStr, opts);
+  };
+
+  return SQLJavaDbXutils3;
+
+})(FiledsJavaDbXutils3);
+
+SQLJava = (function(superClass) {
+  extend(SQLJava, superClass);
+
+  function SQLJava() {}
+
+  SQLJava.prototype.toJava = function(sqlStr, opts) {
+    var filedStr;
+    filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr(sqlStr, opts);
+    return SQLJava.__super__.toJava.call(this, filedStr, opts);
+  };
+
+  return SQLJava;
+
+})(FiledsJava);

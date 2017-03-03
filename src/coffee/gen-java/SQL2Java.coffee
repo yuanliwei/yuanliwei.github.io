@@ -67,26 +67,48 @@ class SQLJavaDbOrmlite extends FiledsJavaDbOrmlite
       else if(value.match(regKey))
         strKeyName = value.match(regName)
         strKeyName = strKeyName[0].substring(1,strKeyName[0].length-1)
-      console.log strFiles
     keyStr = strFiles[strKeyName]
     delete strFiles[strKeyName]
     resultArr = []
     resultArr.push keyStr
     for key, value of strFiles
       resultArr.push value
-    console.log resultArr.join '\n'
     resultArr.join('\n')
     #private String word_desc;//发音文件\nprivate String word_desc;//发音文件"
-# sql="""CREATE TABLE `wrd_word_info` (
-# `word_id` int(11) NOT NULL COMMENT '单词id',
-# `wb_no` smallint(6) NOT NULL COMMENT '批次号',
-# `word` varchar(100) NOT NULL COMMENT '英文单词',
-# `paraphrase` varchar(500) DEFAULT '' COMMENT '中文释义',
-# `phonetic` varchar(100) DEFAULT NULL COMMENT '音标',
-# `example` text COMMENT '例句',
-# `net_file` varchar(255) DEFAULT NULL COMMENT '发音文件',
-# `word_desc` varchar(255) DEFAULT '' COMMENT '备注',
-# `source` varchar(100) DEFAULT '' COMMENT '来源',
-# PRIMARY KEY (`word_id`)
-# ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='词汇基本信息表';"""
-# private String word_desc;//发音文件
+    # sql="""CREATE TABLE `wrd_word_info` (
+    # `word_id` int(11) NOT NULL COMMENT '单词id',
+    # `wb_no` smallint(6) NOT NULL COMMENT '批次号',
+    # `word` varchar(100) NOT NULL COMMENT '英文单词',
+    # `paraphrase` varchar(500) DEFAULT '' COMMENT '中文释义',
+    # `phonetic` varchar(100) DEFAULT NULL COMMENT '音标',
+    # `example` text COMMENT '例句',
+    # `net_file` varchar(255) DEFAULT NULL COMMENT '发音文件',
+    # `word_desc` varchar(255) DEFAULT '' COMMENT '备注',
+    # `source` varchar(100) DEFAULT '' COMMENT '来源',
+    # PRIMARY KEY (`word_id`)
+    # ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='词汇基本信息表';"""
+    # private String word_desc;//发音文件
+
+class SQLJavaDbXutils extends FiledsJavaDbXutils
+
+  constructor: () ->
+
+  toJava: (sqlStr, opts) ->
+    filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr sqlStr, opts
+    super filedStr, opts
+
+class SQLJavaDbXutils3 extends FiledsJavaDbXutils3
+
+  constructor: () ->
+
+  toJava: (sqlStr, opts) ->
+    filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr sqlStr, opts
+    super filedStr, opts
+
+class SQLJava extends FiledsJava
+
+  constructor: () ->
+
+  toJava: (sqlStr, opts) ->
+    filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr sqlStr, opts
+    super filedStr, opts
