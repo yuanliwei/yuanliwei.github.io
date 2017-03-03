@@ -31,7 +31,7 @@ SQLJavaDbOrmlite = (function(superClass) {
   };
 
   SQLJavaDbOrmlite.prototype.parseSql2FiledsStr = function(sqlStr, opts) {
-    var className, ref, reg;
+    var className, i, key, keyStr, len, ref, reg, regKey, regName, regNote, regType, resultArr, sqlS, strFile, strFiles, strKeyName, strName, strNote, strType, value;
     reg = /CREATE +TABLE +([`|\S]+) +\(/i;
     className = (ref = sqlStr.match(reg)) != null ? ref[1] : void 0;
     reg = /`(\S+)`/;
@@ -43,8 +43,46 @@ SQLJavaDbOrmlite = (function(superClass) {
       }
     }
     sqlStr.split(',').join('\n');
-    sqlStr.split('\n');
-    return reg = /([`|\S]+) +(COMMENT +'(.*?)' ?,)/i;
+    sqlS = sqlStr.split('\n');
+    reg = /([`|\S]+) +(COMMENT +'(.*?)' ?,)/i;
+    regName = /`\S+`/i;
+    regType = /\S+\(/i;
+    regNote = /'\S+'/i;
+    regKey = /PRIMARY KEY/i;
+    strFiles = {};
+    strKeyName = '';
+    for (key = i = 0, len = sqlS.length; i < len; key = ++i) {
+      value = sqlS[key];
+      if (value.match(reg)) {
+        strName = value.match(regName);
+        strName = strName[0].substring(1, strName[0].length - 1);
+        strType = value.match(regType);
+        strType = strType[0].substring(0, strType[0].length - 1);
+        strNote = value.match(regNote);
+        strNote = strNote[0].substring(1, strNote[0].length - 1);
+        if ('varchar' === strType) {
+          strType = "String";
+        } else if ('smallint' === strType) {
+          strType = "int";
+        }
+        strFile = "private " + strType + " " + strName + ";//" + strNote + "\n";
+        strFiles[strName] = strFile;
+      } else if (value.match(regKey)) {
+        strKeyName = value.match(regName);
+        strKeyName = strKeyName[0].substring(1, strKeyName[0].length - 1);
+      }
+      console.log(strFiles);
+    }
+    keyStr = strFiles[strKeyName];
+    delete strFiles[strKeyName];
+    resultArr = [];
+    resultArr.push(keyStr);
+    for (key in strFiles) {
+      value = strFiles[key];
+      resultArr.push(value);
+    }
+    console.log(resultArr.join('\n'));
+    return resultArr.join('\n');
   };
 
   return SQLJavaDbOrmlite;

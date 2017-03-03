@@ -34,8 +34,41 @@ class SQLJavaDbOrmlite extends FiledsJavaDbOrmlite
     sqlStr.split(',').join('\n')
 
     # TODO: 在这里解析sql成fileds字符串
-    sqlStr.split('\n')
+    sqlS=sqlStr.split('\n')
     reg = /([`|\S]+) +(COMMENT +'(.*?)' ?,)/i
+    regName = /`\S+`/i
+    regType =  /\S+\(/i
+    regNote =  /'\S+'/i
+    regKey =  /PRIMARY KEY/i
+    strFiles = {}
+    strKeyName=''
+    for value,key in sqlS
+      if(value.match(reg))
+        strName = value.match(regName)
+        strName = strName[0].substring(1,strName[0].length-1)
+        strType = value.match(regType)
+        strType = strType[0].substring(0,strType[0].length-1)
+        strNote = value.match(regNote)
+        strNote = strNote[0].substring(1,strNote[0].length-1)
+        if ('varchar'==strType)
+          strType = "String"
+        else if ('smallint'==strType)
+          strType = "int"
+        strFile = "private " +strType+" "+strName+";//"+strNote+"\n"
+        strFiles[strName] = strFile
+      else if(value.match(regKey))
+        strKeyName = value.match(regName)
+        strKeyName = strKeyName[0].substring(1,strKeyName[0].length-1)
+      console.log strFiles
+    keyStr = strFiles[strKeyName]
+    delete strFiles[strKeyName]
+    resultArr = []
+    resultArr.push keyStr
+    for key, value of strFiles
+      resultArr.push value
+    console.log resultArr.join '\n'
+    resultArr.join('\n')
+    #private String word_desc;//发音文件\nprivate String word_desc;//发音文件"
 # sql="""CREATE TABLE `wrd_word_info` (
 # `word_id` int(11) NOT NULL COMMENT '单词id',
 # `wb_no` smallint(6) NOT NULL COMMENT '批次号',
@@ -48,4 +81,4 @@ class SQLJavaDbOrmlite extends FiledsJavaDbOrmlite
 # `source` varchar(100) DEFAULT '' COMMENT '来源',
 # PRIMARY KEY (`word_id`)
 # ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='词汇基本信息表';"""
- 
+# private String word_desc;//发音文件
