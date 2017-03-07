@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Animate Test</title>
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/animate.css">
+    <style media="screen">
+      html, body{
+        margin: 0px;
+        padding: 0px;
+      }
+      .animated-item{
+        height: 300px;
+        margin: 5px;
+        z-index: -1;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container text-center">
+      <br>
+      <button id="btn" type="button" name="button" class="btn btn-primary btn-large">BUTTON</button>
+      <br>
+      <div id="target">
+        <div class="animated-item">
+          ITEM
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var target = $('#target');
+      $('#btn').click(function (e) {
+        if(target.hasClass('bounceInRight')){
+          target.removeClass().addClass('bounceOutRight animated')
+        } else {
+          target.removeClass().addClass('bounceInRight animated')
+        }
+      });
+    </script>
+  </body>
+</html>
