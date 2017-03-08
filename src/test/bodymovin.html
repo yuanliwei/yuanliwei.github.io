@@ -10,6 +10,7 @@
   <script src="https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"></script>
   <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <script src="https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js"></script>
   <style media="screen">
   #container{
     width: 100%;
@@ -27,6 +28,17 @@
   <div class="container">
     <div class="row">
       <div id='container'></div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <input type="text" id="ae-json" class="form-control" placeholder="AE-JSON">
+          <span class="input-group-btn">
+            <button id="ae-button" class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
     </div>
     <br>
     <div class="row ">
@@ -97,12 +109,26 @@
     var anim = null;
     var path = 'https://yuanliwei.github.io/src/test/res/TwitterHeart.json';
     function play() {
+      stop();
       var animData = {
         container: document.getElementById('container'),
         renderer: 'svg',
         loop: true,
         autoplay: true,
         path: path
+      };
+      // path: 'https://labs.nearpod.com/bodymovin/demo/the_lady/data.json'
+      anim = bodymovin.loadAnimation(animData);
+    }
+    function playData(data) {
+      stop();
+      data = JSON.parse(data);
+      var animData = {
+        container: document.getElementById('container'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: data
       };
       // path: 'https://labs.nearpod.com/bodymovin/demo/the_lady/data.json'
       anim = bodymovin.loadAnimation(animData);
@@ -121,6 +147,23 @@
     function changeColor(color) {
       $('#container').css('background-color', color);
     }
+    $('#ae-button').click(function (e) {
+      var data = $('#ae-json').val();
+      ref.set(data);
+      playData(data);
+    });
+    var config, ref;
+    config = {
+      authDomain: "ylw-wuziqi.wilddog.com",
+      syncURL: "https://ylw-wuziqi.wilddogio.com"
+    };
+    wilddog.initializeApp(config);
+    ref = wilddog.sync().ref("/test-bodymovin");
+    ref.on('value', function(snapshot, prev) {
+      var data = snapshot.val();
+       $('#ae-json').val(data);
+       playData(data);
+    });
   </script>
 </body>
 </html>
