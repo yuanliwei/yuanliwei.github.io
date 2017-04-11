@@ -45,7 +45,7 @@
 
       var datas = [];
       for (var i = 0; i < 300; i++) {
-        datas.push({'wordNo':i, 'desc': 'descdescdesc', 'wrongNum': 23});
+        datas.push({'wordNo':i, 'desc': 'descdescdesc'+i, 'wrongNum': 23});
       }
       var list = null;
       setTimeout(function () {
@@ -72,14 +72,21 @@
                 } else {
                   holder.item.addClass("bg-primary");
                 }
+              },
+              filter: function (data, filter) {
+                return data.desc.match(filter);
               }
             });
             list.setDatas(datas);
+            setTimeout(function () {
+              list.setFilter("desc2\\d$", true);
+            }, 1000);
           },1000);
 
+          var index = 0;
     function append() {
         list.append({
-          'wordNo': 0,
+          'wordNo': index++,
           'desc': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           'wrongNum': 234343});
       }
