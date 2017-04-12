@@ -1,5 +1,7 @@
 var list = null;
 var mark = null;
+var alertTmpl = $("#alert-container").html();
+format.extend(String.prototype, {});
 
 var NetCapture = {
     devArr: [],
@@ -46,11 +48,13 @@ function getDevs() {
 function startCapture() {
   var result = NetCapture.start();
   console.log('start capture : ' + result);
+  showAlert('start capture : ' + result);
 }
 
 function stopCapture() {
   NetCapture.stop();
   console.log('stop capture.');
+  showAlert('stop capture.');
 }
 
 function netCapture() {
@@ -116,6 +120,8 @@ function initList() {
   });
   var context = document.querySelector("#list");
   mark = new Mark(context);
+  alertTmpl = $("#alert-container").html();
+  $("#alert-container").html('');
 }
 
 var HttpRequestHandle = {
@@ -179,6 +185,7 @@ function initDropdownMenus() {
     NetCapture.devNo = 0;
   }
   devBtn.text(netDeviceName);
+  showAlert(netDeviceName);
 
   $("#url-filter").keyup(function (view) {
     var value = view.target.value;
@@ -199,8 +206,16 @@ function selNetDevice(devNo) {
 
 $(document).ready(function () {
   initList();
-  // for (var i = 0; i < 300; i++) {
-  //   list.append({url: 'url', request:'request', response: 'response'});
-  // }
+  for (var i = 0; i < 300; i++) {
+    list.append({url: 'url', request:'request', response: 'response'});
+  }
   setTimeout(initDropdownMenus, 300);
 });
+
+function showAlert(msg) {
+  var alert = $(alertTmpl.format(msg));
+  $("#alert-container").append(alert);
+  setTimeout(function () {
+    alert.alert('close');
+  }, 3000);
+}
