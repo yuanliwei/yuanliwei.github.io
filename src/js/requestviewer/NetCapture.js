@@ -156,7 +156,7 @@ var HttpRequestHandle = {
       params[paramKV[0]] = paramKV[1];
     }
     var host = params["Host"];
-    if (!!host) {
+    if (!host) {
       host = params["HOST"];
     }
     var url = "http://" + host + path;
@@ -167,25 +167,25 @@ var HttpRequestHandle = {
 function initDropdownMenus() {
   var devBtn = $("#dev-name");
   var devDropdown = $("#dev-name-dropdown");
-  var netDeviceName = Client.loadData("netDeviceName");
+  var netDeviceNo = Client.loadData("netDeviceNo") || 0;
   var devs = NetCapture.getDevices();
   var devArr = JSON.parse(devs);
   NetCapture.devArr = devArr;
-  var found = false;
+  console.log("dev no - " + netDeviceNo);
+  if (netDeviceNo < devArr.length) {
+    NetCapture.devNo = netDeviceNo;
+    devBtn.text(devArr[NetCapture.devNo].name);
+    showAlert("found dev : " + devBtn.text());
+  } else {
+    Client.saveData("netDeviceNo", 0);
+    NetCapture.devNo = 0;
+    devBtn.text(devArr[NetCapture.devNo].name);
+    showAlert("not found dev use : " + devBtn.text());
+  }
   for (var i = 0; i < devArr.length; i++) {
     var dev = devArr[i];
-    if (dev.name == netDeviceName) {
-      found = true;
-    }
     devDropdown.append('<a class="dropdown-item" href="#" onclick="selNetDevice('+i+')">' + dev.name + '</a>');
   }
-  if (!found) {
-    netDeviceName = devArr[0].name;
-    Client.saveData("netDeviceName", netDeviceName);
-    NetCapture.devNo = 0;
-  }
-  devBtn.text(netDeviceName);
-  showAlert(netDeviceName);
 
   $("#url-filter").keyup(function (view) {
     var value = view.target.value;
@@ -200,7 +200,7 @@ function initDropdownMenus() {
 function selNetDevice(devNo) {
   var devBtn = $("#dev-name");
   devBtn.text(NetCapture.devArr[devNo].name);
-  Client.saveData("netDeviceName", devNo);
+  Client.saveData("netDeviceNo", devNo);
   NetCapture.devNo = devNo;
 }
 
@@ -217,5 +217,5 @@ function showAlert(msg) {
   $("#alert-container").append(alert);
   setTimeout(function () {
     alert.alert('close');
-  }, 3000);
+  }, 5000);
 }
