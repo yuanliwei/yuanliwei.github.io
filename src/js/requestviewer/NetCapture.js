@@ -48,19 +48,18 @@ function getDevs() {
 function startCapture() {
   var result = NetCapture.start();
   console.log('start capture : ' + result);
-  showAlert('start capture : ' + result);
 }
 
 function stopCapture() {
   NetCapture.stop();
   console.log('stop capture.');
-  showAlert('stop capture.');
 }
 
 function netCapture() {
   if (NetCapture.hasStart) {
     var result = NetCapture.stop();
     console.log("stop capture : " + result);
+    showAlert('stop capture : ' + result);
     if (result) {
       $("#captureBtn").removeClass("btn-danger").addClass("btn-success");
       $("#captureBtn").text("Start");
@@ -68,6 +67,7 @@ function netCapture() {
   } else {
     var result = NetCapture.start();
     console.log("start capture : " + result);
+    showAlert('start capture : ' + result);
     if (result) {
       registerCaptureCallback();
       $("#captureBtn").removeClass("btn-success").addClass("btn-danger");
