@@ -153,12 +153,9 @@ var HttpRequestHandle = {
     for (var i = 1; i < headers.length; i++) {
       var paramKV = headers[i].trim();
       paramKV = paramKV.split(': ');
-      params[paramKV[0]] = paramKV[1];
+      params[paramKV[0].toLowerCase()] = paramKV[1];
     }
-    var host = params["Host"];
-    if (!host) {
-      host = params["HOST"];
-    }
+    var host = params["host"];
     var url = "http://" + host + path;
     return url;
   }
