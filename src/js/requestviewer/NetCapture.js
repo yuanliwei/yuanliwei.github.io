@@ -206,9 +206,9 @@ function selNetDevice(devNo) {
 
 $(document).ready(function () {
   initList();
-  for (var i = 0; i < 300; i++) {
-    list.append({url: 'url', request:'request', response: 'response'});
-  }
+  // for (var i = 0; i < 300; i++) {
+  //   list.append({url: 'url', request:'request', response: 'response'});
+  // }
   setTimeout(initDropdownMenus, 300);
 });
 
