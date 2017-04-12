@@ -150,6 +150,9 @@ var HttpRequestHandle = {
       params[paramKV[0]] = paramKV[1];
     }
     var host = params["Host"];
+    if (!!host) {
+      host = params["HOST"];
+    }
     var url = "http://" + host + path;
     return url;
   }
