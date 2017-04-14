@@ -21,6 +21,7 @@
       <div class="row mt-4">
         <div class="col-12">
           <button type="button" class="btn btn-primary m-2" onclick="clearMsg()">Clear</button>
+          <button type="button" class="btn btn-primary m-2" onclick="sendMsgTest()">sendMsgTest</button>
         </div>
       </div>
       <div class="row mt-4">
@@ -38,6 +39,9 @@
       });
       function clearMsg() {
         $(".message").text('');
+      }
+      function sendMsgTest() {
+        wlog("now Date : " + JSON.stringify(new Date()));
       }
     </script>
   </body>
