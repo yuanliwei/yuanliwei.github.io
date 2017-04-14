@@ -22,6 +22,7 @@ function receive(callback) {
   ref.on('value', function(snapshot, prev) {
     var data = snapshot.val();
     var restored = JSON.parse(pako.inflate(data, { to: 'string' }));
+    console.log("dataLen:" + data.length + " restoredLen:" + restored.length);
     callback(restored);
   });
 }
