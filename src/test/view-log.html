@@ -26,8 +26,8 @@
       </div>
       <div class="row mt-4">
         <div class="col-12">
-          <div contenteditable="true">
-            <pre class="message"></pre>
+          <div class="message" contenteditable="true">
+
           </div>
         </div>
       </div>
@@ -35,7 +35,11 @@
     <script type="text/javascript">
       receive(function (message) {
         console.log(message);
-        $(".message").append('\n' + message);
+        if (message && message.length < 5000) {
+          $(".message").append('<pre>' + message + '</pre>');
+        } else {
+          $(".message").append('<textarea class="w-100">' + message + '</textarea>');
+        }
       });
       function clearMsg() {
         $(".message").text('');
