@@ -45,7 +45,8 @@
         $(".message").text('');
       }
       function sendMsgTest() {
-        wlog("now Date : " + JSON.stringify(new Date()));
+        var date = new Date();
+        wlog("now Date&Time : " + d.toLocaleDateString() + ' ' + d.toTimeString());
       }
     </script>
   </body>
