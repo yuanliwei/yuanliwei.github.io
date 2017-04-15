@@ -36,9 +36,13 @@
       receive(function (message) {
         console.log(message);
         if (message && message.length < 5000) {
-          $(".message").append('<pre>' + message + '</pre>');
+          var pre = $('<pre></pre>');
+          pre.text(message);
+          $(".message").append(pre);
         } else {
-          $(".message").append('<textarea class="w-100">' + message + '</textarea>');
+          var textarea = $('<textarea class="w-100" rows="10"></textarea>');
+          textarea.val(message);
+          $(".message").append(textarea);
         }
       });
       function clearMsg() {
