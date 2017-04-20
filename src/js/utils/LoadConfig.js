@@ -1,8 +1,8 @@
+var getPath = function (path) {
+  var url = document.location.href;
+  return url.substr(0, url.indexOf('src')) + path;
+}
 var LoadConfig = {
-  getPath: function (path) {
-    var url = document.location.href;
-    return url.substr(0, url.indexOf('src')) + path;
-  },
   "jquery":[
     "https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"
   ],
@@ -22,6 +22,6 @@ var LoadConfig = {
     "https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"
   ],
   "wlog":[
-    this.getPath("src/js/utils/wlog.js")
+    getPath("src/js/utils/wlog.js")
   ]
 };
