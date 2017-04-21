@@ -122,11 +122,48 @@ var Load = (function () {
       }
     };
 
+    this.loadParamMap = {};
     this.loadArgs = function (params, callback) {
-      setTimeout(function () {
-        console.log("loadParams..." + JSON.stringify(params));
-        callback();
-      }, 1000);
+      var urls = this.getUrls(params);
+      var ldParams = {};
+      this.loadParamMap[params] = ldParams;
+      ldParams.size = urls.length;
+      ldParams.overSize = 0;
+      for (var i = 0; i < urls.length; i++) {
+        var url = urls[i];
+        // TODO: 解析文件名判断是 js 还是 css
+        var type = parseType(url);
+        switch (type) {
+          case "js":
+            this.loadScript(url, ldParams, callback);
+            break;
+          case "css":
+            this.loadLink(url, ldParams, callback);
+            break;
+          default:
+            console.error("unknow type! " + url);
+        }
+      }
+      // setTimeout(function () {
+      //   console.log("loadParams..." + JSON.stringify(params));
+      //   callback();
+      // }, 1000);
+    };
+
+    this.loadScript = function (url, ldParams, callback) {
+      var node = document.createElement('script');
+      node.type = 'text/javascript';
+      node.charset = 'utf-8';
+      node.async = true;
+      node.src = url;
+      appendNode(node, url, ldParams, callback);
+    };
+
+    this.loadLink = function (url, ldParams, callback) {
+      var node = document.createElement('link');
+      node.rel = "stylesheet";
+      node.href = url;
+      appendNode(node, url, ldParams, callback)
     };
 
     this.getUrls = function (params) {
@@ -140,16 +177,24 @@ var Load = (function () {
           urls.push(param);
         }
       }
-      for (var i = 0; i < urls.length; i++) {
-        var url = urls[i];
-        // TODO: 解析文件名判断是 js 还是 css
-        if (url.includes('.js')) {
+      return urls;
+    }
 
+    function appendNode(node, url, ldParams, callback) {
+      node.onload = function () {
+        ldParams.overSize++;
+        if (ldParams.overSize == ldParams.size) {
+          callback();
         }
-        if (url.includes('.css')) {
-
+      };
+      node.onerror = function (e) {
+        console.error(e.stack);
+        ldParams.overSize++;
+        if (ldParams.overSize == ldParams.size) {
+          callback();
         }
-      }
+      };
+      document.head.appendChild(node);
     }
 
     function isEmptyObject(e) {
@@ -157,6 +202,13 @@ var Load = (function () {
       for (t in e)
       return !1;
       return !0
+    }
+
+    function parseType(url) {
+      var urlArr = url.split('?');
+      var urls = urlArr[0].split('.');
+      var end = urls[urls.length-1];
+      return end.toLowerCase();
     }
 
   }
