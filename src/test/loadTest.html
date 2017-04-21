@@ -9,7 +9,6 @@
     <script type="text/javascript">
     var config = "";
     new Load(loadConfig).load("../js/utils/loadConfig.js",
-          "../js/utils/loadConfig.js",
           "jquery",
           "https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js",
           "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",
@@ -21,9 +20,11 @@
       .then(function () {
         console.log("on wait 1000");
       })
+      .load("wlog", "../js/utils/loadConfig.js")
+      .load("wlog")
       .load("wlog")
       .wait(1000)
-      .load("bodymovin", "model");
+      .load("bodymovin");
     </script>
   </head>
   <body>

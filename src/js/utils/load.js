@@ -1,57 +1,7 @@
-/*
-(function () {
-  function Load(params) {
-    if (typeof params == "array") {
-      params.forEach(function (param) {
-        parseParam(param);
-      });
-    } else {
-      parseParam(params);
-    }
-
-    function parseParam(param) {
-      if (param.startsWith('http')) {
-        loadScript(param);
-      } else if (param.startsWith('file')) {
-        loadScript(param);
-      } else if (param.startsWith('.')) {
-        loadScript(param);
-      } else if (param.startsWith('.')) {
-        loadScript(param);
-      } else {
-
-      }
-    }
-
-    function loadScript(src) {
-      var script = document.createElement("script");
-      script.src = src;
-      script.type = ""
-      document.head.appendChild(script);
-    }
-
-    function loadStyle(src) {
-      var style = document.createElement("link");
-      style.src = src;
-      style.rel="stylesheet";
-      document.head.appendChild(style);
-    }
-  }
-
-  return Load;
-})();
-*/
-
-// var config = {
-//   "jquery":["https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"]
-// };
-// new Load(config).load("jquery", "bootstrap", "jquery-ui")
-//   .then(func)
-//   .load("wlog").load("bodymovin", "model");
-
 var Load = (function () {
   function Load(config_) {
     this.config = config_ || {};
+
     this.isChain = false;
 
     this.load = function () {
@@ -88,6 +38,7 @@ var Load = (function () {
     };
 
     this.doLoad = function () {
+      this.isChain = false;
       var self = this;
       this.loadArgs(this.params, function () {
         if (self.chain) {
@@ -122,16 +73,13 @@ var Load = (function () {
       }
     };
 
-    this.loadParamMap = {};
     this.loadArgs = function (params, callback) {
       var urls = this.getUrls(params);
       var ldParams = {};
-      this.loadParamMap[params] = ldParams;
       ldParams.size = urls.length;
       ldParams.overSize = 0;
       for (var i = 0; i < urls.length; i++) {
         var url = urls[i];
-        // TODO: 解析文件名判断是 js 还是 css
         var type = parseType(url);
         switch (type) {
           case "js":
@@ -144,10 +92,6 @@ var Load = (function () {
             console.error("unknow type! " + url);
         }
       }
-      // setTimeout(function () {
-      //   console.log("loadParams..." + JSON.stringify(params));
-      //   callback();
-      // }, 1000);
     };
 
     this.loadScript = function (url, ldParams, callback) {
@@ -181,14 +125,22 @@ var Load = (function () {
     }
 
     function appendNode(node, url, ldParams, callback) {
+      if (Load.loadSrcMap[url]) {
+        ldParams.overSize++;
+        if (ldParams.overSize == ldParams.size) {
+          callback();
+        }
+        return;
+      }
       node.onload = function () {
+        Load.loadSrcMap[url] = true;
         ldParams.overSize++;
         if (ldParams.overSize == ldParams.size) {
           callback();
         }
       };
       node.onerror = function (e) {
-        console.error(e.stack);
+        console.error(JSON.stringify(e));
         ldParams.overSize++;
         if (ldParams.overSize == ldParams.size) {
           callback();
@@ -212,6 +164,8 @@ var Load = (function () {
     }
 
   }
+
+  Load.loadSrcMap = {};
 
   return Load;
 })();

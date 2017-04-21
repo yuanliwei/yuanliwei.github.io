@@ -40,6 +40,15 @@ var loadConfig = {
   "fast-list":[
     getPath("src/js/list/fast-list.js")
   ],
+  "wilddog":[
+    "https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js"
+  ],
+  "wilddog-config":[
+    getPath("src/js/utils/wilddog-config.js")
+  ],
+  "pako":[
+    "https://cdn.bootcss.com/pako/1.0.5/pako.min.js"
+  ],
   "wlog":[
     getPath("src/js/utils/wlog.js")
   ]

@@ -4,131 +4,80 @@
   <meta charset="utf-8">
   <meta content="width=device-width,initial-scale=1.0" name="viewport">
   <title>bodymovin test</title>
-  <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"></script>
-  <link href="https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css" rel="stylesheet">
-  <script src="https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"></script>
-  <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-  <script src="https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js"></script>
-  <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.structure.min.css" rel="stylesheet">
-  <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.theme.min.css" rel="stylesheet">
-  <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
-  <style media="screen">
-  #container{
-    width: 100%;
-    height:400px;
-    overflow: hidden;
-    cursor: pointer;
-    background-color:#000;
-  }
-  .btn-item{
-    margin: 5px;
-  }
-  </style>
+  <script src="../js/utils/load.js" charset="utf-8"></script>
+  <script src="../js/utils/loadConfig.js" charset="utf-8"></script>
 </head>
 <body>
   <div class="container">
-    <div class="row">
-      <div id='container'></div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-12">
-        <div class="input-group">
-          <textarea type="text" id="ae-json" class="form-control" placeholder="AE-JSON"></textarea>
-          <span class="input-group-btn">
-            <button id="ae-button" class="btn btn-default" type="button">Go!</button>
-          </span>
-        </div><!-- /input-group -->
-      </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col-12 text-center">
-        <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-primary" onclick="play()">play</button>
-          <button type="button" class="btn btn-primary" onclick="pause()">pause</button>
-          <button type="button" class="btn btn-primary" onclick="stop()">stop</button>
-          <button type="button" class="btn btn-primary" onclick="changeColor('#000000')">黑</button>
-          <button type="button" class="btn btn-primary" onclick="changeColor('#FFFFFF')">白</button>
+    <div class="row mt-2">
+      <div class="col-lg-8 col-12">
+        <div id='container' class="col-12" style="height:400px;background-color:#000;"></div>
+        <div class="col-12 mt-4">
+          <div id="slider"></div>
+        </div>
+        <div class="col-12 mt-4">
+          <div class="input-group mt-2">
+            <textarea type="text" id="ae-json" class="form-control" placeholder="AE-JSON"></textarea>
+            <span class="input-group-btn">
+              <button id="ae-button" class="btn btn-default" type="button">Go!</button>
+            </span>
+          </div><!-- /input-group -->
         </div>
       </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col-12">
-        <div id="slider"></div>
+      <div class="col-lg-4 col-12">
+        <div class="col-12 mt-4 text-center">
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-primary" onclick="play()">play</button>
+            <button type="button" class="btn btn-primary" onclick="pause()">pause</button>
+            <button type="button" class="btn btn-primary" onclick="stop()">stop</button>
+            <button type="button" class="btn btn-primary" onclick="changeColor('#000000')">黑</button>
+            <button type="button" class="btn btn-primary" onclick="changeColor('#FFFFFF')">白</button>
+          </div>
+        </div>
+        <div id="buttons" class="col-12 mt-4 text-center text-lg-left"></div>
       </div>
     </div>
-    <br>
-    <div class="row ">
-      <div class="col-12 text-center">
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/9squares-AlBoardman.json')">AlBoardman</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/EmptyState.json')">EmptyState</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/HamburgerArrow.json')">HamburgerArrow</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/LottieLogo1.json')">LottieLogo1</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/LottieLogo2.json')">LottieLogo2</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/MotionCorpse-Jrcanest.json')">Jrcanest</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/PinJump.json')">PinJump</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/TwitterHeart.json')">TwitterHeart</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Logo/LogoSmall.json')">LogoSmall</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Apostrophe.json')">Apostrophe</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/BlinkingCursor.json')">BlinkingCursor</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Colon.json')">Colon</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Comma.json')">Comma</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/A.json')">A</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/B.json')">B</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/C.json')">C</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/D.json')">D</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/E.json')">E</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/F.json')">F</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/G.json')">G</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/H.json')">H</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/I.json')">I</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/J.json')">J</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/K.json')">K</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/L.json')">L</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/M.json')">M</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/N.json')">N</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/O.json')">O</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/P.json')">P</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Q.json')">Q</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/R.json')">R</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/S.json')">S</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/T.json')">T</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/U.json')">U</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/V.json')">V</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/W.json')">W</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/X.json')">X</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Y.json')">Y</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Mobilo/Z.json')">Z</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/Alarm.json')">Alarm</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/CheckSwitch.json')">CheckSwitch</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/EllipseTrimPath.json')">EllipseTrimPath</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/Hosts.json')">Hosts</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/LightBulb.json')">LightBulb</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/LoopPlayOnce.json')">LoopPlayOnce</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Tests/SplitDimensions.json')">SplitDimensions</button>
-        <button class="btn btn-primary btn-item" onclick="changeModel('https://yuanliwei.github.io/src/test/res/Walkthrough/Walkthrough.json')">Walkthrough</button>
-      </div>
+    <div class="row">
     </div>
   </div>
   <script type="text/javascript">
-    $( "#slider" ).slider({
-      min: 0,
-      max: 1000,
-      stop: function( event, ui ) {
-        console.log('stop - ' + ui.value);
-      },
-      start: function( event, ui ) {
-        console.log('start - ' + ui.value);
-      },
-      slide: function( event, ui ) {
-        console.log('slide - ' + ui.value);
-      }
-    });
     var anim = null;
     var path = 'https://yuanliwei.github.io/src/test/res/TwitterHeart.json';
+    function initScene(){
+      format.extend(String.prototype);
+      $( "#slider" ).slider({
+        min: 0,
+        max: 1000,
+        stop: function( event, ui ) {
+          console.log('stop - ' + ui.value);
+        },
+        start: function( event, ui ) {
+          console.log('start - ' + ui.value);
+        },
+        slide: function( event, ui ) {
+          console.log('slide - ' + ui.value);
+        }
+      });
+      dataArr.forEach(function (dataUrl) {
+        var name = getName(dataUrl);
+        var button = $('<button class="btn btn-primary m-1">{0}</button>'.format(name));
+        button.click(function () {
+          changeModel(dataUrl);
+        });
+        $("#buttons").append(button);
+      });
+      $('#ae-button').click(function (e) {
+        var data = $('#ae-json').val();
+        ref.set(data);
+        playData(data);
+      });
+      ref = wilddog.sync().ref("/test-bodymovin");
+      ref.on('value', function(snapshot, prev) {
+        var data = snapshot.val();
+        $('#ae-json').val(data);
+        playData(data);
+      });
+    }
     function play() {
       stop();
       var animData = {
@@ -168,23 +117,18 @@
     function changeColor(color) {
       $('#container').css('background-color', color);
     }
-    $('#ae-button').click(function (e) {
-      var data = $('#ae-json').val();
-      ref.set(data);
-      playData(data);
-    });
-    var config, ref;
-    config = {
-      authDomain: "ylw-wuziqi.wilddog.com",
-      syncURL: "https://ylw-wuziqi.wilddogio.com"
-    };
-    wilddog.initializeApp(config);
-    ref = wilddog.sync().ref("/test-bodymovin");
-    ref.on('value', function(snapshot, prev) {
-      var data = snapshot.val();
-       $('#ae-json').val(data);
-       playData(data);
-    });
+    function getName(jsonUrl) {
+      var arr = jsonUrl.split('/');
+      var name = arr[arr.length - 1];
+      var shortName = name.substr(0, name.length - 5);
+      return shortName;
+    }
+
+    new Load(loadConfig)
+      .load("jquery", "bodymovin", "wilddog", "string-format")
+      .load("jqueryui", "bootstrap", "wilddog-config")
+      .load("./data/bodymovin.js")
+      .then(initScene);
 
   </script>
 </body>
