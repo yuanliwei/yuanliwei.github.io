@@ -1,44 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
-
     <title>index</title>
-    <!-- utils -->
-    <script src="./src/js/utils/jquery.js"></script>
-    <!--bootstrap-->
-    <link rel="stylesheet" href="./bootstrap-3.3.6-dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="./bootstrap-3.3.6-dist/css/bootstrap-theme.css" />
-    <script src="./bootstrap-3.3.6-dist/js/bootstrap.js"></script>
-
-    <style type="text/css">
-        .content_body {
-            margin: 10%;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="content_body">
+    <script src="./src/js/utils/load.js" charset="utf-8"></script>
+    <script src="./src/js/utils/loadConfig.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-4">
         <div class="panel panel-primary">
-            <div class="panel-body">
-                <div class="page-header">
-                    <h1>目录 <small>link</small></h1>
-                </div>
+          <div class="panel-body">
+            <div class="page-header">
+              <h1>目录 <small>link</small></h1>
             </div>
-            <div class="panel-footer">
-                <p>
-                    <a class="btn btn-primary btn-lg" role="button" href="./src/gen/gen.html">generate</a>
-                    <a class="btn btn-primary btn-lg" role="button" href="./src/escape/escape.html">escape</a>
-                    <a class="btn btn-primary btn-lg" role="button" href="./src/action/action.html">action</a>
-                    <a class="btn btn-primary btn-lg" role="button" href="./src/regex/regex.html">regex</a>
-                    <a class="btn btn-primary btn-lg" role="button" href="./src/json-tool/json-tool.html">JSON TOOL</a>
-                </p>
-            </div>
+          </div>
+          <div class="panel-footer">
+            <a class="btn btn-primary m-2 btn-lg" role="button" href="./src/gen/gen.html">GENERATE</a>
+            <a class="btn btn-primary m-2 btn-lg" role="button" href="./src/escape/escape.html">ESCAPE</a>
+            <a class="btn btn-primary m-2 btn-lg" role="button" href="./src/action/action.html">action</a>
+            <a class="btn btn-primary m-2 btn-lg" role="button" href="./src/regex/regex.html">regex</a>
+            <a class="btn btn-primary m-2 btn-lg" role="button" href="./src/json-tool/json-tool.html">JSON TOOL</a>
+            <a class="btn btn-primary m-2 btn-lg" role="button" href="./src/test/bodymovin.html">BODY MOVIN</a>
+            <a class="btn btn-primary m-2 btn-lg" role="button" href="./src/test/view-log.html">VIEW LOG</a>
+          </div>
         </div>
+      </div>
     </div>
-</body>
+    <script type="text/javascript">
+      new Load(loadConfig).load("bootstrap-css")
+    </script>
+  </body>
 
 </html>

@@ -22,6 +22,10 @@ var loadConfig = {
     "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css",
     "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
   ],
+  "bootstrap-css":[
+    "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",
+    "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  ],
   "fontawesome":[
     "https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
   ],
@@ -31,8 +35,31 @@ var loadConfig = {
   "beautify":[
     "https://cdn.bootcss.com/js-beautify/1.6.12/beautify.min.js"
   ],
+  "highlight":[
+    getPath("highlight/styles/default.css"),
+    getPath("highlight/highlight.pack.js")
+  ],
   "string-format":[
     "https://cdn.bootcss.com/string-format/0.5.0/string-format.min.js"
+  ],
+  "escapes":[
+    getPath("src/js/escape/MD5.js"),
+    getPath("src/js/escape/Base64.js"),
+    getPath("src/js/escape/he.js"),
+    getPath("src/js/escape/crypto-js.js"),
+    getPath("src/js/escape/escape.js")
+  ],
+  "java-model":[
+    getPath("src/js/java-model/Modifiers.js"),
+    getPath("src/js/java-model/Filed.js"),
+    getPath("src/js/java-model/ClassModel.js")
+  ],
+  "gen-java":[
+    getPath("src/js/gen-java/Fileds2Java.js"),
+    getPath("src/js/gen-java/Json2Java.js"),
+    getPath("src/js/gen-java/GenXML.js"),
+    getPath("src/js/gen-java/GenJavaTemplate.js"),
+    getPath("src/js/gen-java/SQL2Java.js")
   ],
   "normal-list":[
     getPath("src/js/list/normal-list.js")
