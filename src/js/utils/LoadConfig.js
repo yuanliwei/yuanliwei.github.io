@@ -16,9 +16,11 @@ var loadConfig = {
     "https://cdn.bootcss.com/mark.js/8.9.0/mark.min.js",
     "https://cdn.bootcss.com/mark.js/8.9.0/jquery.mark.min.js"
   ],
-  "bootstrap":[
+  "tether":[
     "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",
-    "https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js",
+    "https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"
+  ],
+  "bootstrap":[
     "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css",
     "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
   ],
