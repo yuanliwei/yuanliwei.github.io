@@ -12,7 +12,7 @@ var Load = (function () {
         this.params.push(arguments[i]);
       }
       if (!this.___isChain) {
-        this.___doLoad();
+        doLoad(this);
       }
       return this.chain;
     };
@@ -22,7 +22,7 @@ var Load = (function () {
       this.chain.___isChain = true;
       this.callback = callback_;
       if (!this.___isChain) {
-        this.___doThen();
+        doThen(this);
       }
       return this.chain;
     };
@@ -32,7 +32,7 @@ var Load = (function () {
       this.chain.___isChain = true;
       this.callbackAsync = callbackAsync_;
       if (!this.___isChain) {
-        this.___doThenAsync();
+        doThenAsync(this);
       }
       return this.chain;
     };
@@ -42,58 +42,55 @@ var Load = (function () {
       this.chain.___isChain = true;
       this.millis = millis;
       if (!this.___isChain) {
-        this.___doWait();
+        doWait(this);
       }
       return this.chain;
     };
-// mmmm mmmmm mmmmmmmnn mnmnm mmmm
-    this.___doLoad = function () {
-      this.___isChain = false;
-      var self = this;
-      loadArgs(this.params, this.config, function () {
+
+    this.___doNext = function () {
+      if (this.callback) {
+        doThen(this);
+      }
+      if (this.callbackAsync) {
+        doThenAsync(this);
+      }
+      if (this.params) {
+        doLoad(this);
+      }
+      if (this.millis) {
+        doWait(this);
+      }
+    };
+
+    function doLoad(self) {
+      self.___isChain = false;
+      loadArgs(self.params, self.config, function () {
         if (self.chain) {
           self.chain.___doNext();
         }
       });
     };
 
-    this.___doWait = function () {
-      var self = this;
+    function doWait(self) {
       setTimeout(function () {
         self.chain.___doNext();
-      }, this.millis);
+      }, self.millis);
     };
 
-    this.___doThen = function () {
-      this.callback();
-      if (this.chain) {
-        this.chain.___doNext();
+    function doThen(self) {
+      self.callback();
+      if (self.chain) {
+        self.chain.___doNext();
       }
     };
 
-    this.___doThenAsync = function () {
-      var self = this;
-      this.callbackAsync(function () {
+    function doThenAsync(self) {
+      self.callbackAsync(function () {
         if (self.chain) {
           self.chain.___doNext();
         }
       });
     }
-
-    this.___doNext = function () {
-      if (this.callback) {
-        this.___doThen();
-      }
-      if (this.callbackAsync) {
-        this.___doThenAsync();
-      }
-      if (this.params) {
-        this.___doLoad();
-      }
-      if (this.millis) {
-        this.___doWait();
-      }
-    };
 
     function loadArgs(params, config, callback) {
       var urls = getUrls(params, config);
