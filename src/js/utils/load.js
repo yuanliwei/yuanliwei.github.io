@@ -165,13 +165,6 @@ var Load = (function () {
       document.head.appendChild(node);
     }
 
-    function isEmptyObject(e) {
-      var t;
-      for (t in e)
-      return !1;
-      return !0
-    }
-
     function parseType(url) {
       var urlArr = url.split('?');
       var urls = urlArr[0].split('.');
