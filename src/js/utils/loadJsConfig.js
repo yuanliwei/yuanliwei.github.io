@@ -2,7 +2,7 @@ var getPath = function (path) {
   var url = document.location.href;
   return url.substr(0, url.indexOf('src')) + path;
 }
-var loadConfig = {
+var loadJsConfig = {
   "jquery":[
     "https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"
   ],

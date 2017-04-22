@@ -5,7 +5,7 @@
     <meta content="width=device-width,initial-scale=1.0" name="viewport">
     <title>View Log</title>
     <script src="../js/utils/load.js" charset="utf-8"></script>
-    <script src="../js/utils/loadConfig.js" charset="utf-8"></script>
+    <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
   </head>
   <body>
     <div class="container">
@@ -50,7 +50,7 @@
         wlog("now Date&Time : " + date.toLocaleDateString() + ' ' + date.toTimeString());
       }
 
-      new Load(loadConfig)
+      new Load(loadJsConfig)
         .load("jquery", "tether")
         .load("bootstrap", "wlog")
         .then(startReceiveLog);

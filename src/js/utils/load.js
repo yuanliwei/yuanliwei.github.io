@@ -17,22 +17,19 @@ var Load = (function () {
       return this.chain;
     };
 
-    this.then = function (callback_) {
+    this.then = function (callback_, isAsync) {
       this.chain = new Load(this.config);
       this.chain.___isChain = true;
-      this.callback = callback_;
-      if (!this.___isChain) {
-        doThen(this);
-      }
-      return this.chain;
-    };
-
-    this.thenAsync = function (callbackAsync_) {
-      this.chain = new Load(this.config);
-      this.chain.___isChain = true;
-      this.callbackAsync = callbackAsync_;
-      if (!this.___isChain) {
-        doThenAsync(this);
+      if (isAsync) {
+        this.callbackAsync = callback_;
+        if (!this.___isChain) {
+          doThenAsync(this);
+        }
+      } else {
+        this.callback = callback_;
+        if (!this.___isChain) {
+          doThen(this);
+        }
       }
       return this.chain;
     };

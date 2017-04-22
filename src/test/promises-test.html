@@ -5,7 +5,7 @@
     <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
     <title>PROMISES TEST</title>
     <script src="../js/utils/load.js" charset="utf-8"></script>
-    <script src="../js/utils/loadConfig.js" charset="utf-8"></script>
+    <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
   </head>
   <body>
     <div class="container">
@@ -19,11 +19,12 @@
           <button type="button" class="btn btn-primary m-2" onclick="startPromiseChain()">startPromiseChain</button>
           <button type="button" class="btn btn-primary m-2" onclick="testChain2()">testChain2</button>
           <button type="button" class="btn btn-primary m-2" onclick="testLoadES6()">testLoadES6</button>
+          <button type="button" class="btn btn-primary m-2" onclick="testUseAsync()">testUseAsync</button>
         </div>
       </div>
     </div>
     <script type="text/javascript">
-      new Load(loadConfig).load("bootstrap-css")
+      new Load(loadJsConfig).load("bootstrap-css")
       .load("../js/utils/loadES6.js");
       function startTest() {
         console.log("click start ..");
@@ -91,7 +92,7 @@
         setTimeout(callback, 1000);
       }
       function testLoadES6() {
-        new LoadES6(loadConfig)
+        new LoadES6(loadJsConfig)
         .load("jquery", "tether", "string-format", "beautify",
               "escapes", "highlight")
         .load("bootstrap")
@@ -107,6 +108,26 @@
             hljs.highlightBlock(block);
           });
         });
+      }
+
+      function testUseAsync() {
+        new LoadES6()
+        .then((resolve)=>{
+          console.log("in 1");
+          setTimeout(resolve, 1000);
+        }, true)
+        .then((resolve)=>{
+          console.log("in 2");
+          setTimeout(resolve, 1000);
+        }, true)
+        .then((resolve)=>{
+          console.log("in 3");
+          setTimeout(resolve, 1000);
+        }, true)
+        .then((resolve)=>{
+          console.log("in 4");
+          setTimeout(resolve, 1000);
+        }, true);
       }
     </script>
   </body>

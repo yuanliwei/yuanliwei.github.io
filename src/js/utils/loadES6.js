@@ -12,21 +12,22 @@ class LoadES6 {
       params.push(arguments[i]);
     }
     this.promise = this.promise.then(()=>{
-      return new Promise((resolve, reject)=>{
-        console.log("doload - " + JSON.stringify(params));
-        // TODO: change to map
-        this.___loadParams(params, ()=> resolve());
-      }).catch((e)=>console.error(e));
+      console.log("load:" + JSON.stringify(params));
+      var promises = LoadES6.getLoadPromises(params, this);
+      return Promise.all(promises).catch((e)=>console.error(e));
     });
     return new LoadES6(this.config, this.promise);
   }
 
-  then(callback) {
+  then(callback, isAsync) {
     this.promise = this.promise.then(()=>{
       return new Promise((resolve, reject)=>{
-        console.log("dothen");
-        callback();
-        resolve();
+        if (isAsync) {
+          callback(resolve);
+        } else {
+          callback();
+          resolve();
+        }
       }).catch((e)=>console.error(e));
     });
     return new LoadES6(this.config, this.promise);
@@ -42,54 +43,49 @@ class LoadES6 {
     return new LoadES6(this.config, this.promise);
   }
 
-  ___loadParams(params, callback) {
-    var urls = this.___getUrls(params);
-    var ldParams = {};
-    ldParams.size = urls.length;
-    ldParams.overSize = 0;
-    // TODO: use map
-    // [1,2,3,4,5].map(v => {
-    //     return v * 2;
-    // })
-    // [2, 4, 6, 8, 10]
-    urls.map(url=>{
-      var type = this.___parseType(url);
-      switch (type) {
-        case "js":
-          this.___loadScript(url, ldParams, callback);
-          break;
-        case "css":
-          this.___loadLink(url, ldParams, callback);
-          break;
-        default:
-          console.error("unknow type! " + url);
-      }
+  static getLoadPromises(params, self) {
+    var urls = LoadES6.getUrls(params, self);
+    var promises = urls.map(url=>{
+      return new Promise((resolve, reject)=>{
+        var type = LoadES6.parseType(url);
+        switch (type) {
+          case "js":
+            LoadES6.loadScript(url, resolve);
+            break;
+          case "css":
+            LoadES6.loadLink(url, resolve);
+            break;
+          default:
+            console.error("unknow type! " + url);
+        }
+      });
     });
+    return promises;
   };
 
-  ___loadScript(url, ldParams, callback) {
+  static loadScript(url, resolve) {
     var node = document.createElement('script');
     node.type = 'text/javascript';
     node.charset = 'utf-8';
     node.async = true;
     node.src = url;
-    this.___appendNode(node, url, ldParams, callback);
+    LoadES6.appendNode(node, url, resolve);
   };
 
-  ___loadLink(url, ldParams, callback) {
+  static loadLink(url, resolve) {
     var node = document.createElement('link');
     node.rel = "stylesheet";
     node.href = url;
-    this.___appendNode(node, url, ldParams, callback)
+    LoadES6.appendNode(node, url, resolve);
   };
 
-  ___getUrls(params) {
+  static getUrls(params, self) {
     var urls = [];
     if (typeof params == "string") {
       params = [params];
     }
     params.map(param=> {
-      var configUrls = this.config[param];
+      var configUrls = self.config[param];
       if (configUrls) {
         urls = urls.concat(configUrls);
       } else {
@@ -99,32 +95,23 @@ class LoadES6 {
     return urls;
   }
 
-  ___appendNode(node, url, ldParams, callback) {
+  static appendNode(node, url, resolve) {
     if (LoadES6.loaded[url]) {
-      ldParams.overSize++;
-      if (ldParams.overSize == ldParams.size) {
-        callback();
-      }
+      resolve();
       return;
     }
     node.onload = function () {
       LoadES6.loaded[url] = true;
-      ldParams.overSize++;
-      if (ldParams.overSize == ldParams.size) {
-        callback();
-      }
+      resolve();
     };
     node.onerror = function (e) {
       console.error(JSON.stringify(e));
-      ldParams.overSize++;
-      if (ldParams.overSize == ldParams.size) {
-        callback();
-      }
+      resolve();
     };
     document.head.appendChild(node);
   }
 
-  ___parseType(url) {
+  static parseType(url) {
     var urlArr = url.split('?');
     var urls = urlArr[0].split('.');
     var end = urls[urls.length-1];
