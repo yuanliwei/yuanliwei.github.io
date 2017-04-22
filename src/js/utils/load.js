@@ -75,18 +75,19 @@ var Load = (function () {
     };
 
     function doThen(self) {
-      self.callback();
+      self.chain.data = self.callback(self.data);
       if (self.chain) {
         self.chain.___doNext();
       }
     };
 
     function doThenAsync(self) {
-      self.callbackAsync(function () {
+      self.callbackAsync(function (data) {
         if (self.chain) {
+          self.chain.data = data;
           self.chain.___doNext();
         }
-      });
+      }, self.data);
     }
 
     function loadArgs(params, config, callback) {

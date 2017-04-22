@@ -20,6 +20,7 @@
           <button type="button" class="btn btn-primary m-2" onclick="testChain2()">testChain2</button>
           <button type="button" class="btn btn-primary m-2" onclick="testLoadES6()">testLoadES6</button>
           <button type="button" class="btn btn-primary m-2" onclick="testUseAsync()">testUseAsync</button>
+          <button type="button" class="btn btn-primary m-2" onclick="testUseAsyncWithValue()">testUseAsyncWithValue</button>
         </div>
       </div>
     </div>
@@ -128,6 +129,37 @@
           console.log("in 4");
           setTimeout(resolve, 1000);
         }, true);
+      }
+
+      function testUseAsyncWithValue() {
+        new LoadES6()
+        .then((resolve, data)=>{
+          console.log("in 1");
+          setTimeout(()=>{
+            resolve(1);
+          }, 1000);
+        }, true)
+        .then((resolve, data)=>{
+          console.log("in 2");
+          setTimeout(()=>{
+            resolve(2 + data);
+          }, 1000);
+        }, true)
+        .then((resolve, data)=>{
+          console.log("in 3");
+          setTimeout(()=>{
+            resolve(3 + data);
+          }, 1000);
+        }, true)
+        .then((resolve, data)=>{
+          console.log("in 4");
+          setTimeout(()=>{
+            resolve(4 + data);
+          }, 1000);
+        }, true)
+        .then((data)=>{
+          console.log("over with value : " + data);
+        });
       }
     </script>
   </body>

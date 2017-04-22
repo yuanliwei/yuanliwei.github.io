@@ -20,13 +20,13 @@ class LoadES6 {
   }
 
   then(callback, isAsync) {
-    this.promise = this.promise.then(()=>{
+    this.promise = this.promise.then((data)=>{
       return new Promise((resolve, reject)=>{
         if (isAsync) {
-          callback(resolve);
+          callback(resolve, data);
         } else {
-          callback();
-          resolve();
+          data = callback(data);
+          resolve(data);
         }
       }).catch((e)=>console.error(e));
     });
