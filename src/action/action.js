@@ -1,33 +1,15 @@
-function loadConfig() {
-    var Config = {};
-    try {
-        if (localStorage && localStorage.getItem('config_action')) {
-            Config = JSON.parse(localStorage.getItem('config_action'));
-            var selStr = '#mode-option-group input[value="{0}"]'.format(Config.mode);
-//             $(selStr)[0].checked = true;
-            $('#code_input').val(Config.input);
-            onChange();
-        }
-    } catch (e) {
-        console.error(e);
-    }
-    return Config;
-}
-
-function saveConfig() {
-    if (!localStorage) return;
-    var Config = {};
-    Config.input = $('#code_input').val();
-    Config.mode = $('#mode-option-group input[name="genMode"]:checked').val();
-    localStorage.setItem("config_action", JSON.stringify(Config));
-}
-
 function initEvent() {
     var input = $('#code_input')[0];
     input.onchange = onChange;
     input.onkeyup = onChange;
     $('#mode-option-group input, #gen-option-group input').click(function () {
         onChange();
+    });
+    // 测试代码
+    $('pre code').text(injectHandleMessage.toString());
+
+    $('pre code').each(function (i, block) {
+        hljs.highlightBlock(block);
     });
 }
 
@@ -50,7 +32,7 @@ function onChange() {
 
         case 9: fun = Escape.md5; break;
         case 10: fun = Escape.sha1; break;
-        
+
         default:
             fun = Escape.encodeURIComponent;
             break;
@@ -76,4 +58,12 @@ function ajaxTest(){
     var htmlobj=$.ajax({url:"http://www.w3school.com.cn/jquery/test1.txt",async:false});
 
     $('pre code').html(htmlobj.responseText);
+}
+
+function injectHandleMessage() {
+  window.addEventListener("message", function (e) {
+    var e = e || event;
+    var data = e.data;
+    console.log(document.title + " : " + data);
+  });
 }
