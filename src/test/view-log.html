@@ -60,7 +60,6 @@
         receiveLog(function (message) {
           console.log(message);
           if ($("#terminalstyle")[0].checked) {
-            if (fireworks) fireworks.fire();
             appendShowTerminalMsg(message);
           } else {
             appendShowMsg(message);
@@ -89,18 +88,18 @@
           var pre = $('<pre class="text-success"></pre>');
           pre.text(message);
           $(".message").append(pre);
+          if (fireworks) fireworks.fire();
         } else {
           var textarea = $('<textarea class="w-100 text-success" rows="20" style="background:rgba(0,0,0,0);"></textarea>');
           textarea.val(message);
           $(".message").append(textarea);
+          if (fireworks) fireworks.fire(3);
         }
       }
 
       function clearMsg() {
         $(".message").text('');
-        if ($("#terminalstyle")[0].checked) {
-          if (fireworks) fireworks.fire(9);
-        }
+        if ($("#terminalstyle")[0].checked && fireworks) fireworks.fire(9);
       }
 
       function sendMsgTest() {
@@ -113,8 +112,8 @@
         .load("jquery", "tether", "fontawesome", "common-utils", "csshake")
         .load("bootstrap", "jqueryui", "wlog")
         .then(startReceiveLog)
-        .load("./particle/js/particle.js")
-        .then(()=> fireworks = new BeautifulFireworks("canvas"))
+        .load("./particle/js/BeautifulFireworks.js", "../js/utils/AudioPool.js")
+        .then(()=> fireworks = new BeautifulFireworks("canvas", "./mp3/65ec68b443594a38b8f7d6d0c53d74b5.mp3", "./mp3/b74ab7828fd243418c443abe604bf6de.mp3"))
         .then(()=>{
           PageState.load("#autoscroll", "#terminalstyle");
           $("#autoscroll").checkboxradio({icon: false});

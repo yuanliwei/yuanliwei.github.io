@@ -10,10 +10,8 @@ var BeautifulFireworks = (function () {
     };
   })();
 
-  function BeautifulFireworks(canvasId) {
+  function BeautifulFireworks(canvasId, fireAudio, bombAudio) {
     // now we will setup our basic variables for the demo
-    this.canvasId = canvasId;
-
     var canvas, mousedown,
     ctx, lineWidth,
     // full screen dimensions
@@ -186,6 +184,8 @@ var BeautifulFireworks = (function () {
       while( particleCount-- ) {
         particles.push( new Particle( x, y ) );
       }
+      // 爆炸声
+      AudioPool.play(bombAudio);
     }
 
     // main demo loop
@@ -226,7 +226,7 @@ var BeautifulFireworks = (function () {
 
     }
 
-    function init(canvasId) {
+    function init() {
       canvas = document.getElementById( canvasId );
       ctx = canvas.getContext( '2d' );
       updateWindow();
@@ -251,12 +251,14 @@ var BeautifulFireworks = (function () {
       count = count || 1;
       while (count--) {
         fireworks.push( new Firework( cw / 2, ch, random( 0, cw ), random( 0, ch / 2 ) ) );
+        // 开火声
+        AudioPool.play(fireAudio);
       }
     }
 
     this.fire = fire;
 
-    init(this.canvasId);
+    init();
   };
   return BeautifulFireworks;
 
