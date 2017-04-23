@@ -78,7 +78,7 @@
           pre.text(message);
           $(".message").append(pre);
         } else {
-          var textarea = $('<textarea class="w-100" rows="20"></textarea>');
+          var textarea = $('<textarea class="w-100" rows="20" style="background:transparent;"></textarea>');
           textarea.val(message);
           $(".message").append(textarea);
         }
@@ -90,7 +90,7 @@
           pre.text(message);
           $(".message").append(pre);
         } else {
-          var textarea = $('<textarea class="w-100 text-success" rows="20"></textarea>');
+          var textarea = $('<textarea class="w-100 text-success" rows="20" style="background:rgba(0,0,0,0);"></textarea>');
           textarea.val(message);
           $(".message").append(textarea);
         }

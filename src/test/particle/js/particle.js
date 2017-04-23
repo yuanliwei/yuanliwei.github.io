@@ -240,9 +240,12 @@ var BeautifulFireworks = (function () {
       cw = window.innerWidth,
       ch = window.innerHeight,
       // set canvas dimensions
+      canvas.style.width = cw + "px";
+      canvas.style.height = ch + "px";
       canvas.width = cw * window.devicePixelRatio;
       canvas.height = ch * window.devicePixelRatio;
-
+      wlog("canvas.style.width:"+canvas.style.width+"\ncanvas.style.height:"+canvas.style.height+"\ncanvas.width:"+canvas.width
+      +"\ncanvas.height:"+canvas.height);
     }
 
     function fire(count) {
