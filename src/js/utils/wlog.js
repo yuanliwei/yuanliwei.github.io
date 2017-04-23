@@ -44,6 +44,10 @@
     return ref;
   }
 
+  window.addEventListener("error", function (e) {
+    wlog("Error:" + e.message + "\n" + e.error.stack);
+  });
+
   window.wlog = log;
   window.receiveLog = receive;
 })();
