@@ -245,7 +245,7 @@ var BeautifulFireworks = (function () {
       canvas.width = cw * window.devicePixelRatio;
       canvas.height = ch * window.devicePixelRatio;
       wlog("canvas.style.width:"+canvas.style.width+"\ncanvas.style.height:"+canvas.style.height+"\ncanvas.width:"+canvas.width
-      +"\ncanvas.height:"+canvas.height);
+      +"\ncanvas.height:"+canvas.height+"\nwindow.devicePixelRatio:"+window.devicePixelRatio);
     }
 
     function fire(count) {
