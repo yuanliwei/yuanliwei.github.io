@@ -181,7 +181,7 @@ var BeautifulFireworks = (function () {
     function createParticles( x, y ) {
       // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
       var particleCount = 80;
-      while( particleCount-- ) {
+      while( particleCount-- && particles.length < 6000) {
         particles.push( new Particle( x, y ) );
       }
       // 爆炸声
