@@ -15,10 +15,9 @@ var BeautifulFireworks = (function () {
     this.canvasId = canvasId;
 
     var canvas, mousedown,
-    ctx,
+    ctx, lineWidth,
     // full screen dimensions
-    cw = window.innerWidth,
-    ch = window.innerHeight,
+    cw, ch,
     // firework collection
     fireworks = [],
     // particle collection
@@ -237,15 +236,15 @@ var BeautifulFireworks = (function () {
 
     function updateWindow() {
       // full screen dimensions
-      cw = window.innerWidth,
-      ch = window.innerHeight,
+      cw = window.innerWidth * window.devicePixelRatio;
+      ch = window.innerHeight * window.devicePixelRatio;
       // set canvas dimensions
-      canvas.style.width = cw + "px";
-      canvas.style.height = ch + "px";
-      canvas.width = cw * window.devicePixelRatio;
-      canvas.height = ch * window.devicePixelRatio;
-      wlog("canvas.style.width:"+canvas.style.width+"\ncanvas.style.height:"+canvas.style.height+"\ncanvas.width:"+canvas.width
-      +"\ncanvas.height:"+canvas.height+"\nwindow.devicePixelRatio:"+window.devicePixelRatio);
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      canvas.width = cw;
+      canvas.height = ch;
+      lineWidth = window.devicePixelRatio;
+      ctx.lineWidth = lineWidth;
     }
 
     function fire(count) {
