@@ -257,7 +257,8 @@ var BeautifulFireworks = (function () {
     }
 
     this.fire = fire;
-
+    AudioPool.preload(fireAudio);
+    AudioPool.preload(bombAudio);
     init();
   };
   return BeautifulFireworks;
