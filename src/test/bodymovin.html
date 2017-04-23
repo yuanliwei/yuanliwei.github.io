@@ -122,7 +122,7 @@
       return shortName;
     }
 
-    new Load(loadJsConfig)
+    new Load(loadJsConfig).load("bootstrap-css")
       .load("jquery", "tether", "bodymovin", "wilddog", "string-format")
       .load("jqueryui", "bootstrap", "wilddog-config")
       .load("./data/bodymovin.js")

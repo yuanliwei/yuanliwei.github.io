@@ -8,6 +8,9 @@
     <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
   </head>
   <body>
+    <div class="fixed-top h-100 w-100" style="z-index:-1;">
+      <canvas id="canvas" class="d-none" width="0" height="0" style="background-color:#000;"></canvas>
+    </div>
     <div class="container">
       <a href="#" name="up"></a>
       <div class="row mt-4">
@@ -15,7 +18,7 @@
           <div class="message" contenteditable="true"></div>
         </div>
       </div>
-      </div>
+    </div>
     <div class="btn-group-vertical m-4 fixed-top shake-chunk" style="left:auto;">
       <a href="../../index.html" class="btn btn-secondary">
         <i class="fa fa-home fa-2x"></i>
@@ -26,11 +29,19 @@
       <button type="button" class="btn btn-secondary" onclick="sendMsgTest()">
         <i class="fa fa-send fa-2x"></i>
       </button>
+      <label class="btn btn-secondary mb-0">
+        <input id="terminalstyle" class="d-none" type="checkbox" autocomplete="off">
+        <!-- <i class="fa fa-terminal fa-2x"></i> -->
+        <span class="fa-stack fa-1x">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-terminal fa-stack-1x"></i>
+        </span>
+      </label>
       <button type="button" class="btn btn-secondary" onclick="gotoUp()">
         <i class="fa fa-arrow-up fa-2x"></i>
       </button>
       <label class="btn btn-secondary mb-0">
-        <input id="autoscroll" type="checkbox" autocomplete="off">
+        <input id="autoscroll" class="d-none" type="checkbox" autocomplete="off">
         <i class="fa fa-arrow-down fa-2x"></i>
       </label>
     </div>
@@ -48,14 +59,11 @@
       function startReceiveLog() {
         receiveLog(function (message) {
           console.log(message);
-          if (message && message.length < 5000) {
-            var pre = $('<pre></pre>');
-            pre.text(message);
-            $(".message").append(pre);
+          if ($("#terminalstyle")[0].checked) {
+            if (fireworks) fireworks.fire();
+            appendShowTerminalMsg(message);
           } else {
-            var textarea = $('<textarea class="w-100" rows="20"></textarea>');
-            textarea.val(message);
-            $(".message").append(textarea);
+            appendShowMsg(message);
           }
           if ($("#autoscroll")[0].checked) {
             document.location.hash = '';
@@ -64,8 +72,35 @@
         });
       }
 
+      function appendShowMsg(message) {
+        if (message && message.length < 5000) {
+          var pre = $('<pre></pre>');
+          pre.text(message);
+          $(".message").append(pre);
+        } else {
+          var textarea = $('<textarea class="w-100" rows="20"></textarea>');
+          textarea.val(message);
+          $(".message").append(textarea);
+        }
+      }
+
+      function appendShowTerminalMsg(message) {
+        if (message && message.length < 5000) {
+          var pre = $('<pre class="text-success"></pre>');
+          pre.text(message);
+          $(".message").append(pre);
+        } else {
+          var textarea = $('<textarea class="w-100 text-success" rows="20"></textarea>');
+          textarea.val(message);
+          $(".message").append(textarea);
+        }
+      }
+
       function clearMsg() {
         $(".message").text('');
+        if ($("#terminalstyle")[0].checked) {
+          if (fireworks) fireworks.fire(9);
+        }
       }
 
       function sendMsgTest() {
@@ -73,22 +108,33 @@
         wlog("now Date&Time : " + date.toLocaleDateString() + ' ' + date.toTimeString() + " - " + new Date().getMilliseconds() );
       }
 
+      var fireworks = null;
       new Load(loadJsConfig)
         .load("jquery", "tether", "fontawesome", "common-utils", "csshake")
         .load("bootstrap", "jqueryui", "wlog")
         .then(startReceiveLog)
+        .load("./particle/js/particle.js")
+        .then(()=> fireworks = new BeautifulFireworks("canvas"))
         .then(()=>{
-          PageState.load("#autoscroll");
+          PageState.load("#autoscroll", "#terminalstyle");
           $("#autoscroll").checkboxradio({icon: false});
-          if ($("#autoscroll")[0].checked) {
-            $( "#autoscroll" ).checkboxradio( "option", "classes.ui-checkboxradio", "highlight" );
-          }
+          $("#terminalstyle").checkboxradio({icon: false});
+          if ($("#terminalstyle")[0].checked) $("#canvas").removeClass('d-none');
           $("#autoscroll").change((e)=>{
             var scroll = e.target;
             PageState.save("#autoscroll");
             if (scroll.checked) {
               document.location.hash = '';
               document.location.hash = 'down';
+            }
+          });
+          $("#terminalstyle").change((e)=>{
+            var scroll = e.target;
+            PageState.save("#terminalstyle");
+            if (scroll.checked) {
+              $("#canvas").removeClass('d-none');
+            } else {
+              $("#canvas").addClass('d-none');
             }
           });
         });
