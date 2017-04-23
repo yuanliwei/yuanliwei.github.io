@@ -113,7 +113,7 @@
         .load("bootstrap", "jqueryui", "wlog")
         .then(startReceiveLog)
         .load("./particle/js/BeautifulFireworks.js", "../js/utils/AudioPool.js")
-        .then(()=> fireworks = new BeautifulFireworks("canvas", "./mp3/65ec68b443594a38b8f7d6d0c53d74b5.mp3", "./mp3/b74ab7828fd243418c443abe604bf6de.mp3"))
+        .then(()=> fireworks = new BeautifulFireworks("canvas", "./mp3/fire.mp3", "./mp3/bomb.mp3"))
         .then(()=>{
           PageState.load("#autoscroll", "#terminalstyle");
           $("#autoscroll").checkboxradio({icon: false});
