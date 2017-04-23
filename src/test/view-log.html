@@ -9,23 +9,42 @@
   </head>
   <body>
     <div class="container">
-      <nav class="navbar sticky-top navbar-light bg-faded">
-        <div class="row mt-2">
-          <div class="col-12">
-            <button type="button" class="btn btn-primary m-2" onclick="clearMsg()">Clear</button>
-            <button type="button" class="btn btn-primary m-2" onclick="sendMsgTest()">sendMsgTest</button>
-          </div>
-        </div>
-      </nav>
+      <a href="#" name="up"></a>
       <div class="row mt-4">
         <div class="col-12">
-          <div class="message" contenteditable="true">
-
-          </div>
+          <div class="message" contenteditable="true"></div>
         </div>
       </div>
+      </div>
+    <div class="btn-group-vertical m-4 fixed-top shake-chunk" style="left:auto;">
+      <a href="../../index.html" class="btn btn-secondary">
+        <i class="fa fa-home fa-2x"></i>
+      </a>
+      <button type="button" class="btn btn-secondary" onclick="clearMsg()">
+        <i class="fa fa-refresh fa-2x"></i>
+      </button>
+      <button type="button" class="btn btn-secondary" onclick="sendMsgTest()">
+        <i class="fa fa-send fa-2x"></i>
+      </button>
+      <button type="button" class="btn btn-secondary" onclick="gotoUp()">
+        <i class="fa fa-arrow-up fa-2x"></i>
+      </button>
+      <label class="btn btn-secondary mb-0">
+        <input id="autoscroll" type="checkbox" autocomplete="off">
+        <i class="fa fa-arrow-down fa-2x"></i>
+      </label>
     </div>
+    <a href="#" name="down"></a>
     <script type="text/javascript">
+
+      function gotoUp() {
+        document.location.hash = '';
+        document.location.hash = 'up';
+        $("#autoscroll")[0].checked = false;
+        $( "#autoscroll" ).checkboxradio( "option", "classes.ui-checkboxradio", "" );
+        PageState.save("#autoscroll");
+      }
+
       function startReceiveLog() {
         receiveLog(function (message) {
           console.log(message);
@@ -38,6 +57,10 @@
             textarea.val(message);
             $(".message").append(textarea);
           }
+          if ($("#autoscroll")[0].checked) {
+            document.location.hash = '';
+            document.location.hash = 'down';
+          }
         });
       }
 
@@ -47,13 +70,28 @@
 
       function sendMsgTest() {
         var date = new Date();
-        wlog("now Date&Time : " + date.toLocaleDateString() + ' ' + date.toTimeString());
+        wlog("now Date&Time : " + date.toLocaleDateString() + ' ' + date.toTimeString() + " - " + new Date().getMilliseconds() );
       }
 
       new Load(loadJsConfig)
-        .load("jquery", "tether")
-        .load("bootstrap", "wlog")
-        .then(startReceiveLog);
+        .load("jquery", "tether", "fontawesome", "common-utils", "csshake")
+        .load("bootstrap", "jqueryui", "wlog")
+        .then(startReceiveLog)
+        .then(()=>{
+          PageState.load("#autoscroll");
+          $("#autoscroll").checkboxradio({icon: false});
+          if ($("#autoscroll")[0].checked) {
+            $( "#autoscroll" ).checkboxradio( "option", "classes.ui-checkboxradio", "highlight" );
+          }
+          $("#autoscroll").change((e)=>{
+            var scroll = e.target;
+            PageState.save("#autoscroll");
+            if (scroll.checked) {
+              document.location.hash = '';
+              document.location.hash = 'down';
+            }
+          });
+        });
     </script>
   </body>
 </html>

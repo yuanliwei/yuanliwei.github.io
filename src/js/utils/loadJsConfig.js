@@ -34,6 +34,9 @@ var loadJsConfig = {
   "bodymovin":[
     "https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"
   ],
+  "csshake":[
+    "https://cdn.bootcss.com/csshake/1.5.1/csshake.min.css"
+  ],
   "beautify":[
     "https://cdn.bootcss.com/js-beautify/1.6.12/beautify.min.js"
   ],
@@ -55,6 +58,9 @@ var loadJsConfig = {
     getPath("src/js/java-model/Modifiers.js"),
     getPath("src/js/java-model/Filed.js"),
     getPath("src/js/java-model/ClassModel.js")
+  ],
+  "common-utils":[
+    getPath("src/js/utils/PageState.js")
   ],
   "gen-java":[
     getPath("src/js/gen-java/Fileds2Java.js"),
