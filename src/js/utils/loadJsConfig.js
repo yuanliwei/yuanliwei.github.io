@@ -32,6 +32,12 @@ var loadJsConfig = {
   "fontawesome":[
     "https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
   ],
+  "three.js":[
+    "https://cdn.bootcss.com/three.js/r83/three.min.js"
+  ],
+  "Stats":[
+    "https://cdn.bootcss.com/stats.js/r16/Stats.min.js"
+  ],
   "bodymovin":[
     "https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"
   ],

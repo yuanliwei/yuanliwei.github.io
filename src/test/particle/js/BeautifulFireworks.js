@@ -193,6 +193,7 @@ var BeautifulFireworks = (function () {
       // this function will run endlessly with requestAnimationFrame
       requestAnimFrame( loop );
 
+
       // increase the hue to get different colored fireworks over time
       //hue += 0.5;
 
@@ -209,6 +210,16 @@ var BeautifulFireworks = (function () {
       // change the composite operation back to our main mode
       // lighter creates bright highlight points as the fireworks and particles overlap each other
       ctx.globalCompositeOperation = 'lighter';
+
+      if (fireworks.length==0&&particles.length==0) return;
+
+      var stars = 10;
+      while (stars--) {
+        ctx.beginPath();
+        ctx.arc(cw * Math.random(),ch * Math.random() ,1 ,0 ,2*Math.PI);
+        ctx.fillStyle = 'hsl(' + hue + ', 100%, ' + 80 + '%)';
+        ctx.fill();
+      }
 
       // loop over each firework, draw it, update it
       var i = fireworks.length;
