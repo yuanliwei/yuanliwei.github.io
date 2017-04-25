@@ -1,8 +1,17 @@
 CACHE MANIFEST
+
 # version 1
+# 该类别指定要缓存的资源文件
+CACHE:
 *
 
+# 指定不进行缓存的资源文件
+NETWORK:
+# login.php
+# http://foocoder.com  
 
-NETWORK
-
-FALLBACK
+# 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源
+FALLBACK:
+# /main.py /static.html
+# images/large/ images/offline.jpg
+# *.html /offline.html
