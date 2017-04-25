@@ -49,6 +49,7 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 /src/js/utils/wlog.js
 /src/js/utils/loadJsConfig.js
 /src/js/utils/load.js
+/src/js/utils/loadES6.js
 /highlight/highlight.pack.js
 /highlight/styles/default.css
 /src/test/particle/js/BeautifulFireworks.js
