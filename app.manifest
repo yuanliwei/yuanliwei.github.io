@@ -51,6 +51,8 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 /src/js/utils/AudioPool.js
 /favicon.ico
 /src/test/view-log.html
+/src/test/mp3/bomb.mp3
+/src/test/mp3/fire.mp3
 
 
 # 指定不进行缓存的资源文件
