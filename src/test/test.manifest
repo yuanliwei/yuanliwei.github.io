@@ -43,6 +43,8 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 ../../src/js/utils/PageState.js
 ../../src/js/utils/wilddog-config.js
 ../../src/js/utils/wlog.js
+../../src/js/utils/wlog.js
+../../src/js/utils/load.js
 ../../highlight/highlight.pack.js
 ../../highlight/styles/default.css
 
