@@ -47,6 +47,9 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 /src/js/utils/load.js
 /highlight/highlight.pack.js
 /highlight/styles/default.css
+/src/test/particle/js/BeautifulFireworks.js
+/src/js/utils/AudioPool.js
+/favicon.ico
 
 # 指定不进行缓存的资源文件
 NETWORK:
