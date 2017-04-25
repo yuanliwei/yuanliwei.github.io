@@ -55,6 +55,7 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 NETWORK:
 # login.php
 # http://foocoder.com
+https://ylw-wuziqi.wilddogio.com/*
 
 # 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源
 FALLBACK:
