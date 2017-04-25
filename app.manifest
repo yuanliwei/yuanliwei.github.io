@@ -1,6 +1,7 @@
 CACHE MANIFEST
 
 # version 1
+
 # 该类别指定要缓存的资源文件
 CACHE:
 https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js
@@ -9,6 +10,8 @@ https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css
 https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js
 https://cdn.bootcss.com/csshake/1.5.1/csshake.min.css
 https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css
+https://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0
+https://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0
 https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js
 https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.css
 https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js
@@ -54,15 +57,10 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 /src/test/mp3/bomb.mp3
 /src/test/mp3/fire.mp3
 
-
 # 指定不进行缓存的资源文件
 NETWORK:
-# login.php
-# http://foocoder.com
 *
 
 # 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源
 FALLBACK:
-# /main.py /static.html
-# images/large/ images/offline.jpg
 # *.html /offline.html
