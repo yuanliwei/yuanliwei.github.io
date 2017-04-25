@@ -1,0 +1,13 @@
+{
+  "name": "JS Tools",
+  "short_name": "yuanliwei",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "start_url": "/index.html",
+  "scope": "/yuanliwei.github.io",
+  "icons": [{
+      "src": "icon/app-icon",
+      "sizes": "128x128",
+      "type": "image/png"
+    }]
+  }
