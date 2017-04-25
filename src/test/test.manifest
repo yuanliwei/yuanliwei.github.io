@@ -3,12 +3,12 @@ CACHE MANIFEST
 # version 1
 # 该类别指定要缓存的资源文件
 CACHE:
-*
+https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 
 # 指定不进行缓存的资源文件
 NETWORK:
 # login.php
-# http://foocoder.com  
+# http://foocoder.com
 
 # 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源
 FALLBACK:
