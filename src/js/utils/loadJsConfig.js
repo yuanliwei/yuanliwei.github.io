@@ -38,6 +38,9 @@ var loadJsConfig = {
   "Stats":[
     "https://cdn.bootcss.com/stats.js/r16/Stats.min.js"
   ],
+  "particles":[
+    "https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"
+  ],
   "bodymovin":[
     "https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"
   ],
