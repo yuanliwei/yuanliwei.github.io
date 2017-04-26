@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# version 7
+# version 8
 
 # 该类别指定要缓存的资源文件
 CACHE:
@@ -44,6 +44,10 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 /src/js/java-model/Modifiers.js
 /src/js/list/fast-list.js
 /src/js/list/normal-list.js
+/src/js/utils/common.js
+/src/js/utils/code-format.js
+/src/gen/gen.js
+/src/js/utils/StringUtil.js
 /src/js/utils/PageState.js
 /src/js/utils/wilddog-config.js
 /src/js/utils/wlog.js
@@ -57,6 +61,8 @@ https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
 /favicon.ico
 /index.html
 /src/test/view-log.html
+/src/gen/gen.html
+/src/escape/escape.html
 /src/test/mp3/bomb.mp3
 /src/test/mp3/fire.mp3
 
