@@ -91,7 +91,8 @@ function receiveMsg() {
     }
 
     if (pices.step && pices.uid == friendId ) {
-      pices = new Pieces(pices.x,pieces.y,pieces.type)
+      isMe = true;
+      pices = new Pieces(pices.x,pices.y,pices.type)
       pieces.push(pices);
       draw();
     }
