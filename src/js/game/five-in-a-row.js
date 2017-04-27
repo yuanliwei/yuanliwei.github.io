@@ -80,7 +80,7 @@ function receiveMsg() {
     var data = snapshot.val();
     console.log(data);
     var pices = JSON.parse(data);
-    if (pices.command) {
+    if (pices.command && pices.uid != userId) {
       if (pices.start) {
         userId = pices.foeUid//我的
         friendId = pices.uid;
