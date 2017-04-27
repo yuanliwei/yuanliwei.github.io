@@ -8,7 +8,7 @@ class Pieces {
   draw(ctx,gridw){
     ctx.fillStyle = (this.type == 1) ? "#fff" : "#000";
     ctx.beginPath();
-    ctx.arc(this.x * gridw,this.y * gridw,50,0,2*Math.PI);
+    ctx.arc(this.x * gridw,this.y * gridw,20*dp,0,2*Math.PI);
     ctx.fill();
   }
 }
