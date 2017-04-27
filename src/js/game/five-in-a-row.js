@@ -19,7 +19,7 @@ var pieces = [];
 function startGame() {
   var cmd = {};
   cmd.command = true;
-  cmd.start = ture;
+  cmd.start = true;
   cmd.uid = userId = Math.random();
   cmd.foeUid = Math.random();
   cmd.first = true;
