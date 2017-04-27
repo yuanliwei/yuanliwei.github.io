@@ -61,6 +61,7 @@ function initCanvas(id) {
     draw();
 
     pices.step = true;
+    pices.uid = userId;
     sendMsg(JSON.stringify(pices));
     isMe = false;
   });
@@ -77,6 +78,7 @@ function receiveMsg() {
   var ref = wilddog.sync().ref("web-wuziqi");
   ref.on('value', function(snapshot, prev) {
     var data = snapshot.val();
+    console.log(data);
     var pices = JSON.parse(data);
     if (pices.command) {
       if (pices.start) {
@@ -87,7 +89,8 @@ function receiveMsg() {
         foeType = pices.myType;
       }
     }
-    if (pices.step) {
+
+    if (pices.step && pices.uid == friendId ) {
       pices = new Pieces(pices.x,pieces.y,pieces.type)
       pieces.push(pices);
       draw();
