@@ -21,7 +21,7 @@ function startGame() {
   cmd.command = true;
   cmd.start = true;
   cmd.uid = userId = Math.random();
-  cmd.foeUid = Math.random();
+  cmd.foeUid = friendId = Math.random();
   cmd.first = true;
   cmd.myType = 1;
   cmd.foeType = 2;
