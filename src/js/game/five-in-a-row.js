@@ -26,7 +26,7 @@ function startGame() {
   cmd.myType = 1;
   cmd.foeType = 2;
   sendMsg(JSON.stringify(cmd));
-  isMe = ture;
+  isMe = true;
   wlog("开始游戏");
 }
 
