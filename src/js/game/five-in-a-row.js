@@ -78,13 +78,6 @@ function receiveMsg() {
   ref.on('value', function(snapshot, prev) {
     var data = snapshot.val();
     var pices = JSON.parse(data);
-
-    cmd.command = true;
-    cmd.start = ture;
-    cmd.uid = userId = Math.random();
-    cmd.first = true;
-    cmd.myType = 1;
-
     if (pices.command) {
       if (pices.start) {
         userId = pices.foeUid//我的
@@ -95,6 +88,7 @@ function receiveMsg() {
       }
     }
     if (pices.step) {
+      pices = new Pieces(pices.x,pieces.y,pieces.type)
       pieces.push(pices);
       draw();
     }
