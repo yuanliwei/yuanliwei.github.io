@@ -1,5 +1,6 @@
+var dp = window.devicePixelRatio;
 var canvas, ctx,
-    gridW = 100,
+    gridW = 40 *dp ,
     lineNum = 10,
     colNum = 10,
     cw, ch;
@@ -49,8 +50,8 @@ function initCanvas(id) {
     var startX = (cw - size) / 2;
     var startY = (ch - size) / 2;
     //鼠标坐标
-    var mX = e.x * window.devicePixelRatio - startX;
-    var mY = e.y * window.devicePixelRatio - startY;
+    var mX = e.x * dp - startX;
+    var mY = e.y * dp - startY;
 
     var x = parseInt(mX/gridW + 0.5);//在第几个网子上
     var y = parseInt(mY/gridW + 0.5);
