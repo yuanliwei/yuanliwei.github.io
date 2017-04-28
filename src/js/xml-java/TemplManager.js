@@ -2,12 +2,10 @@ var TemplManager;
 
 TemplManager = (function() {
   function TemplManager() {
-    var config, ref;
-    config = {
-      authDomain: "ylw-wuziqi.wilddog.com",
+    var ref;
+    wilddog.initializeApp({
       syncURL: "https://ylw-wuziqi.wilddogio.com"
-    };
-    wilddog.initializeApp(config);
+    });
     ref = wilddog.sync().ref("/code-template");
     ref.on('value', (function(_this) {
       return function(snapshot, prev) {

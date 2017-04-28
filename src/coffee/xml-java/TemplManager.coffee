@@ -1,11 +1,7 @@
 class TemplManager
 
   constructor: () ->
-    config = {
-      authDomain: "ylw-wuziqi.wilddog.com"
-      syncURL: "https://ylw-wuziqi.wilddogio.com"
-    }
-    wilddog.initializeApp(config)
+    wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
     ref = wilddog.sync().ref("/code-template")
     ref.on 'value', (snapshot, prev) =>
       @updateList snapshot.val()

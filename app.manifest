@@ -29,7 +29,7 @@ https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css
 https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js
 https://cdn.bootcss.com/three.js/r83/three.min.js
 https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js
-https://cdn.wilddog.com/sdk/js/2.3.10/wilddog.js
+https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js
 /src/test/data/particlesjs-config.json
 /src/js/escape/Base64.js
 /src/js/escape/crypto-js.js

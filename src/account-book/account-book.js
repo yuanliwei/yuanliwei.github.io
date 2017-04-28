@@ -159,12 +159,8 @@ function onSave() {
 }
 
 function saveToDog(row){
-        // 初始化
-      var config = {
-        authDomain: "ylw-wuziqi.wilddog.com",
-        syncURL: "https://ylw-wuziqi.wilddogio.com"
-      };
-      wilddog.initializeApp(config);
+      // 初始化
+      wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
       var ref = wilddog.sync().ref("/account");
       // child() 用来定位到某个节点。
 

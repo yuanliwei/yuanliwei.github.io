@@ -1,8 +1,3 @@
 // wilddog-config.js
-var config, ref;
-config = {
-  authDomain: "ylw-wuziqi.wilddog.com",
-  syncURL: "https://ylw-wuziqi.wilddogio.com"
-};
-wilddog.initializeApp(config);
+wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
 // ref = wilddog.sync().ref("/test-bodymovin");
