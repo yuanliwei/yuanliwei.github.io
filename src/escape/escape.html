@@ -47,14 +47,14 @@
       </div>
     </div>
     <script type="text/javascript">
-        new Load(loadJsConfig)
+        new Load(loadJsConfig).hide()
         .load("jquery", "tether", "string-format", "beautify",
               "escapes", "highlight")
         .load("bootstrap")
         .load("../js/utils/StringUtil.js",
               "../js/utils/common.js",
               "../js/utils/code-format.js",
-              "./escape.js")
+              "./escape.js").show()
         .then(function() {
           console.log('====================hello==============');
           loadConfig();

@@ -122,10 +122,10 @@
       return shortName;
     }
 
-    new Load(loadJsConfig).load("bootstrap-css")
+    new Load(loadJsConfig).hide()
       .load("jquery", "tether", "bodymovin", "wilddog", "string-format")
       .load("jqueryui", "bootstrap", "wilddog-config")
-      .load("./data/bodymovin.js")
+      .load("./data/bodymovin.js").show()
       .then(initScene);
 
   </script>

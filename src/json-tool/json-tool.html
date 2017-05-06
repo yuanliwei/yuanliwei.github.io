@@ -42,14 +42,14 @@
   </div>
 
     <script type="text/javascript">
-        new Load(loadJsConfig)
+        new Load(loadJsConfig).hide()
           .load("jquery", "tether", "string-format", "beautify",
                 "escapes", "highlight")
           .load("bootstrap")
           .load("../js/utils/StringUtil.js",
                 "../js/utils/code-format.js",
                 "../js/utils/common.js",
-                "./json-tool.js")
+                "./json-tool.js").show()
           .then(function() {
               console.log('====================hello==============');
               loadConfig();
