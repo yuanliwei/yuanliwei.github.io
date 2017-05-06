@@ -35,14 +35,20 @@ var Load = (function () {
     };
 
     this.wait = function (millis) {
-      this.chain = new Load(this.config);
-      this.chain.___isChain = true;
-      this.millis = millis;
-      if (!this.___isChain) {
-        doWait(this);
-      }
-      return this.chain;
+      return this.then(function(next) {
+        setTimeout(next, millis);
+      }, true);
     };
+
+    this.hide = function(selector) {
+      selector = selector || 'body';
+      return this.then(function() { document.querySelector(selector).style.display='none'; });
+    }
+
+    this.show = function(selector) {
+      selector = selector || 'body';
+      return this.then(function() { document.querySelector(selector).style.display=''; });
+    }
 
     this.___doNext = function () {
       if (this.callback) {
@@ -53,9 +59,6 @@ var Load = (function () {
       }
       if (this.params) {
         doLoad(this);
-      }
-      if (this.millis) {
-        doWait(this);
       }
     };
 
@@ -68,16 +71,11 @@ var Load = (function () {
       });
     };
 
-    function doWait(self) {
-      setTimeout(function () {
-        self.chain.___doNext();
-      }, self.millis);
-    };
-
     function doThen(self) {
       self.chain.data = self.callback(self.data);
       if (self.chain) {
         self.chain.___doNext();
+        self.chain.___isChain = false;
       }
     };
 

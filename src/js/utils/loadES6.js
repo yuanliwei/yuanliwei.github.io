@@ -34,13 +34,17 @@ class LoadES6 {
   }
 
   wait(millis) {
-    this.promise = this.promise.then(()=>{
-      return new Promise((resolve, reject)=>{
-        console.log("wait - " + millis);
-        setTimeout(resolve, millis);
-      }).catch((e)=>console.error(e));
-    });
-    return new LoadES6(this.config, this.promise);
+    return this.then((resolve)=>{ setTimeout(resolve, millis) }, true);
+  }
+
+  hide(selector) {
+    selector = selector || 'body';
+    return this.then(()=> { document.querySelector(selector).style.display='none' })
+  }
+
+  show(selector) {
+    selector = selector || 'body';
+    return this.then(()=> { document.querySelector(selector).style.display='' })
   }
 
   static getLoadPromises(params, self) {

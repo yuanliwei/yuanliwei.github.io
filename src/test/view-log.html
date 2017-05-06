@@ -123,10 +123,11 @@
       }
 
       var fireworks = null;
-      new Load(loadJsConfig)
+      new Load(loadJsConfig).hide()
         .load("jquery", "tether", "fontawesome", "common-utils", "csshake")
         .load("bootstrap", "jqueryui", "wlog")
         .then(startReceiveLog)
+        .show()
         .load("./particle/js/BeautifulFireworks.js", "../js/utils/AudioPool.js")
         .then(()=> fireworks = new BeautifulFireworks("canvas", "./mp3/fire.mp3", "./mp3/bomb.mp3"))
         .then(()=>{
