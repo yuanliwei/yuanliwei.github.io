@@ -42,6 +42,7 @@ function onChange() {
         case 3: result = new CourseList(json).html(); break;
         case 4: result = new BookChapterList(json).html(); break;
         case 5: result = new HomeworkList(json).html(); break;
+        case 6: result = new CombineRepeteLine(json).html(); break;
       }
     } catch (e) {
       result = e.stack;
@@ -59,6 +60,7 @@ function onChange() {
       case 3:
       case 4:
       case 5:
+      case 6:
         $('pre code').text('');
         $('#result_content').html(result);
         break;
@@ -159,6 +161,65 @@ BookList = (function () {
     }
   }
   return BookList;
+})();
+
+CombineRepeteLine = (function () {
+  function CombineRepeteLine(json) {
+    this.json = json;
+    this.html = function () {
+      return getCombineRepeteLineHtml(json);
+    }
+    function getCombineRepeteLineHtml(json) {
+      var strings = json.split('\n')
+      var stringMap = {}
+      strings.forEach((str)=>{
+        stringMap[str] = str;
+      })
+      strings = []
+      for (var str in stringMap) {
+        if(str)
+        strings.push(str)
+      }
+
+      return strings.join('<br>');
+    }
+
+    function castEndDate(book) {
+      var endDate = book.end_date;
+      if(endDate < 1000) return;
+      book.end_date = new Date(endDate).Format("yyyy-MM-dd hh:mm:ss");
+    }
+    function castBookType(book) {
+      var packType = book.packType;
+      switch (packType) {
+        case 1: book.packType =  "1 - 听力风暴"; break;
+        case 2: book.packType =  "2 - 同步视听说"; break;
+        case 3: book.packType =  "3 - 语音风暴"; break;
+        case 4: book.packType =  "4 - 李大侠"; break;
+        case 5: book.packType =  "5 - 听说风暴"; break;
+        case 6: book.packType =  "6 - 2016版"; break;
+        default: book.packType =  packType + " - 未知的打包类型"; break;
+      }
+    }
+    function castFlag(book) {
+      var flag = book.flag;
+      switch (flag) {
+        case 1: book.flag = "1 - 已购买"; break;
+        case 2: book.flag = "2 - 已授权"; break;
+        case 3: book.flag = "3 - 未购买"; break;
+        default: book.flag = flag + " - 未知的购买类型"; break;
+      }
+    }
+    function castValid(book) {
+      var valid = book.valid;
+      switch (valid) {
+        case 0: book.valid = "0 - 已过期"; break;
+        case 1: book.valid = "1 - 未过期"; break;
+        default: book.valid = valid + " - 未知类型"; break;
+      }
+    }
+  }
+  return CombineRepeteLine;
 })();
 
 BookChapterList = (function () {
