@@ -16,3 +16,6 @@ https://yuanliwei.github.io/src/js/utils/wlog.js
 "Beautiful, functional, dialogs in Javascript",
 6030
 ],
+
+Visual Studio Editor
+https://github.com/Microsoft/monaco-editor

@@ -13,6 +13,26 @@ var loadJsConfig = {
     "https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js",
     "https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.css"
   ],
+  "jquery.qrcode":[
+    "https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"
+  ],
+  "JsBarcode":[
+    "https://cdn.bootcss.com/jsbarcode/3.6.0/JsBarcode.all.min.js"
+  ],
+  "codemirror":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/codemirror.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/dracula.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/codemirror.min.css"
+  ],
+  "codemirror-show-hint":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/show-hint.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/show-hint.min.js"
+  ],
+  "codemirror-javascript":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/javascript-hint.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/lint/javascript-lint.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/mode/javascript/javascript.min.js"
+  ],
   "mark":[
     "https://cdn.bootcss.com/mark.js/8.9.0/mark.min.js",
     "https://cdn.bootcss.com/mark.js/8.9.0/jquery.mark.min.js"
