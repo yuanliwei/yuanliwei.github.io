@@ -16,6 +16,16 @@
     body {
       background-color: black!important;
     }
+    body .ui-dialog .ui-widget-content, body .ui-widget-content {
+      background-color: #000;
+      overflow: hidden;
+    }
+    body .ui-dialog .ui-widget-header {
+      border: none;
+      background: #333333;
+      color: #ffffff;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -23,6 +33,10 @@
     <div class="row mt-5">
       <div class="col-12">
         <div id='term'></div>
+        <div id='dialogterm'></div>
+      </div>
+      <div class="col-12 text-center">
+        <button id="open_term" type="button" class="btn btn-primary">OpenDialog</button>
       </div>
     </div>
   </div>
@@ -98,11 +112,84 @@
           }
         }
       });
+
+      initTerminalDialog()
+    }
+
+    function addDialogToJquery() {
+      (function($) {
+        $.extend_if_has = function(desc, source, array) {
+          for (var i=array.length;i--;) {
+            if (typeof source[array[i]] != 'undefined') {
+              desc[array[i]] = source[array[i]];
+            }
+          }
+          return desc;
+        };
+        $.fn.dterm = function(interpeter, options) {
+          var defaults = Object.keys($.terminal.defaults);
+          var op = $.extend_if_has({}, options, defaults);
+
+          var term = this.append('<div/>').
+          terminal(interpeter, op);
+          if (!options.title) {
+            options.title = 'JQuery Terminal Emulator';
+          }
+          options.close = function(e, ui) {
+            term.focus(false);
+          };
+          var self = this;
+          var dialog = this.dialog($.extend(options, {
+            resize: function(e, ui) {
+              var c = self.find('.ui-dialog-content');
+              term.resize(c.width(), c.height());
+            },
+            open: function(e, ui) {
+              term.focus();
+              var c = self.find('.ui-dialog-content');
+              term.resize(c.width(), c.height());
+            },
+            closeOnEscape: false
+          }));
+          this.terminal = term;
+          return this;
+        };
+      })(jQuery);
+    }
+
+    function initTerminalDialog() {
+      addDialogToJquery()
+      var dterm = $('#dialogterm').dterm(function(command, term) {
+        if (command !== '') {
+          try {
+            var result = window.eval(command);
+            if (result !== undefined) {
+              this.echo(new String(result));
+            }
+          } catch(e) {
+            this.error(new String(e));
+          }
+        } else {
+          this.echo('');
+        }
+      }, {
+        greetings: 'Javascript Interpreter',
+        width: 1000,
+        height: 400,
+        exit: false,
+        autoOpen: false,
+        name: 'Javascript Interpreter',
+        prompt: 'eval> '
+      });
+
+      $('#open_term').click(function() {
+        dterm.dialog('open');
+      });
     }
 
     new Load(loadJsConfig).hide()
       .load("jquery", "tether", "wilddog", "pako")
-      .load("bootstrap", "wilddog-config", "jquery-terminal")
+      .load("bootstrap", "wilddog-config", "jqueryui", "jquery-terminal")
       .load("./data/star-wars.js").show()
       .then(initScene);
 
