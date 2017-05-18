@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0" name="viewport">
+  <title>STAR WARS</title>
+  <script src="../js/utils/load.js" charset="utf-8"></script>
+  <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
+  <style media="screen">
+    :root {
+      --size: 2;
+    }
+    .cmd, .terminal {
+      font-family: Courier New,Fixed!important;
+    }
+    body {
+      background-color: black!important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-12">
+        <div id='term'></div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    function initScene(){
+      var frames = [];
+      var LINES_PER_FRAME = 14;
+      var DELAY = 67;
+      var stop = false;
+
+      var lines = film.length;
+      for (var i=0; i<lines; i+=LINES_PER_FRAME) {
+        frames.push(film.slice(i, i+LINES_PER_FRAME));
+      }
+      //to show greetings after clearing the terminal
+      function greetings(term) {
+        term.echo('STAR WARS ASCIIMACTION\n'+
+        'Simon Jansen (C) 1997 - 2015\n'+
+        'www.asciimation.co.nz\n\n'+
+        'type "play" to start animation, '+
+        'press C to stop');
+      }
+      function play(term, delay) {
+        var i = 0;
+        var next_delay;
+        if (delay == undefined) {
+          delay = DELAY;
+        }
+        function display() {
+          if (i == frames.length) {
+            i = 0;
+          }
+          term.clear();
+          if (frames[i][0].match(/[0-9]+/)) {
+            next_delay = frames[i][0] * delay;
+          } else {
+            next_delay = delay;
+          }
+          term.echo('\n'.repeat(5))
+          term.echo(' '.repeat(5) + frames[i++].slice(1).join('\n' + ' '.repeat(5))+'\n');
+          term.echo('\n'.repeat(5))
+          // console.log('stop : ' + stop);
+          if (!stop) {
+            setTimeout(display, next_delay);
+          } else {
+            term.clear();
+            greetings(term);
+            i = 0;
+          }
+        }
+        display();
+      }
+      $('#term').terminal(function(command, term){
+        if (command == 'play') {
+          term.pause();
+          stop = false;
+          play(term);
+        }
+      }, {
+        // width: 1000,
+        // height: 500,
+        prompt: 'starwars> ',
+        greetings: null,
+        enabled: false,
+        onInit: function(term) {
+          greetings(term);
+        },
+        keymap: {
+          'CTRL+D': function(e, original) {
+            console.log("stop pppp");
+            stop = true;
+            // term.resume();
+          }
+        }
+      });
+    }
+
+    new Load(loadJsConfig).hide()
+      .load("jquery", "tether", "wilddog", "pako")
+      .load("bootstrap", "wilddog-config", "jquery-terminal")
+      .load("./data/star-wars.js").show()
+      .then(initScene);
+
+  </script>
+</body>
+</html>
