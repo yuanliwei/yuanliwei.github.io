@@ -28,6 +28,8 @@ function onChange() {
         case 11: fun = Escape.sha256; break;
         case 12: fun = Escape.sha512; break;
         case 13: fun = Escape.formatDate; break;
+        case 14: fun = Escape.toUnicode; break;
+        case 15: fun = Escape.fromUnicode; break;
 
         default:
             fun = Escape.encodeURIComponent;
