@@ -35,7 +35,7 @@
         <div id='term'></div>
         <div id='dialogterm'></div>
       </div>
-      <div class="col-12 text-center">
+      <div class="col-12 text-center invisible">
         <button id="open_term" type="button" class="btn btn-primary">OpenDialog</button>
       </div>
     </div>
@@ -133,7 +133,7 @@
           var term = this.append('<div/>').
           terminal(interpeter, op);
           if (!options.title) {
-            options.title = 'JQuery Terminal Emulator';
+            options.title = 'Javascript REPL';
           }
           options.close = function(e, ui) {
             term.focus(false);
