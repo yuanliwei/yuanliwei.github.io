@@ -1,7 +1,7 @@
 class LoadES6 {
 
   constructor(config_, promise_) {
-    this.config = config_;
+    this.config = config_ || {};
     this.promise = promise_ || Promise.resolve();
     return this;
   }
