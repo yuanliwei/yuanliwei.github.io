@@ -19,6 +19,11 @@ var loadJsConfig = {
   "JsBarcode":[
     "https://cdn.bootcss.com/jsbarcode/3.6.0/JsBarcode.all.min.js"
   ],
+  "jquery-terminal":[
+    "https://cdn.bootcss.com/jquery.terminal/1.4.0/css/jquery.terminal.min.css",
+    // "https://cdn.bootcss.com/jquery.terminal/1.4.0/js/jquery.terminal.min.js"
+    "https://cdn.bootcss.com/jquery.terminal/1.4.0/js/jquery.terminal.js"
+  ],
   "codemirror":[
     "https://cdn.bootcss.com/codemirror/5.25.2/codemirror.min.js",
     "https://cdn.bootcss.com/codemirror/5.25.2/theme/dracula.min.css",

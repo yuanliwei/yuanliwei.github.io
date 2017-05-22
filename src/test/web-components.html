@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>web components 测试</title>
+    <script type="text/javascript">
+    class FlagIcon extends HTMLElement {
+      constructor() {
+        super();
+        this._countryCode = null;
+      }
+
+      static get observedAttributes() { return ["country"]; }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        // name will always be "country" due to observedAttributes
+        this._countryCode = newValue;
+        this._updateRendering();
+      }
+      connectedCallback() {
+        this._updateRendering();
+      }
+
+      get country() {
+        return this._countryCode;
+      }
+      set country(v) {
+        this.setAttribute("country", v);
+      }
+
+      _updateRendering() {
+        // Left as an exercise for the reader. But, you'll probably want to
+        // check this.ownerDocument.defaultView to see if we've been
+        // inserted into a document with a browsing context, and avoid
+        // doing any work if not.
+      }
+    }
+
+    customElements.define("flag-icon", FlagIcon);
+    </script>
+
+    <script type="text/javascript">
+    class PlasticButton extends HTMLButtonElement {
+      constructor() {
+        super();
+        this.addEventListener("click", () => {
+          // Draw some fancy animation effects!
+        });
+      }
+    }
+    customElements.define("plastic-button", PlasticButton, { extends: "button" });
+    </script>
+    <script type="text/javascript">
+    class TacoButton extends HTMLElement {
+      static get observedAttributes() { return ["disabled"]; }
+
+      constructor() {
+        super();
+
+        this.addEventListener("keydown", e => {
+          if (e.keyCode === 32 || e.keyCode === 13) {
+            this.dispatchEvent(new MouseEvent("click", {
+              bubbles: true,
+              cancelable: true
+            }));
+          }
+        });
+
+        this.addEventListener("click", e => {
+          if (this.disabled) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+
+        this._observer = new MutationObserver(() => {
+          this.setAttribute("aria-label", this.textContent);
+        });
+      }
+
+      connectedCallback() {
+        this.setAttribute("role", "button");
+        this.setAttribute("tabindex", "0");
+
+        this._observer.observe(this, {
+          childList: true,
+          characterData: true,
+          subtree: true
+        });
+      }
+
+      disconnectedCallback() {
+        this._observer.disconnect();
+      }
+
+      get disabled() {
+        return this.hasAttribute("disabled");
+      }
+
+      set disabled(v) {
+        if (v) {
+          this.setAttribute("disabled", "");
+        } else {
+          this.removeAttribute("disabled");
+        }
+      }
+
+      attributeChangedCallback() {
+        // only is called for the disabled attribute due to observedAttributes
+        if (this.disabled) {
+          this.removeAttribute("tabindex");
+          this.setAttribute("aria-disabled", "true");
+        } else {
+          this.setAttribute("tabindex", "0");
+          this.setAttribute("aria-disabled", "false");
+        }
+      }
+    }
+    customElements.define("taco-button", TacoButton);
+
+    </script>
+  </head>
+  <body>
+    <h1>Web Components 测试</h1>
+    <taco-button>taco-button</taco-button>
+    <hr>
+    <flag-icon country='zh-cn' width="100" height="100"></flag-icon>
+    <hr>
+    <script type="text/javascript">
+      const flagIcon = document.createElement("flag-icon")
+      flagIcon.country = "jp"
+      document.body.appendChild(flagIcon)
+    </script>
+    <hr>
+    <button is="plastic-button">Click Me!</button>
+    <hr>
+    <plastic-button>Click me?</plastic-button>
+    <script type="text/javascript">
+      const plasticButton = document.createElement("button", { is: "plastic-button" });
+      plasticButton.textContent = "Click me!";
+    </script>
+  </body>
+</html>

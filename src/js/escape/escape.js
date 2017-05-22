@@ -114,3 +114,15 @@ Escape.HtmlDecode = function(text) {
 Escape.formatDate = function (dataValue) {
   return new Date(parseInt(dataValue)).Format('yyyy-MM-dd hh:mm:ss.S');
 }
+
+Escape.toUnicode = function (str) {
+  var codes = []
+  for (var i = 0; i < str.length; i++) {
+    codes.push(("000"+str.charCodeAt(i).toString(16)).slice(-4))
+  }
+  return "\\u"+codes.join("\\u");
+}
+
+Escape.fromUnicode = function (str) {
+  return unescape(str.replace(/\\/g, "%"));
+}

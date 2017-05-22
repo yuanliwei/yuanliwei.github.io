@@ -39,6 +39,7 @@
   }
 
   window.addEventListener("error", function (e) {
+    e.error = e.error || {}
     wlog("Error:" + e.message + "\n" + e.error.stack+"\n\tat:"+e.filename+" (line:"+e.lineno+" col:"+e.colno+")");
   });
 

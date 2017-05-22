@@ -216,7 +216,7 @@ var BeautifulFireworks = (function () {
       var stars = parseInt(particles.length / 8) + 1;
       while (stars--) {
         ctx.beginPath();
-        ctx.arc(cw * Math.random(),ch * Math.random() ,1 * window.devicePixelRatio ,0 ,2*Math.PI);
+        ctx.fillRect(cw * Math.random(),ch * Math.random() ,2 * window.devicePixelRatio ,2 * window.devicePixelRatio);
         ctx.fillStyle = 'hsl(' + hue + ', 100%, ' + 80 + '%)';
         ctx.fill();
       }
