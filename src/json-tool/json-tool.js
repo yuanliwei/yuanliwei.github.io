@@ -88,16 +88,16 @@ BookList = (function () {
               <div class="row">
                 <div class="col-6 bg-success text-danger">
                   <div class="row">
-                    <div class="col-2">price</div> <div class="col-10">{price}</div>
-                    <div class="col-2">packType</div> <div class="col-10">{packType}</div>
-                    <div class="col-2">version</div> <div class="col-10">{version}</div>
+                    <div class="col-4">price</div> <div class="col-8">{price}</div>
+                    <div class="col-4">packType</div> <div class="col-8">{packType}</div>
+                    <div class="col-4">version</div> <div class="col-8">{version}</div>
                   </div>
                 </div>
                 <div class="col-6 bg-danger text-info">
                   <div class="row">
-                    <div class="col-2">flag</div> <div class="col-10">{flag}</div>
-                    <div class="col-2">valid</div> <div class="col-10">{valid}</div>
-                    <div class="col-2">end_date</div> <div class="col-10">{end_date}</div>
+                    <div class="col-4">flag</div> <div class="col-8">{flag}</div>
+                    <div class="col-4">valid</div> <div class="col-8">{valid}</div>
+                    <div class="col-4">end_date</div> <div class="col-8">{end_date}</div>
                   </div>
                 </div>
               </div>
