@@ -78,36 +78,31 @@ BookList = (function () {
       var bookTempl = `
         <div class="container">
           <div class="row bg-info">
-            <div class="col-md-2 col-sm-2 col-xs-2">
-              <img class="img-responsive img-rounded" src="{img_url.viewurl}" alt="">
-            </div>
-            <div class="col-md-8 col-sm-8 col-xs-8 bg-success">
+            <img height="200px" class="col-3 img-rounded m-2" src="{img_url.viewurl}" alt="">
+            <div class="col-8 bg-success">
               <div class="row">
-                <dl class="dl-horizontal">
-                  <dt>book_name</dt> <dd>{book_name}</dd>
-                  <dt>book_id</dt> <dd>{book_id}</dd>
-                  <dt>zipfile_url</dt> <dd>{zipfile_url.viewurl}</dd>
-                </dl>
+                <div class="col-2">book_name</div> <div class="col-10">{book_name}</div>
+                <div class="col-2">book_id</div> <div class="col-10">{book_id}</div>
+                <div class="col-2">zipfile_url</div> <div class="col-10">{zipfile_url.viewurl}</div>
               </div>
               <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6 bg-success text-danger">
-                  <dl class="dl-horizontal">
-                    <dt>price</dt> <dd>{price}</dd>
-                    <dt>packType</dt> <dd>{packType}</dd>
-                    <dt>version</dt> <dd>{version}</dd>
-                  </dl>
+                <div class="col-6 bg-success text-danger">
+                  <div class="row">
+                    <div class="col-2">price</div> <div class="col-10">{price}</div>
+                    <div class="col-2">packType</div> <div class="col-10">{packType}</div>
+                    <div class="col-2">version</div> <div class="col-10">{version}</div>
+                  </div>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 bg-danger text-info">
-                  <dl class="dl-horizontal">
-                    <dt>flag</dt> <dd>{flag}</dd>
-                    <dt>valid</dt> <dd>{valid}</dd>
-                    <dt>end_date</dt> <dd>{end_date}</dd>
-                  </dl>
+                <div class="col-6 bg-danger text-info">
+                  <div class="row">
+                    <div class="col-2">flag</div> <div class="col-10">{flag}</div>
+                    <div class="col-2">valid</div> <div class="col-10">{valid}</div>
+                    <div class="col-2">end_date</div> <div class="col-10">{end_date}</div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2">
-              col-md-2
+            <div class="col-2">
             </div>
           </div>
         </div>
