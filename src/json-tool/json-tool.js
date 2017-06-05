@@ -309,7 +309,7 @@ BookChapterList = (function () {
     }
 
     function parseChapterTree(chapters) {
-      chapters.sort(function(l, h){ return parseInt(l.orderNo) - parseInt(h.orderNo); });
+      chapters.sort(function(l, h){ return parseInt(l.display_order) - parseInt(h.display_order); });
       chapters.forEach(function (chapter) {
         if(!chapter.parent_id && chapter.id){
           chapter.childs = [];
