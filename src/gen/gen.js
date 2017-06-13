@@ -48,6 +48,7 @@ function onChange() {
         case 16: fileds2Java = new SQLJavaDbXutils(); break;
         case 17: fileds2Java = new SQLJavaDbXutils3(); break;
         case 18: fileds2Java = new SQLJava(); break;
+        case 19: fileds2Java = new Pom2Cmd(); break;
         default:
             fileds2Java = new FiledsJavaDbXutils();
             break;

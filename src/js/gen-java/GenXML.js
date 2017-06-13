@@ -120,3 +120,30 @@ var ParseLayoutXML = (function() {
   return ParseLayoutXML;
 
 })();
+
+
+
+var Pom2Cmd = (function () {
+    function Pom2Cmd() {
+
+    }
+
+    Pom2Cmd.prototype.parse = function (text, opts) {
+      var xml = text
+      var dom = $.parseXML(xml)
+      return $(xml.replace(/\$\{(.*?)\}/g, (match, name)=>{
+        var tags = dom.getElementsByTagName(name)
+        return (tags.length == 0)?match:tags[0].innerHTML
+      })).find('dependency').map((num, item)=>{
+        var artifactId = $(item).find('artifactId')[0].innerText
+        var version = $(item).find('version')[0].innerText
+        var groupId = $(item).find('groupId')[0].innerText
+        return `mvn install:install-file -Dfile=${artifactId}-${version}.jar -DgroupId=${groupId} -DartifactId=${artifactId} -Dversion=${version} -Dpackaging=jar`
+      }).toArray().join('\n')
+    };
+
+    Pom2Cmd.prototype.toJava = Pom2Cmd.prototype.parse;
+
+    return Pom2Cmd;
+
+})();
