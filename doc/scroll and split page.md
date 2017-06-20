@@ -1,7 +1,8 @@
 # 滚动代码
 
-`http://www.thepetedesign.com/demos/onepage_scroll_demo.html`
-`https://alvarotrigo.com/fullPage/`
+- `http://www.thepetedesign.com/demos/onepage_scroll_demo.html`
+- `https://alvarotrigo.com/fullPage/`
+
 ```javascript
 $.fn.transformPage = function(settings, pos, index) {
   if (typeof settings.beforeMove == 'function') settings.beforeMove(index);
@@ -40,6 +41,7 @@ $.fn.transformPage = function(settings, pos, index) {
 `https://nathancahill.github.io/Split.js/`
 
 # java 链式网络请求
+```java
 new HttpGet(url)
   .onResponse(new Http{
       public void on(String res){
@@ -48,3 +50,4 @@ new HttpGet(url)
     })
   .onSuccess()
   .onError()
+  ```
