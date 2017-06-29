@@ -51,3 +51,6 @@ new HttpGet(url)
   .onSuccess()
   .onError()
   ```
+
+# 滑动翻页代码
+`http://www.bootcdn.cn/Swiper/`
