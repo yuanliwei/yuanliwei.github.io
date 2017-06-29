@@ -52,6 +52,11 @@ new HttpGet(url)
   .onError()
   ```
 
+<<<<<<< HEAD
 # 滚动动画
 
 `http://www.bootcdn.cn/scrollReveal.js/`
+=======
+# 滑动翻页代码
+`http://www.bootcdn.cn/Swiper/`
+>>>>>>> 84b87c574ced419327ad95152498213c0323dc2e
