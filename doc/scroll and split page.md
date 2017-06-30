@@ -58,3 +58,5 @@ new HttpGet(url)
 
 # 滑动翻页代码
 `http://www.bootcdn.cn/Swiper/`
+# swiper 中文网
+http://www.swiper.com.cn/api/Slides_grid/2014/1217/50.html
