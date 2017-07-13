@@ -82,6 +82,12 @@ var loadJsConfig = {
   "string-format":[
     "https://cdn.bootcss.com/string-format/0.5.0/string-format.min.js"
   ],
+  "chart":[
+    // "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.min.js",
+    // "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.min.js"
+    "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.js",
+    "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.js"
+  ],
   "escapes":[
     getPath("src/js/escape/MD5.js"),
     getPath("src/js/escape/Base64.js"),

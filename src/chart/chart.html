@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width,initial-scale=1.0" name="viewport">
+  <title>图表</title>
+  <script src="../js/utils/load.js" charset="utf-8"></script>
+  <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mt-4 page-header">
+        <h1>图表 <small>chart</small></h1>
+      </div>
+      <div class="col-12">
+        <div class="input-group mt-2">
+          <textarea type="text" id="input_json_text" class="form-control" placeholder="输入数据"></textarea>
+          <span class="input-group-btn">
+            <button id="selectAll" class="btn btn-primary" type="button">全选!</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
+      <canvas id="myChart" class="col-12 mt-4" height="500"></canvas>
+      <div class="col-12 mt-4 text-center">
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-primary" onclick="add()">add</button>
+          <button type="button" class="btn btn-primary" onclick="clearChart()">clear</button>
+          <button type="button" class="btn btn-primary" onclick="resetData()">reset</button>
+        </div>
+      </div>
+    </body>
+
+    <script type="text/javascript">
+      new Load(loadJsConfig).hide()
+        .load("jquery", "tether", "string-format", "beautify",
+        "escapes", "highlight", "chart")
+        .load("bootstrap")
+        .load("./chart.js","./chartjs-plugin-zoom.min.js").show()
+        .then(function() {
+          console.log('====================hello==============');
+          // loadConfig();
+          var ctx = document.getElementById("myChart");
+          initChart(ctx);
+        });
+
+      function add() {
+        var dataStr = $('#input_json_text').val()
+        setSpaceSplitDataString(dataStr)
+      }
+
+      function clearChart() {
+        clearData()
+      }
+
+      function resetData() {
+        clearData()
+        add()
+      }
+
+    </script>
+
+    </html>
