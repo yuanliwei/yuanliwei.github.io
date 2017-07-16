@@ -147,3 +147,22 @@ var Pom2Cmd = (function () {
     return Pom2Cmd;
 
 })();
+
+var ConvertLua = (function () {
+    function ConvertLua() {
+
+    }
+
+    ConvertLua.prototype.parse = function (text, opts) {
+      var lua = text
+      if (!opts.className) {
+        alert('className is null!')
+      }
+      return `file.open('${opts.className}','w')\nfile.write([[${lua}]])\nfile.flush()\nfile.close()\n`
+    };
+
+    ConvertLua.prototype.toJava = ConvertLua.prototype.parse;
+
+    return ConvertLua;
+
+})();
