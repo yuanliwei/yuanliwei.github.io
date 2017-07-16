@@ -158,7 +158,7 @@ var ConvertLua = (function () {
       if (!opts.className) {
         alert('className is null!')
       }
-      return `file.open('${opts.className}','w')\nfile.write([[${lua.split('\n').join('\\n')}]])\nfile.flush()\nfile.close()\n`
+      return `file.open('${opts.className}','w')\nfile.write([[${lua}]])\nfile.flush()\nfile.close()\n`
     };
 
     ConvertLua.prototype.toJava = ConvertLua.prototype.parse;
