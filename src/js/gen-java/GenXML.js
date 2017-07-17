@@ -155,10 +155,18 @@ var ConvertLua = (function () {
 
     ConvertLua.prototype.parse = function (text, opts) {
       var lua = text
-      if (!opts.className) {
-        alert('className is null!')
+      var lines = lua.split('\n')
+      if (!lines[0]) {
+        alert('lines[0] is null!')
       }
-      return `file.open('${opts.className}','w')\r\nfile.write([[${lua}]])\r\nfile.flush()\r\nfile.close()\r\n\r\n`
+      var filename = lines[0].substring(3)
+      var codes = []
+      codes.push(`file.open('${filename}','w')`)
+      lines.forEach((item)=>{
+        codes.push(`file.writeline([[${item.trim()} ]])`)
+      })
+      codes.push(`file.close()`)
+      return codes.join('\n')
     };
 
     ConvertLua.prototype.toJava = ConvertLua.prototype.parse;
