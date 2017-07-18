@@ -161,7 +161,9 @@ var ConvertLua = (function () {
       }
       var filename = lines[0].substring(3)
       var codes = []
-      codes.push(`file.open('${filename}','w')`)
+      codes.push(`file.remove('${filename}')`)
+      codes.push(`print(file.open('${filename}','w'))`)
+      codes.push(`\n`)
       lines.forEach((item)=>{
         codes.push(`file.writeline([[${item.trim()} ]])`)
       })
