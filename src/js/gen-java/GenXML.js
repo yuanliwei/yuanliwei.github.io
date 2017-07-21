@@ -165,7 +165,7 @@ var ConvertLua = (function () {
       codes.push(`print(file.open('${filename}','w'))`)
       codes.push(`\n`)
       lines.forEach((item)=>{
-        codes.push(`file.writeline([[${item.trim()} ]])`)
+        codes.push(`file.writeline([[${item} ]])`)
       })
       codes.push(`file.close()`)
       return codes.join('\n')
