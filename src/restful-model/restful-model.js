@@ -55,7 +55,7 @@ function onChange() {
       }
     } catch (e) {
       result = e.stack;
-      jsObj.log(result);
+      // jsObj.log(result);
       console.error(e);
 
       mode = 1;
