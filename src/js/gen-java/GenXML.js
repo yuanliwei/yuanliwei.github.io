@@ -147,3 +147,32 @@ var Pom2Cmd = (function () {
     return Pom2Cmd;
 
 })();
+
+var ConvertLua = (function () {
+    function ConvertLua() {
+
+    }
+
+    ConvertLua.prototype.parse = function (text, opts) {
+      var lua = text
+      var lines = lua.split('\n')
+      if (!lines[0]) {
+        alert('lines[0] is null!')
+      }
+      var filename = lines[0].substring(3)
+      var codes = []
+      codes.push(`file.remove('${filename}')`)
+      codes.push(`print(file.open('${filename}','w'))`)
+      codes.push(`\n`)
+      lines.forEach((item)=>{
+        codes.push(`file.writeline([[${item} ]])`)
+      })
+      codes.push(`file.close()`)
+      return codes.join('\n')
+    };
+
+    ConvertLua.prototype.toJava = ConvertLua.prototype.parse;
+
+    return ConvertLua;
+
+})();
