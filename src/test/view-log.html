@@ -7,6 +7,12 @@
     <script src="../js/utils/load.js" charset="utf-8"></script>
     <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
     <script src="../js/utils/wlog.js" charset="utf-8"></script>
+    <style media="screen">
+      .force-wrap{
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
   </head>
   <body>
     <div class="fixed-top h-100 w-100" style="z-index:-1;">
@@ -80,7 +86,7 @@
 
       function appendShowMsg(message) {
         if (message && message.length < 5000) {
-          var pre = $('<pre></pre>');
+          var pre = $('<pre class="force-wrap"></pre>');
           pre.text(message);
           $(".message").append(pre);
         } else {
@@ -92,7 +98,7 @@
 
       function appendShowTerminalMsg(message) {
         if (message && message.length < 5000) {
-          var pre = $('<pre class="text-success"></pre>');
+          var pre = $('<pre class="text-success force-wrap"></pre>');
           pre.text(message);
           $(".message").append(pre);
           if (fireworks) fireworks.fire();
