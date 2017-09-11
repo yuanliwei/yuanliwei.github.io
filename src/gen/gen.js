@@ -43,6 +43,7 @@ function onChange() {
         case 11: fileds2Java = new AlignComment(); break;
         case 12: fileds2Java = new FormatCode(); break;
         case 13: fileds2Java = new ParseLayoutXML(); break;
+        case 21: fileds2Java = new ParseLayoutXML2(); break;
         case 14: fileds2Java = new GenJavaTemplate(); break;
         case 15: fileds2Java = new SQLJavaDbOrmlite(); break;
         case 16: fileds2Java = new SQLJavaDbXutils(); break;

@@ -121,7 +121,46 @@ var ParseLayoutXML = (function() {
 
 })();
 
+var ParseLayoutXML2 = (function() {
+  function ParseLayoutXML2() {}
 
+  ParseLayoutXML2.prototype.parseXML = function(xml, opts) {
+    var eles, results, templ, x;
+    x = $(xml);
+    eles = x.find('*[android\\:id]');
+    var templ1 = `private {view} {name};`;
+    var templ2 = `{name} = ({view}) findViewById(R.id.{name});`;
+
+    var defines = [];
+    var values = [];
+    eles.each(function(num, item) {
+      var obj, origName, result, varName, viewId, viewName;
+      viewName = item.localName;
+      viewName = viewName.match(/\.?([^\.]*$)/)[1];
+      viewId = item.getAttribute('android:id');
+      if (!viewId.startsWith('@+id/')) {
+        return;
+      }
+      viewId = viewId.substring(5);
+      origName = xml.match(new RegExp(viewName, 'i'));
+      varName = viewId.match(/(_?[a-z|A-Z|0-9]*?){0,2}$/)[0];
+      varName = StringUtil.format(varName, 2);
+      obj = {
+        id: viewId,
+        view: origName,
+        name: varName
+      };
+      defines.push(templ1.format(obj));
+      values.push(templ2.format(obj));
+    });
+    return defines.join('\n') + '\n\n\n' + values.join('\n');
+  };
+
+  ParseLayoutXML2.prototype.toJava = ParseLayoutXML2.prototype.parseXML;
+
+  return ParseLayoutXML2;
+
+})();
 
 var Pom2Cmd = (function () {
     function Pom2Cmd() {
