@@ -129,7 +129,7 @@ var ParseLayoutXML2 = (function() {
     x = $(xml);
     eles = x.find('*[android\\:id]');
     var templ1 = `private {view} {name};`;
-    var templ2 = `{name} = ({view}) findViewById(R.id.{name});`;
+    var templ2 = `{name} = ({view}) findViewById(R.id.{id});`;
 
     var defines = [];
     var values = [];
