@@ -19,3 +19,9 @@ https://yuanliwei.github.io/src/js/utils/wlog.js
 
 Visual Studio Editor
 https://github.com/Microsoft/monaco-editor
+
+new TextDecoder('utf-8').decode(arr)
+
+https://kripken.github.io/sql.js/GUI/
+
+https://nodeca.github.io/pako/
