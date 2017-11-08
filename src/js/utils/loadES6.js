@@ -1,8 +1,21 @@
 class LoadES6 {
 
-  constructor(config_, promise_) {
-    this.config = config_ || {};
-    this.promise = promise_ || Promise.resolve();
+  constructor() {
+    var config_ = {}
+    var promise_ = Promise.resolve()
+    for (var i = 0; i < arguments.length; i++) {
+      var arg = arguments[i]
+      if (arg.toString() == '[object Object]'){
+        Object.assign(config_, arg)
+      } else if (arg.toString() == '[object Promise]'){
+        promise_ = arg
+      } else {
+        console.warn('un support type! : ' + arg);
+      }
+    }
+
+    this.config = config_
+    this.promise = promise_
     return this;
   }
 

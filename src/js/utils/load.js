@@ -1,6 +1,17 @@
 var Load = (function () {
-  function Load(config_) {
-    this.config = config_ || {};
+  function Load() {
+
+    var config_ = {}
+    for (var i = 0; i < arguments.length; i++) {
+      var arg = arguments[i]
+      if (arg.toString() == '[object Object]'){
+        Object.assign(config_, arg)
+      } else {
+        console.warn('un support type! : ' + arg);
+      }
+    }
+
+    this.config = config_;
 
     this.___isChain = false;
 
