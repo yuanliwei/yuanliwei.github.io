@@ -43,6 +43,7 @@ function onChange() {
         case 4: result = new BookChapterList(json).html(); break;
         case 5: result = new HomeworkList(json).html(); break;
         case 6: result = new CombineRepeteLine(json).html(); break;
+        case 7: result = require('xml-formatter')(json); break;
       }
     } catch (e) {
       result = e.stack;
@@ -50,6 +51,7 @@ function onChange() {
     }
     switch (mode) {
       case 1:
+      case 7:
         $('#result_content').html('');
         $('pre code').text(result);
         $('pre code').each(function (i, block) {

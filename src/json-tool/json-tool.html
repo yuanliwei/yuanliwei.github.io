@@ -29,6 +29,7 @@
               <label class="radio-inline"><input type="radio" name="genMode" value="3"> 课程列表 </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="5"> 作业列表 </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="6"> 合并重复项 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="7"> 格式化xml </label>
           </div>
         </div>
       </div>
@@ -50,6 +51,7 @@
           .load("../js/utils/StringUtil.js",
                 "../js/utils/code-format.js",
                 "../js/utils/common.js",
+                "./xml-formatter.js",
                 "./json-tool.js").show()
           .then(function() {
               console.log('====================hello==============');
