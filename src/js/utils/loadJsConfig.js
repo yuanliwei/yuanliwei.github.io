@@ -46,12 +46,12 @@ LoadES6.config({
     "https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"
   ],
   "bootstrap":[
-    "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css",
-    "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+    "https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css",
+    "https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
   ],
   "bootstrap-css":[
     "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",
-    "https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    "https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
   ],
   "fontawesome":[
     "https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
