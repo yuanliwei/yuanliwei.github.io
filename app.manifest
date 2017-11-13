@@ -1,6 +1,14 @@
 CACHE MANIFEST
 
-# version 43
+# version 50
+
+# 指定不进行缓存的资源文件
+NETWORK:
+*
+
+# 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源
+FALLBACK:
+# *.html /offline.html
 
 # 该类别指定要缓存的资源文件
 CACHE:
@@ -70,11 +78,3 @@ https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js
 /src/json-tool/json-tool.js
 /src/test/data/bodymovin.js
 /src/escape/escape.js
-
-# 指定不进行缓存的资源文件
-NETWORK:
-*
-
-# 每行指定两个文件，第一个为在线时使用的资源，第二个是离线时使用的资源
-FALLBACK:
-# *.html /offline.html

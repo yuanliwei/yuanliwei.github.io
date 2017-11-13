@@ -6,10 +6,7 @@ class LoadES6 {
   }
 
   load() {
-    var params = [];
-    for (var i = 0; i < arguments.length; i++) {
-      params.push(arguments[i]);
-    }
+    var params = [...arguments];
     this.promise = this.promise.then(()=>{
       console.log("load:" + JSON.stringify(params));
       var promises = LoadES6.getLoadPromises(params);
@@ -88,10 +85,7 @@ class LoadES6 {
 
   static getUrls(params) {
     var urls = [];
-    if (typeof params == "string") {
-      params = [params];
-    }
-    params.map(param=> {
+    params.forEach((param)=> {
       var configUrls = LoadES6.configuration[param];
       if (configUrls) {
         urls = urls.concat(configUrls);
