@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2017-11-13 23:28:00
+# 生成时间 2017-11-13 23:54:28
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -84,6 +84,7 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /icon/app-icon.png
 /index.html
 /manifest.json
+/offline.html
 /README.md
 /service-worker.js
 /src/account-book/account-book-2.html

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html manifest="/app.manifest">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="theme-color" content="rgb(182, 25, 36)">
+    <title>OFFLINE</title>
+    <script src="./src/js/utils/load.js" charset="utf-8"></script>
+  </head>
+  <body style="background-color: rgb(182, 25, 36);">
+    <div id="particles-js" class="fixed-top h-100 w-100" style="z-index:-1;"></div>
+  </body>
+  <script type="text/javascript">
+    new Load().load("./src/js/utils/loadJsConfig.js")
+      .load("bootstrap-css", "particles")
+      .then(()=>{
+        var config = "/src/test/data/particlesjs-config.json";
+        particlesJS.load('particles-js', config, function() {
+          console.log('callback - particles.js config loaded');
+        });
+      });
+  </script>
+
+</html>

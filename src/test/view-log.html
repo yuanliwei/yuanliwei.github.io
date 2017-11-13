@@ -51,16 +51,16 @@
       </div>
     </div>
     <div class="btn-group-vertical m-4 fixed-top shake-chunk" style="left:auto;">
-      <a href="../../index.html" class="btn btn-secondary">
+      <a href="../../index.html" class="btn btn-light">
         <i class="fa fa-home fa-2x"></i>
       </a>
-      <button type="button" class="btn btn-secondary" onclick="clearMsg()">
+      <button type="button" class="btn btn-light" onclick="clearMsg()">
         <i class="fa fa-refresh fa-2x"></i>
       </button>
-      <button type="button" class="btn btn-secondary" onclick="sendMsgTest()">
+      <button type="button" class="btn btn-light" onclick="sendMsgTest()">
         <i class="fa fa-send fa-2x"></i>
       </button>
-      <label class="btn btn-secondary mb-0">
+      <label class="btn btn-light mb-0">
         <input id="terminalstyle" class="d-none" type="checkbox" autocomplete="off">
         <!-- <i class="fa fa-terminal fa-2x"></i> -->
         <span class="fa-stack fa-1x">
@@ -68,10 +68,10 @@
           <i class="fa fa-terminal fa-stack-1x"></i>
         </span>
       </label>
-      <button type="button" class="btn btn-secondary" onclick="gotoUp()">
+      <button type="button" class="btn btn-light" onclick="gotoUp()">
         <i class="fa fa-arrow-up fa-2x"></i>
       </button>
-      <label class="btn btn-secondary mb-0">
+      <label class="btn btn-light mb-0">
         <input id="autoscroll" class="d-none" type="checkbox" autocomplete="off">
         <i class="fa fa-arrow-down fa-2x"></i>
       </label>
@@ -147,7 +147,7 @@
       var fireworks = null;
       new Load().hide()
         .load("../js/utils/loadJsConfig.js")
-        .load("jquery", "tether", "fontawesome", "common-utils", "csshake")
+        .load("jquery", "popper", "fontawesome", "common-utils", "csshake")
         .load("bootstrap", "jqueryui", "wlog")
         .then(startReceiveLog)
         .show()
