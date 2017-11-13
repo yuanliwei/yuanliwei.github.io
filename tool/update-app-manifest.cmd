@@ -1,0 +1,1 @@
+node .\update-app-manifest.js
