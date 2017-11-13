@@ -45,6 +45,9 @@ LoadES6.config({
     "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",
     "https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"
   ],
+  "popper":[
+    "https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"
+  ],
   "bootstrap":[
     "https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css",
     "https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
@@ -52,6 +55,13 @@ LoadES6.config({
   "bootstrap-css":[
     "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",
     "https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+  ],
+  "jade":[
+    "https://cdn.bootcss.com/jade/1.11.0/jade.min.js"
+  ],
+  "bootstrap-table":[
+    "https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js",
+    "https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css"
   ],
   "fontawesome":[
     "https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -69,14 +79,19 @@ LoadES6.config({
     "https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"
   ],
   "csshake":[
-    "https://cdn.bootcss.com/csshake/1.5.1/csshake.min.css"
+    "https://cdn.bootcss.com/csshake/1.5.2/csshake.min.css"
   ],
   "beautify":[
     "https://cdn.bootcss.com/js-beautify/1.6.12/beautify.min.js"
   ],
   "highlight":[
-    "/highlight/styles/default.css",
-    "/highlight/highlight.pack.js"
+    "https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js",
+    "https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-light.min.css"
+  ],
+  "highlight-languages":[
+    "https://cdn.bootcss.com/highlight.js/9.12.0/languages/javascript.min.js",
+    "https://cdn.bootcss.com/highlight.js/9.12.0/languages/xml.min.js",
+    "https://cdn.bootcss.com/highlight.js/9.12.0/languages/json.min.js"
   ],
   "string-format":[
     "https://cdn.bootcss.com/string-format/0.5.0/string-format.min.js"
@@ -86,6 +101,21 @@ LoadES6.config({
     // "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.min.js"
     "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.js",
     "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.js"
+  ],
+  "sql":[
+    "https://cdn.bootcss.com/sql.js/0.4.0/js/sql.js"
+  ],
+  "jszip":[
+    "https://cdn.bootcss.com/jszip/3.1.4/jszip.js"
+  ],
+  "goldenlayout":[
+    "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-base.css",
+    "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-light-theme.css",
+    // "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-dark-theme.css",
+    // "https://cdn.bootcss.com/golden-layout/1.5.9/css/default-theme.css",
+    // "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-soda-theme.css",
+    // "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-translucent-theme.css",
+    "https://cdn.bootcss.com/golden-layout/1.5.9/goldenlayout.min.js"
   ],
   "escapes":[
     "/src/js/escape/MD5.js",
