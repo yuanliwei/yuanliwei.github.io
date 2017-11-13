@@ -5,7 +5,6 @@
     <meta content="width=device-width,initial-scale=1.0" name="viewport">
     <title>RESTful Model</title>
     <script src="../js/utils/load.js" charset="utf-8"></script>
-    <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
     <!-- utils -->
     <script src="../js/utils/jquery.js"></script>
 
@@ -100,7 +99,8 @@
               }
             });
         }
-        new Load(loadJsConfig).hide()
+        new Load().hide()
+          .load("../js/utils/loadJsConfig.js")
           .load("jquery", "tether", "string-format", "beautify",
           "escapes", "highlight")
           .load("bootstrap", "jqueryui").show()

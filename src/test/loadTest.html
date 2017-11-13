@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0" name="viewport">
     <title>Load Test</title>
-    <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
     <script src="../js/utils/load.js" charset="utf-8"></script>
     <script type="text/javascript">
     var config = "";
-    new Load(loadJsConfig).load("../js/utils/loadJsConfig.js",
+    new Load().load("../js/utils/loadJsConfig.js")
+      .load("../js/utils/loadJsConfig.js",
           "jquery",
           "https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js",
           "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",

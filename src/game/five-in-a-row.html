@@ -5,13 +5,13 @@
     <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
     <title>五子棋</title>
     <script src="../js/utils/loadES6.js" charset="utf-8"></script>
-    <script src="../js/utils/loadJsConfig.js" charset="utf-8"></script>
   </head>
   <body>
     <canvas id="canvas" class="w-100 h-100 m-0 p-0 bg-info"></canvas>
     <button type="button" class="btn btn-primary m-4 fixed-top shake-chunk" style="left:auto;" onclick="startGame()">开始游戏</button>
     <script type="text/javascript">
-    new LoadES6(loadJsConfig).load("wilddog")
+    new LoadES6()
+      .load("../js/utils/loadJsConfig.js").load("wilddog")
       .load("bootstrap-css", "wlog", "wilddog-config","csshake")
       .load("../js/game/Pieces.js","../js/game/five-in-a-row.js")
       .then(()=>{

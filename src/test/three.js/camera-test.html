@@ -268,7 +268,7 @@
 
   }
 
-  new Load(loadJsConfig)
+  new Load().load("../js/utils/loadJsConfig.js")
     .load("three.js", "Stats", "wlog")
     .then(()=>{
       container = document.createElement( 'div' );

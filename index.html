@@ -6,8 +6,7 @@
     <meta name="theme-color" content="rgb(182, 25, 36)">
     <title>index</title>
     <!-- <link rel="manifest" href="/manifest.json"> -->
-    <script src="./src/js/utils/loadES6.js" charset="utf-8"></script>
-    <script src="./src/js/utils/loadJsConfig.js" charset="utf-8"></script>
+    <script src="./src/js/utils/load.js" charset="utf-8"></script>
   </head>
   <body>
     <div id="particles-js" class="fixed-top h-100 w-100" style="z-index:-1;background-color: rgb(182, 25, 36);"></div>
@@ -37,7 +36,9 @@
       </div>
     </div>
     <script type="text/javascript">
-      new LoadES6(loadJsConfig).hide()
+      new Load().hide()
+        .load("./src/js/utils/loadJsConfig.js")
+        .load("wlog")
         .load("bootstrap-css", "particles")
         .show()
         .then(()=>{

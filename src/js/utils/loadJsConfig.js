@@ -1,9 +1,9 @@
-var getPath = function (path) {
-  var url = document.location.href;
-  return url.substr(0, url.indexOf('src')) + path;
+if (typeof LoadES6 == 'undefined') {
+  LoadES6 = {}
+  LoadES6.config = Load.config
 }
 
-var loadJsConfig = {
+LoadES6.config({
   "jquery":[
     "https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"
   ],
@@ -21,8 +21,7 @@ var loadJsConfig = {
   ],
   "jquery-terminal":[
     "https://cdn.bootcss.com/jquery.terminal/1.4.0/css/jquery.terminal.min.css",
-    // "https://cdn.bootcss.com/jquery.terminal/1.4.0/js/jquery.terminal.min.js"
-    "https://cdn.bootcss.com/jquery.terminal/1.4.0/js/jquery.terminal.js"
+    "https://cdn.bootcss.com/jquery.terminal/1.4.0/js/jquery.terminal.min.js"
   ],
   "codemirror":[
     "https://cdn.bootcss.com/codemirror/5.25.2/codemirror.min.js",
@@ -76,8 +75,8 @@ var loadJsConfig = {
     "https://cdn.bootcss.com/js-beautify/1.6.12/beautify.min.js"
   ],
   "highlight":[
-    getPath("highlight/styles/default.css"),
-    getPath("highlight/highlight.pack.js")
+    "/highlight/styles/default.css",
+    "/highlight/highlight.pack.js"
   ],
   "string-format":[
     "https://cdn.bootcss.com/string-format/0.5.0/string-format.min.js"
@@ -89,43 +88,43 @@ var loadJsConfig = {
     "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.js"
   ],
   "escapes":[
-    getPath("src/js/escape/MD5.js"),
-    getPath("src/js/escape/Base64.js"),
-    getPath("src/js/escape/he.js"),
-    getPath("src/js/escape/crypto-js.js"),
-    getPath("src/js/escape/escape.js")
+    "/src/js/escape/MD5.js",
+    "/src/js/escape/Base64.js",
+    "/src/js/escape/he.js",
+    "/src/js/escape/crypto-js.js",
+    "/src/js/escape/escape.js"
   ],
   "java-model":[
-    getPath("src/js/java-model/Modifiers.js"),
-    getPath("src/js/java-model/Filed.js"),
-    getPath("src/js/java-model/ClassModel.js")
+    "/src/js/java-model/Modifiers.js",
+    "/src/js/java-model/Filed.js",
+    "/src/js/java-model/ClassModel.js"
   ],
   "common-utils":[
-    getPath("src/js/utils/PageState.js")
+    "/src/js/utils/PageState.js"
   ],
   "gen-java":[
-    getPath("src/js/gen-java/Fileds2Java.js"),
-    getPath("src/js/gen-java/Json2Java.js"),
-    getPath("src/js/gen-java/GenXML.js"),
-    getPath("src/js/gen-java/GenJavaTemplate.js"),
-    getPath("src/js/gen-java/SQL2Java.js")
+    "/src/js/gen-java/Fileds2Java.js",
+    "/src/js/gen-java/Json2Java.js",
+    "/src/js/gen-java/GenXML.js",
+    "/src/js/gen-java/GenJavaTemplate.js",
+    "/src/js/gen-java/SQL2Java.js"
   ],
   "normal-list":[
-    getPath("src/js/list/normal-list.js")
+    "/src/js/list/normal-list.js"
   ],
   "fast-list":[
-    getPath("src/js/list/fast-list.js")
+    "/src/js/list/fast-list.js"
   ],
   "wilddog":[
     "https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js"
   ],
   "wilddog-config":[
-    getPath("src/js/utils/wilddog-config.js")
+    "/src/js/utils/wilddog-config.js"
   ],
   "pako":[
     "https://cdn.bootcss.com/pako/1.0.5/pako.min.js"
   ],
   "wlog":[
-    getPath("src/js/utils/wlog.js")
+    "/src/js/utils/wlog.js"
   ]
-};
+});

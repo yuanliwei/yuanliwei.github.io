@@ -1,21 +1,7 @@
 class LoadES6 {
 
-  constructor() {
-    var config_ = {}
-    var promise_ = Promise.resolve()
-    for (var i = 0; i < arguments.length; i++) {
-      var arg = arguments[i]
-      if (arg.toString() == '[object Object]'){
-        Object.assign(config_, arg)
-      } else if (arg.toString() == '[object Promise]'){
-        promise_ = arg
-      } else {
-        console.warn('un support type! : ' + arg);
-      }
-    }
-
-    this.config = config_
-    this.promise = promise_
+  constructor(promise) {
+    this.promise = promise || Promise.resolve()
     return this;
   }
 
@@ -26,10 +12,10 @@ class LoadES6 {
     }
     this.promise = this.promise.then(()=>{
       console.log("load:" + JSON.stringify(params));
-      var promises = LoadES6.getLoadPromises(params, this);
+      var promises = LoadES6.getLoadPromises(params);
       return Promise.all(promises).catch((e)=>console.error(e));
     });
-    return new LoadES6(this.config, this.promise);
+    return new LoadES6(this.promise);
   }
 
   then(callback, isAsync) {
@@ -43,7 +29,7 @@ class LoadES6 {
         }
       }).catch((e)=>console.error(e));
     });
-    return new LoadES6(this.config, this.promise);
+    return new LoadES6(this.promise);
   }
 
   wait(millis) {
@@ -60,8 +46,12 @@ class LoadES6 {
     return this.then(()=> { document.querySelector(selector).style.display='' })
   }
 
-  static getLoadPromises(params, self) {
-    var urls = LoadES6.getUrls(params, self);
+  static config(config){
+    Object.assign(LoadES6.configuration, config)
+  }
+
+  static getLoadPromises(params) {
+    var urls = LoadES6.getUrls(params);
     var promises = urls.map(url=>{
       return new Promise((resolve, reject)=>{
         var type = LoadES6.parseType(url);
@@ -96,13 +86,13 @@ class LoadES6 {
     LoadES6.appendNode(node, url, resolve);
   };
 
-  static getUrls(params, self) {
+  static getUrls(params) {
     var urls = [];
     if (typeof params == "string") {
       params = [params];
     }
     params.map(param=> {
-      var configUrls = self.config[param];
+      var configUrls = LoadES6.configuration[param];
       if (configUrls) {
         urls = urls.concat(configUrls);
       } else {
@@ -138,3 +128,5 @@ class LoadES6 {
 }
 
 LoadES6.loaded = {};
+
+LoadES6.configuration = {}
