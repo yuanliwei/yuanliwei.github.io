@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2017-11-13 23:54:28
+# 生成时间 2017-11-14 00:23:36
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -128,14 +128,10 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/js/utils/beautify.js
 /src/js/utils/code-format.js
 /src/js/utils/common.js
-/src/js/utils/jquery.js
 /src/js/utils/load.js
 /src/js/utils/loadES6.js
 /src/js/utils/loadJsConfig.js
-/src/js/utils/require.js
-/src/js/utils/string-format.js
 /src/js/utils/StringUtil.js
-/src/js/utils/template.js
 /src/js/utils/wlog-c.js
 /src/js/xml-java/TemplManager.js
 /src/json-tool/json-tool.html
