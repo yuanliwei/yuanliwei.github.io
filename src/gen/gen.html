@@ -73,12 +73,12 @@
       .load("jquery", "popper", "string-format", "beautify",
             "escapes", "highlight")
       .load("bootstrap")
+      .show()
       .load("../js/utils/StringUtil.js",
             "../js/utils/common.js",
             "../js/utils/code-format.js",
             "./gen.js")
-      .load("java-model", "gen-java")
-      .show()
+      .load("java-model").load("gen-java").load("gen-java-1")
       .then(function() {
         console.log('====================hello==============');
         loadConfig();

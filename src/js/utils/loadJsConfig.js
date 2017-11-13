@@ -136,7 +136,9 @@ LoadES6.config({
     "/src/js/gen-java/Fileds2Java.js",
     "/src/js/gen-java/Json2Java.js",
     "/src/js/gen-java/GenXML.js",
-    "/src/js/gen-java/GenJavaTemplate.js",
+    "/src/js/gen-java/GenJavaTemplate.js"
+  ],
+  "gen-java-1":[
     "/src/js/gen-java/SQL2Java.js"
   ],
   "normal-list":[
