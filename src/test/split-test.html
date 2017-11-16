@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <title>split test</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.bootcss.com/split.js/1.3.5/split.min.js" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/Swiper/4.0.6/js/swiper.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css">
+    <!-- <script src="./SplitPager.js" charset="utf-8"></script> -->
+    <style media="screen">
+      html, body, .container{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        margin: 0;
+        padding: 0;
+      }
+
+      .swiper-container {
+        width: 100%;
+        height: 100%;
+      }
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .swiper-slide-active{
+        overflow: auto;
+      }
+
+      .gutter {
+        background-color: #eee;
+        background-repeat: no-repeat;
+        background-position: 50%;
+      }
+
+      .gutter.gutter-vertical::before {
+        content: "\f0c9";
+        font-family: FontAwesome;
+      }
+
+      .split, .split-vertical, .gutter.gutter-vertical {
+        overflow-y: auto;
+      }
+
+    </style>
+  </head>
+  <body>
+    <!-- Swiper -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    'use strict';
+
+    var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+    var App = function () {
+      function App() {
+        _classCallCheck(this, App);
+
+        var self = this;
+        this.swiper = new Swiper('.swiper-container', {});
+        this.rootView = $('.swiper-wrapper');
+        $.getJSON('https://api.bootcdn.cn/libraries.min.json', function (datas) {
+          self.datas = datas;
+          self.curIndex = 0;
+          self.addPages();
+        });
+        this.swiper.on('slideChange', function () {
+          var cur = self.swiper.realIndex;
+          var total = self.swiper.slides.length;
+          console.log('slide changed cur:' + cur + " total:" + total);
+          if (total - cur < 3) {
+            self.addPages();
+          }
+        });
+      }
+
+      _createClass(App, [{
+        key: 'addPages',
+        value: function addPages() {
+          console.log('add pages');
+          var pageSize = 30;
+          var datas = this.datas.slice(this.curIndex, this.curIndex + pageSize);
+          this.curIndex += pageSize;
+          for (var i = 0; i < datas.length;) {
+            var n = parseInt(4 * Math.random()) + 1;
+            var subDatas = datas.slice(i, i + n);
+            console.log('append i = ' + i);
+            this.swiper.appendSlide(new Page(subDatas).element());
+            i += n;
+          }
+        }
+      }]);
+
+      return App;
+    }();
+
+    var Page = function () {
+      function Page(datas) {
+        _classCallCheck(this, Page);
+
+        if (datas.length == 0) {
+          throw new Error();
+        }
+        this.el = $('<div class="swiper-slide"></div>');
+        this.initView(datas, this.el);
+      }
+
+      _createClass(Page, [{
+        key: 'initView',
+        value: function initView(datas, el) {
+          if (datas.length == 1) {
+            el.append(this.getContent(datas[0]));
+          } else {
+            el.append(new SplitPage(datas).element());
+          }
+        }
+      }, {
+        key: 'getContent',
+        value: function getContent(data) {
+          return $('\n        <div style="display:block; height:100%;">\n          <h1>' + data[0] + '</h1>\n          <p>' + data[1] + '</p>\n          <p><i class="fa fa-star" aria-hidden="true" style="color:green;"></i>' + data[2] + '</p>\n        </div>\n      ');
+        }
+      }, {
+        key: 'element',
+        value: function element() {
+          return this.el;
+        }
+      }]);
+
+      return Page;
+    }();
+
+    var SplitPage = function () {
+      function SplitPage(datas) {
+        _classCallCheck(this, SplitPage);
+
+        var sub = datas.slice(1, datas.length);
+        this.el = $('\n      <div class="container">\n        <div class="top split"></div>\n        <div class="bottom split"></div>\n      </div>\n      ');
+        var top = this.el.find('.top');
+        var bottom = this.el.find('.bottom');
+        Split([top[0], bottom[0]], {
+          sizes: [40, 60],
+          minSize: 30,
+          gutterSize: 25,
+          direction: 'vertical'
+        });
+        this.top = top;
+        this.bottom = bottom;
+        this.datas = datas;
+        this.render();
+      }
+
+      _createClass(SplitPage, [{
+        key: 'render',
+        value: function render() {
+          var top = this.top;
+          var bottom = this.bottom;
+          var datas = this.datas;
+          top.append(new Page(datas.slice(0, 1)).element());
+          datas = datas.slice(1, datas.length);
+          var el = $('\n        <div class="swiper-container">\n          <div class="swiper-wrapper">\n          </div>\n        </div>\n      ');
+          bottom.append(el);
+          var swiper = new Swiper(el[0], {
+            nested: true
+          });
+          swiper.on('touchStart', function (e) {
+            swiper.update();
+          });
+          for (var i = 0; i < datas.length; i++) {
+            var data = datas[i];
+            swiper.appendSlide(new Page([data]).element());
+          }
+        }
+      }, {
+        key: 'element',
+        value: function element() {
+          return this.el;
+        }
+      }]);
+
+      return SplitPage;
+    }();
+  </script>
+  <script type="text/javascript">
+    new App()
+  </script>
+</html>
