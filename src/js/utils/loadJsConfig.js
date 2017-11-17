@@ -129,6 +129,9 @@ LoadES6.config({
     "/src/js/java-model/Filed.js",
     "/src/js/java-model/ClassModel.js"
   ],
+  "common":[
+    "/src/js/utils/common.js"
+  ],
   "common-utils":[
     "/src/js/utils/PageState.js"
   ],

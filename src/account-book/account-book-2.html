@@ -5,166 +5,101 @@
     <meta content="width=device-width,initial-scale=1.0" name="viewport">
     <title>Account book</title>
     <script src="../js/utils/load.js" charset="utf-8"></script>
-    <!-- utils -->
-    <!-- <script src="../js/utils/jquery.js"></script>
-    <script src="../js/utils/StringUtil.js"></script>
-    <script src="../js/utils/string-format.js"></script>
-    <script src="../js/utils/beautify.js"></script>
-    <script src="../js/utils/code-format.js"></script>
-    <script src="../js/utils/common.js"></script> -->
-    <!--bootstrap-->
-    <!-- <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap-theme.css" />
-    <script src="../../bootstrap-3.3.6-dist/js/bootstrap.js"></script> -->
-    <!-- jquery-ui -->
-    <!-- <link rel="stylesheet" href="../../jquery-ui-1.11.4/jquery-ui.min.css" />
-    <script src="../../jquery-ui-1.11.4/jquery-ui.js"></script> -->
-    <!-- highlight -->
-    <!-- <link rel="stylesheet" href="../../highlight/styles/default.css">
-    <script src="../../highlight/highlight.pack.js"></script> -->
-    <!-- func -->
-    <!-- <script src="../js/escape/MD5.js"></script>
-    <script src="../js/escape/Base64.js"></script>
-    <script src="../js/escape/he.js"></script>
-    <script src="../js/escape/crypto-js.js"></script>
-    <script src="../js/escape/escape.js"></script> -->
-    <!-- model -->
-    <!-- <script src="../js/restful-model/NodeModel.js"></script>
-    <script src="../js/restful-model/NodeResultModel.js"></script>
-    <script src="../js/restful-model/RESTfulModel.js"></script>
-    <script src="../js/restful-model/RESTfulModelView.js"></script>
-    <script src="../js/restful-model/ViewModel.js"></script>
-    <script src="../js/restful-model/DrawLine.js"></script>
-    <script src="../js/restful-model/RelationModel.js"></script>
-    <script src="https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js"></script> -->
-    <!-- local -->
   </head>
-  <body>
-    <div class="container bg-primary hide">
-      container container-fluid
-      row
-      col-xs-12 col-sm-12 col-md-12
-      col-xs-offset-4 col-sm-offset-4 col-md-offset-4
-      bg-info bg-primary bg-success bg-warning bg-danger
-      text-left text-center text-right text-justify text-nowrap
-      text-muted text-muted text-primary text-success text-info text-warning text-danger
-      img-responsive img-rounded img-circle img-thumbnail
-      pull-left pull-right
-      center-block clearfix
-      show hidden
-      text-lowercase text-uppercase text-capitalize
-      dl-horizontal
-    </div>
+  <body class="bg-success">
     <div class="container">
       <div class="page-header">
-          <h1>ACCOUNT <small>Book2</small></h1>
+        <h1>ACCOUNT <small>Book2</small></h1>
       </div>
-        <div class="alert-result">
+      <div class="alert-result">
 
-        </div>
+      </div>
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 bg-success">
-
-          <div class="row"><h1>平均数</h1></div>
-          <div class="row">
-           <div class="col-xs-3 col-sm-3 col-md-3 text-center">
-                <br>
-                <br>
-                 <button class="btn btn-primary" type="button" onclick="deleteAllAvgNums()">全部删除</button>
-            </div>
-            <div class="col-xs-9 col-sm-9 col-md-8">
-              <table class="table table-bordered table-hover text-center">
-                <tr>
-                  <th colspan="5" class="text-center">张数</th>
-                  <th>单价</th>
-                  <th>人数</th>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="text" class="form-control tcount">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control tcount">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control tcount">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control tcount">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control tcount">
-                  </td>
-                  <td width="100px">
-                    <select id="basic" class="form-control">
-                      <option>0.4</option>
-                      <option>0.35</option>
-                      <option>0.8</option>
-                    </select>
-                  </td>
-                  <td width="100px">
-                    <select id="basic" class="form-control">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr><td colspan="7">
-                    <input type="text" class="form-control t-count-quick">
-                </td></tr>
-                <tr>
-                  <td colspan="7" id="result" class="text-center" width="100px">
-                  </td>
-                </tr>
-               </table>
-            </div>
-          </div>
-          <div class="row bg-warning">　</div>
-          <div class="row"><h1>总数</h1></div>
-          <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3 text-center">
-                <br>
-                <br>
-                 <button class="btn btn-primary" type="button" onclick="deleteAllNums()">全部删除</button>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-              <br>
-              <table id="numstable" class="table table-bordered table-hover text-center">
-                <tr>
-                  <td width="30px"><span class="sum-table-text">{0}</span></td>
-                  <td><span class="sum-table-text text-right">{1}</span></td>
-                  <td width="30px"><button type="button" style="padding:5px" onclick="deleteNum({2})" class="close">&times;</button></td>
-                </tr>
-              </table>
-              <input type="text" class="form-control sum-count">
-              <h3>　</h3>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3">
-              <h1 id="numstable_result" ></h1>
-            </div>
-          </div>
+        <div class="col-12">
+          <h1>平均数</h1>
         </div>
+        <div class="col-3 text-center">
+          <button class="btn btn-primary" type="button" onclick="deleteAllAvgNums()">全部删除</button>
+        </div>
+        <table class="col-9 table table-bordered table-hover text-center">
+          <tr>
+            <th colspan="5" class="text-center">张数</th>
+            <th>单价</th>
+            <th>人数</th>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" class="form-control tcount">
+            </td>
+            <td>
+              <input type="text" class="form-control tcount">
+            </td>
+            <td>
+              <input type="text" class="form-control tcount">
+            </td>
+            <td>
+              <input type="text" class="form-control tcount">
+            </td>
+            <td>
+              <input type="text" class="form-control tcount">
+            </td>
+            <td width="100px">
+              <select id="basic" class="form-control">
+                <option>0.4</option>
+                <option>0.35</option>
+                <option>0.8</option>
+              </select>
+            </td>
+            <td width="100px">
+              <select id="basic" class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+              </select>
+            </td>
+          </tr>
+          <tr><td colspan="7">
+            <input type="text" class="form-control t-count-quick">
+          </td></tr>
+          <tr>
+            <td colspan="7" id="result" class="text-center" width="100px">
+            </td>
+          </tr>
+        </table>
+        <div class="col-12 bg-warning">　</div>
+        <div class="col-12"><h1>总数</h1></div>
+        <div class="col-12 text-center">
+          <button class="btn btn-primary" type="button" onclick="deleteAllNums()">全部删除</button>
+        </div>
+        <table id="numstable" class="col-6 table table-bordered table-hover text-center">
+          <tr>
+            <td width="30px"><span class="sum-table-text">{0}</span></td>
+            <td><span class="sum-table-text text-right">{1}</span></td>
+            <td width="30px"><button type="button" style="padding:5px" onclick="deleteNum({2})" class="close">&times;</button></td>
+          </tr>
+        </table>
+        <input type="text" class="form-control sum-count">
+        <h3>　</h3>
+        <div class="col-3">
+        <h1 id="numstable_result" ></h1>
       </div>
     </div>
-    <input id="input_json_text" type="text" class="hide"/>
     <script type="text/javascript">
         var GBData = {};
         new Load().hide()
           .load("../js/utils/loadJsConfig.js")
-          .load("jquery", "wlog")
-          .load("bootstrap-css", "particles")
-          .load("./account-book-2.js", "./account-book.css", "../js/utils/string-format.js", "../js/utils/common.js")
+          .load("jquery", "wlog", "string-format")
+          .load("bootstrap-css", "particles", "common")
+          .load("./account-book-2.js", "./account-book.css")
           .show()
-          .then(init)
-        function init() {
-            console.log('====================hello==============');
-            loadConfig();
-            initEvent();
-        }
+          .then(()=> {
+              console.log('====================hello==============');
+              loadConfig();
+              initEvent();
+          })
     </script>
   </body>
 </html>

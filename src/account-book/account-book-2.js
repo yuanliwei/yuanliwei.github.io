@@ -1,19 +1,3 @@
-/*
-container container-fluid
-row
-col-xs-12 col-sm-12 col-md-12
-col-xs-offset-4 col-sm-offset-4 col-md-offset-4
-bg-info bg-primary bg-success bg-warning bg-danger
-text-left text-center text-right text-justify text-nowrap
-text-muted text-muted text-primary text-success text-info text-warning text-danger
-img-responsive img-rounded img-circle img-thumbnail
-pull-left pull-right
-center-block clearfix
-show hidden
-text-lowercase text-uppercase text-capitalize
-dl-horizontal
-*/
-
 var templ = '';
 function initEvent() {
     templNums = $('#numstable').html();
@@ -111,7 +95,7 @@ function deleteAllAvgNums(){
   inputs[4].value = '0';
   $('input.t-count-quick').val('');
   countAvg();
-}  
+}
 
 function showNumsTable(){
    var nums = [];

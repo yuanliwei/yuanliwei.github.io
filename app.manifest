@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2017-11-17 03:14:17
+# 生成时间 2017-11-14 09:16:27
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -67,6 +67,7 @@ https://cdn.bootcss.com/golden-layout/1.5.9/goldenlayout.min.js
 /src/js/java-model/Modifiers.js
 /src/js/java-model/Filed.js
 /src/js/java-model/ClassModel.js
+/src/js/utils/common.js
 /src/js/utils/PageState.js
 /src/js/gen-java/Fileds2Java.js
 /src/js/gen-java/Json2Java.js
@@ -127,7 +128,6 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/js/utils/AudioPool.js
 /src/js/utils/beautify.js
 /src/js/utils/code-format.js
-/src/js/utils/common.js
 /src/js/utils/load.js
 /src/js/utils/loadES6.js
 /src/js/utils/loadJsConfig.js
@@ -222,7 +222,6 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/test/res/Tests/SplitDimensions.json
 /src/test/res/TwitterHeart.json
 /src/test/res/Walkthrough/Walkthrough.json
-/src/test/split-test.html
 /src/test/star-wars.html
 /src/test/table-generate.html
 /src/test/three.js/camera-test.html
