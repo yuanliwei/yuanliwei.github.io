@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2017-11-14 09:16:27
+# 生成时间 2017-11-24 10:25:33
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -222,6 +222,8 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/test/res/Tests/SplitDimensions.json
 /src/test/res/TwitterHeart.json
 /src/test/res/Walkthrough/Walkthrough.json
+/src/test/split-test.html
+/src/test/SplitPager.js
 /src/test/star-wars.html
 /src/test/table-generate.html
 /src/test/three.js/camera-test.html

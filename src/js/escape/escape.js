@@ -112,7 +112,18 @@ Escape.HtmlDecode = function(text) {
 };
 
 Escape.formatDate = function (dataValue) {
-  return new Date(parseInt(dataValue)).Format('yyyy-MM-dd hh:mm:ss.S');
+  return dataValue.replace(/(\d{13})|(\d{10})/g, function (val) {
+    console.log(val);
+    var date = parseInt(val)
+    if (date == 2147483647) {
+      // java中的Integer.MAX_VALUE
+      return 'Integer.MAX_VALUE'
+    }
+    if (val.length == 10) {
+      date *= 1000
+    }
+    return new Date(date).Format('yyyy-MM-dd hh:mm:ss.S');
+  })
 }
 
 Escape.toUnicode = function (str) {
