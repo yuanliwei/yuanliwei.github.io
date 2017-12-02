@@ -108,6 +108,9 @@ LoadES6.config({
   "jszip":[
     "https://cdn.bootcss.com/jszip/3.1.4/jszip.js"
   ],
+  "crypto":[
+    "https://cdn.bootcss.com/crypto-js/3.1.9/crypto-js.js"
+  ],
   "goldenlayout":[
     "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-base.css",
     "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-light-theme.css",

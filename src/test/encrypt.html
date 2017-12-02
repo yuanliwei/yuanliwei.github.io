@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0" name="viewport">
+    <title>加密解密</title>
+    <script src="../js/utils/load.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row p-5 mt-5 bg-info rounded">
+        <div class="col-12">
+          <h1>加密解密</h1>
+        </div>
+        <div class="mt-5 col-12 form-group">
+          <label for="dataArea">输入：</label>
+          <textarea class="form-control" id="dataArea" rows="3"></textarea>
+        </div>
+        <div class="col-12 mt-2 input-group">
+          <span class="input-group-addon" id="basic-addon1">密钥</span>
+          <input type="password" id="key" class="form-control" placeholder="密钥" aria-label="密钥" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-12 mt-4 btn-group d-flex justify-content-end" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-primary btn-lg" onclick="encrypt()">加密</button>
+          <button type="button" class="btn btn-primary btn-lg" onclick="decrypt()">解密</button>
+        </div>
+        <div class="col-12 mt-2 form-group">
+          <label for="dataArea">输出：</label>
+          <textarea class="form-control" id="outDataArea" rows="9"></textarea>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    new Load().hide()
+    .load("../js/utils/loadJsConfig.js")
+    .load("jquery", "popper", "pako", "crypto")
+    .load("bootstrap")
+    .show()
+
+    function encrypt() {
+      var data = $('#dataArea').val().trim()
+      var key = $('#key').val().trim()
+      var longKey = generateKey(key)
+      var result = CryptoJS.AES.encrypt(data, longKey).toString()
+      $('#outDataArea').val(result)
+    }
+
+    function decrypt() {
+      var data = $('#dataArea').val().trim()
+      var key = $('#key').val().trim()
+      var longKey = generateKey(key)
+      var result = CryptoJS.AES.decrypt(data, longKey).toString(CryptoJS.enc.Utf8)
+      $('#outDataArea').val(result)
+    }
+
+    function generateKey(key) {
+      var longKey = CryptoJS.SHA512(key).toString()
+      var tempKey = longKey
+      for (var i = 0; i < 100000; i++) {
+        tempKey = pako.deflate(tempKey, {to:"string"})
+        tempKey = CryptoJS.SHA512(tempKey).toString()
+        console.log(`PROGRESS (${parseInt(i/1000)})`);
+      }
+      return longKey;
+    }
+
+  </script>
+</html>
