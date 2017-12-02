@@ -86,6 +86,10 @@ class LoadES6 {
   static getUrls(params) {
     var urls = [];
     params.forEach((param)=> {
+      if (typeof param == "function") {
+        param()
+        return
+      }
       var configUrls = LoadES6.configuration[param];
       if (configUrls) {
         urls = urls.concat(configUrls);
