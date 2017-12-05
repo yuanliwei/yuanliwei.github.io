@@ -36,6 +36,22 @@
       textarea::-webkit-scrollbar-thumb:hover {
         opacity: 1;
       }
+
+      .filterlight > input{
+        background-color: rgba(255, 255, 255, 0.8);
+        color: red;
+      }
+
+      .filterblack > input{
+        background-color: rgba(0, 0, 0, 0);
+        border-color: green;
+        border-width: 2px;
+        color: red;
+      }
+
+      #filter > span{
+        cursor: move;
+      }
     </style>
   </head>
   <body>
@@ -49,6 +65,11 @@
           <div class="message" contenteditable="true"></div>
         </div>
       </div>
+    </div>
+    <!-- 过滤器 -->
+    <div id="filter" class="filterlight input-group fixed-top w-25 m-3" style="min-width: 200px;">
+      <span class="input-group-addon">filter</span>
+      <input type="text" class="form-control" placeholder="eg. console.*?">
     </div>
     <div class="btn-group-vertical m-4 fixed-top shake-chunk" style="left:auto;">
       <a href="../../index.html" class="btn btn-light">
@@ -96,6 +117,14 @@
       function startReceiveLog() {
         receiveLog(function (message) {
           console.log(message);
+          var filter = $('#filter > input').val().trim()
+          var reg = /./
+          if (filter.length > 0) {
+            reg = new RegExp(filter)
+          }
+          if (!reg.test(message)) {
+            return
+          }
           if ($("#terminalstyle")[0].checked) {
             appendShowTerminalMsg(message);
           } else {
@@ -157,7 +186,11 @@
           PageState.load("#autoscroll", "#terminalstyle");
           $("#autoscroll").checkboxradio({icon: false});
           $("#terminalstyle").checkboxradio({icon: false});
-          if ($("#terminalstyle")[0].checked) $("#canvas").removeClass('d-none');
+          if ($("#terminalstyle")[0].checked) {
+            $("#canvas").removeClass('d-none');
+            $("#filter").removeClass('filterlight')
+            $("#filter").addClass('filterblack')
+          }
           $("#autoscroll").change((e)=>{
             var scroll = e.target;
             PageState.save("#autoscroll");
@@ -167,14 +200,19 @@
             }
           });
           $("#terminalstyle").change((e)=>{
-            var scroll = e.target;
+            var terminal = e.target;
             PageState.save("#terminalstyle");
-            if (scroll.checked) {
+            if (terminal.checked) {
               $("#canvas").removeClass('d-none');
+              $("#filter").removeClass('filterlight')
+              $("#filter").addClass('filterblack')
             } else {
               $("#canvas").addClass('d-none');
+              $("#filter").addClass('filterlight')
+              $("#filter").removeClass('filterblack')
             }
           });
+          $('#filter').draggable()
 
         });
     </script>
