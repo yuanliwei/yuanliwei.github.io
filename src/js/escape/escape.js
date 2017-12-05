@@ -137,3 +137,15 @@ Escape.toUnicode = function (str) {
 Escape.fromUnicode = function (str) {
   return unescape(str.replace(/\\/g, "%"));
 }
+
+Escape.htmlEncode= function(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+Escape.htmlDecode= function(str) {
+  var div = document.createElement('div');
+  div.innerHTML = str;
+  return div.innerText;
+}

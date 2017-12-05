@@ -30,6 +30,8 @@ function onChange() {
         case 13: fun = Escape.formatDate; break;
         case 14: fun = Escape.toUnicode; break;
         case 15: fun = Escape.fromUnicode; break;
+        case 16: fun = Escape.htmlEncode; break;
+        case 17: fun = Escape.htmlDecode; break;
 
         default:
             fun = Escape.encodeURIComponent;
