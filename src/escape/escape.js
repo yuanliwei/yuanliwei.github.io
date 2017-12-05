@@ -32,10 +32,26 @@ function onChange() {
         case 15: fun = Escape.fromUnicode; break;
         case 16: fun = Escape.htmlEncode; break;
         case 17: fun = Escape.htmlDecode; break;
+        case 18: fun = 18; break;
+        case 19: fun = 19; break;
 
         default:
             fun = Escape.encodeURIComponent;
             break;
+    }
+    if(fun == 18){
+      $('pre code').html('')
+      // L : 1, M : 0, Q : 3, H : 2
+      $('pre code').qrcode({text:input, correctLevel: 1});
+      saveConfig();
+      return
+    }
+    if(fun == 19){
+      $('pre code').html('')
+      $('pre code').append('<img id="barcode">')
+      $("#barcode").JsBarcode(input);
+      saveConfig();
+      return
     }
     var javaSrc;
     try {

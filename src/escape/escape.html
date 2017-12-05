@@ -34,6 +34,8 @@
               <label class="radio-inline"><input type="radio" name="genMode" value="13"> 格式化日期 </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="14"> UNICODE编码 </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="15"> UNICODE解码 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="18"> 二维码 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="19"> 条形码 </label>
             </div>
           </form>
         </div>
@@ -54,7 +56,7 @@
         .load("../js/utils/loadJsConfig.js")
         .load("jquery", "popper", "string-format", "beautify",
               "escapes", "highlight")
-        .load("bootstrap")
+        .load("bootstrap", "jquery.qrcode", "JsBarcode")
         .load("../js/utils/StringUtil.js",
               "../js/utils/common.js",
               "../js/utils/code-format.js",
