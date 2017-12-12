@@ -230,6 +230,20 @@ BookChapterList = (function () {
       var chapters = JSON.parse(json);
       if(typeof chapters.data != "undefined") chapters = chapters.data;
 
+      if (chapters.pages) {
+        var datas = chapters
+        chapters = []
+        var convert = (o)=>{
+          o.display_order = o.displayOrder
+          o.is_free = o.isFree
+          o.parent_id = o.parentId
+          return o;
+        }
+        chapters = chapters.concat(datas.pages.map(convert))
+        chapters = chapters.concat(datas.chapters.map(convert))
+        chapters = chapters.concat(datas.tasks.map(convert))
+      }
+
       parseChapterTree(chapters);
 
       var results = [];
