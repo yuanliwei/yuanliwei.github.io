@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2017-12-11 16:37:01
+# 生成时间 2017-12-13 09:26:45
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -36,6 +36,8 @@ https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js
 https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js
 https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css
 https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js
+https://cdn.bootcss.com/moment.js/2.19.4/moment.min.js
+https://cdn.bootcss.com/moment.js/2.19.4/locale/zh-cn.js
 https://cdn.bootcss.com/jade/1.11.0/jade.min.js
 https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js
 https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css
@@ -55,6 +57,10 @@ https://cdn.bootcss.com/string-format/0.5.0/string-format.min.js
 https://cdn.bootcss.com/Chart.js/2.6.0/Chart.js
 https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.js
 https://cdn.bootcss.com/sql.js/0.4.0/js/sql.js
+https://unpkg.com/babel-standalone@6.15.0/babel.min.js
+https://cdn.bootcss.com/react/16.2.0/umd/react.development.js
+https://cdn.bootcss.com/react-dom/16.2.0/umd/react-dom.development.js
+https://cdn.bootcss.com/react-dom/16.2.0/umd/react-dom-server.browser.development.js
 https://cdn.bootcss.com/jszip/3.1.4/jszip.js
 https://cdn.bootcss.com/crypto-js/3.1.9/crypto-js.js
 https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-base.css
@@ -175,6 +181,7 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/test/particle/license.txt
 /src/test/particle/README.txt
 /src/test/promises-test.html
+/src/test/react-test.html
 /src/test/regexp.html
 /src/test/res/9squares-AlBoardman.json
 /src/test/res/d.txt

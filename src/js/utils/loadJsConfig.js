@@ -56,6 +56,10 @@ LoadES6.config({
     "https://cdn.bootcss.com/tether/1.4.0/css/tether.min.css",
     "https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
   ],
+  "moment":[
+    "https://cdn.bootcss.com/moment.js/2.19.4/moment.min.js",
+    "https://cdn.bootcss.com/moment.js/2.19.4/locale/zh-cn.js"
+  ],
   "jade":[
     "https://cdn.bootcss.com/jade/1.11.0/jade.min.js"
   ],
@@ -104,6 +108,14 @@ LoadES6.config({
   ],
   "sql":[
     "https://cdn.bootcss.com/sql.js/0.4.0/js/sql.js"
+  ],
+  "babel-core":[
+    "https://unpkg.com/babel-standalone@6.15.0/babel.min.js"
+  ],
+  "react":[
+    "https://cdn.bootcss.com/react/16.2.0/umd/react.development.js",
+    "https://cdn.bootcss.com/react-dom/16.2.0/umd/react-dom.development.js",
+    "https://cdn.bootcss.com/react-dom/16.2.0/umd/react-dom-server.browser.development.js"
   ],
   "jszip":[
     "https://cdn.bootcss.com/jszip/3.1.4/jszip.js"
