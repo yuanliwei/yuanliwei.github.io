@@ -40,11 +40,11 @@
     </div>
   </div>
   <script type="text/javascript">
+    var stop = false;
     function initScene(){
       var frames = [];
       var LINES_PER_FRAME = 14;
       var DELAY = 67;
-      var stop = false;
 
       var lines = film.length;
       for (var i=0; i<lines; i+=LINES_PER_FRAME) {
@@ -56,7 +56,7 @@
         'Simon Jansen (C) 1997 - 2015\n'+
         'www.asciimation.co.nz\n\n'+
         'type "play" to start animation, '+
-        'press C to stop');
+        'press CTRL+D to stop');
       }
       function play(term, delay) {
         var i = 0;
@@ -69,10 +69,11 @@
             i = 0;
           }
           term.clear();
-          if (frames[i][0].match(/[0-9]+/)) {
+          if (frames[i][0].match(/^[0-9]+$/)) {
             next_delay = frames[i][0] * delay;
           } else {
             next_delay = delay;
+            stop = true
           }
           term.echo('\n'.repeat(5))
           term.echo(' '.repeat(5) + frames[i++].slice(1).join('\n' + ' '.repeat(5))+'\n');
@@ -84,6 +85,7 @@
             term.clear();
             greetings(term);
             i = 0;
+            term.resume();
           }
         }
         display();
@@ -107,7 +109,6 @@
           'CTRL+D': function(e, original) {
             console.log("stop pppp");
             stop = true;
-            // term.resume();
           }
         }
       });
