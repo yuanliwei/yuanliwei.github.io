@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2017-12-25 13:47:26
+# 生成时间 2017-12-25 14:52:40
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -66,6 +66,7 @@ https://cdn.bootcss.com/crypto-js/3.1.9/crypto-js.js
 https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-base.css
 https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-light-theme.css
 https://cdn.bootcss.com/golden-layout/1.5.9/goldenlayout.min.js
+/src/js/utils/vkbeautify.js
 /src/js/escape/MD5.js
 /src/js/escape/Base64.js
 /src/js/escape/he.js
@@ -144,7 +145,6 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/json-tool/json-tool.html
 /src/json-tool/json-tool.js
 /src/json-tool/template.html
-/src/json-tool/xml-formatter.js
 /src/list/demo-normal-list.html
 /src/list/demo.html
 /src/math/angle.html

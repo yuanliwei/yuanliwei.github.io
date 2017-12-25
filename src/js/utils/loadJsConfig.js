@@ -132,6 +132,9 @@ LoadES6.config({
     // "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-translucent-theme.css",
     "https://cdn.bootcss.com/golden-layout/1.5.9/goldenlayout.min.js"
   ],
+  "vkbeautify":[
+    "/src/js/utils/vkbeautify.js"
+  ],
   "escapes":[
     "/src/js/escape/MD5.js",
     "/src/js/escape/Base64.js",

@@ -31,7 +31,7 @@
         </div>
       </div>
       <div contenteditable="true" spellcheck="false">
-          <pre><code class="java" id="code_output"> </code></pre>
+          <pre><code class="" id="code_output"> </code></pre>
       </div>
       <div class="small text-nowrap" contenteditable="true" spellcheck="false">
           <div id="result_content">
@@ -45,11 +45,10 @@
           .load("../js/utils/loadJsConfig.js")
           .load("jquery", "popper", "string-format", "beautify",
                 "escapes", "highlight")
-          .load("bootstrap")
+          .load("bootstrap", "vkbeautify")
           .load("../js/utils/StringUtil.js",
                 "../js/utils/code-format.js",
                 "../js/utils/common.js",
-                "./xml-formatter.js",
                 "./json-tool.js").show()
           .then(function() {
               console.log('====================hello==============');
