@@ -246,9 +246,15 @@ BookChapterList = (function () {
           o.parent_id = o.parentId
           return o;
         }
-        chapters = chapters.concat(datas.pages.map(convert))
-        chapters = chapters.concat(datas.chapters.map(convert))
-        chapters = chapters.concat(datas.tasks.map(convert))
+        if (datas.pages) {
+          chapters = chapters.concat(datas.pages.map(convert))
+        }
+        if (datas.chapters) {
+          chapters = chapters.concat(datas.chapters.map(convert))
+        }
+        if(datas.tasks){
+          chapters = chapters.concat(datas.tasks.map(convert))
+        }
       }
 
       parseChapterTree(chapters);
