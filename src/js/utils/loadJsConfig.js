@@ -19,6 +19,9 @@ LoadES6.config({
   "JsBarcode":[
     "https://cdn.bootcss.com/jsbarcode/3.6.0/JsBarcode.all.min.js"
   ],
+  "split":[
+    "https://cdn.bootcss.com/split.js/1.3.5/split.min.js"
+  ],
   "jquery-terminal":[
     "https://cdn.bootcss.com/jquery.terminal/1.4.0/css/jquery.terminal.min.css",
     "https://cdn.bootcss.com/jquery.terminal/1.4.0/js/jquery.terminal.min.js"
@@ -36,6 +39,87 @@ LoadES6.config({
     "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/javascript-hint.min.js",
     "https://cdn.bootcss.com/codemirror/5.25.2/addon/lint/javascript-lint.min.js",
     "https://cdn.bootcss.com/codemirror/5.25.2/mode/javascript/javascript.min.js"
+  ],
+  "codemirror-theme":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/3024-day.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/3024-night.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/abcdef.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/ambiance.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/base16-dark.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/base16-light.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/bespin.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/blackboard.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/cobalt.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/colorforth.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/dracula.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/duotone-dark.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/duotone-light.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/eclipse.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/erlang-dark.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/hopscotch.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/icecoder.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/isotope.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/lesser-dark.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/liquibyte.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/material.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/mbo.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/mdn-like.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/midnight.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/monokai.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/neo.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/night.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/panda-syntax.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/paraiso-dark.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/paraiso-light.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/pastel-on-dark.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/railscasts.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/rubyblue.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/seti.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/solarized.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/the-matrix.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/tomorrow-night-bright.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/tomorrow-night-eighties.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/ttcn.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/twilight.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/vibrant-ink.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/xq-dark.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/xq-light.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/yeti.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/theme/zenburn.min.css"
+  ],
+  "codemirror-javascript":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/mode/javascript/javascript.min.js",
+    // "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/javascript-hint.min.js"
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/javascript-hint.js"
+  ],
+  "codemirror-fullscreen":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/display/fullscreen.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/display/fullscreen.min.js"
+  ],
+  "codemirror-comment":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/comment/comment.min.js"
+  ],
+  "codemirror-dialog":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/dialog/dialog.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/dialog/dialog.min.js"
+  ],
+  "codemirror-addons":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/edit/matchbrackets.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/fold/foldcode.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/fold/brace-fold.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/fold/indent-fold.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/fold/foldgutter.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/fold/foldgutter.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/edit/closebrackets.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/selection/selection-pointer.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/selection/mark-selection.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/selection/active-line.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/search/search.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/search/searchcursor.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/search/matchesonscrollbar.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/search/matchesonscrollbar.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/search/match-highlighter.min.js",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/scroll/annotatescrollbar.min.js"
   ],
   "mark":[
     "https://cdn.bootcss.com/mark.js/8.9.0/mark.min.js",
