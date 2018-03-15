@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0" name="viewport">
+    <title>迷宫</title>
+    <script src="../js/utils/load.js" charset="utf-8"></script>
+    <style media="screen">
+      html, body{
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+
+  </body>
+  <script comment="场景画布" type="text/javascript">
+    class Scene {
+      constructor() {
+        this.canvas = document.createElement('canvas')
+        this.initCanvas()
+      }
+
+      drawWalls(walls){
+        const {g,canvas} = this
+        g.clearRect(0,0,canvas.width,canvas.height)
+        g.beginPath()
+        g.strokeStyle = 'blue'
+        walls.forEach((wall)=>{
+          this.drawWall(wall)
+        })
+        g.stroke()
+        g.closePath()
+      }
+
+      drawWall(wall){
+        const {x,y,l,t,r,b} = wall
+        const {g} = this
+        var step = 10
+        var x_ = x * 2 * step + 30
+        var y_ = y * 2 * step + 30
+        if (l) {
+          g.moveTo(x_-step,y_-step)
+          g.lineTo(x_-step,y_+step)
+        }
+        if (t) {
+          g.moveTo(x_-step,y_-step)
+          g.lineTo(x_+step,y_-step)
+        }
+        if (r) {
+          g.moveTo(x_+step,y_-step)
+          g.lineTo(x_+step,y_+step)
+        }
+        if (b) {
+          g.moveTo(x_-step,y_+step)
+          g.lineTo(x_+step,y_+step)
+        }
+      }
+
+      initCanvas(){
+        const {canvas} = this
+        this.g = canvas.getContext('2d')
+        document.body.append(canvas)
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        canvas.style.background = '#888'
+      }
+    }
+  </script>
+  <script comment="迷宫生成器" type="text/javascript">
+    class WallGenerate {
+      constructor() {
+        this.walls = []
+        this.width = 40
+        this.height = 30
+      }
+
+      createWalls(){
+        const {walls, width, height} = this
+        var wallMap = {}
+        for (var j = 0; j < height; j++) {
+          for (var i = 0; i < width; i++) {
+            wallMap[i+'-'+j] = {
+              x:i,
+              y:j,
+              l:true,
+              t:true,
+              r:true,
+              b:true
+            }
+          }
+        }
+
+        var stack = []
+        var cur = wallMap['0-0']
+        delete wallMap['0-0']
+        cur.check = true
+        cur.l=false
+        wallMap[`${width-1}-${height-1}`].r=false
+        walls.push(cur)
+        while (true) {
+          // find neighbors
+          let nbs = []
+          let x = cur.x
+          let y = cur.y
+          if (wallMap[`${x-1}-${y}`]) { nbs.push(wallMap[`${x-1}-${y}`]) }
+          if (wallMap[`${x}-${y-1}`]) { nbs.push(wallMap[`${x}-${y-1}`]) }
+          if (wallMap[`${x+1}-${y}`]) { nbs.push(wallMap[`${x+1}-${y}`]) }
+          if (wallMap[`${x}-${y+1}`]) { nbs.push(wallMap[`${x}-${y+1}`]) }
+          if (nbs.length > 0) {
+            stack.push(cur)
+            let o = cur
+            cur = nbs[parseInt(nbs.length*Math.random())]
+            walls.push(cur)
+            let n = cur
+            delete wallMap[`${cur.x}-${cur.y}`]
+            n.check = true
+            if (o.x-1==n.x) {
+              o.l=false
+              n.r=false
+            }
+            if (o.x+1==n.x) {
+              o.r=false
+              n.l=false
+            }
+            if (o.y-1===n.y) {
+              o.t=false
+              n.b=false
+            }
+            if (o.y+1==n.y) {
+              o.b=false
+              n.t=false
+            }
+          } else {
+            cur = stack.pop()
+            if (!cur) {
+              break
+            }
+          }
+        }
+
+        return walls
+      }
+
+      createWallsAsync(){
+        const {walls, width, height} = this
+
+        var cur = null
+        var wallMap = null
+        var stack = null
+        if (!this.wallMap) {
+          wallMap = this.wallMap = {}
+          for (var j = 0; j < height; j++) {
+            for (var i = 0; i < width; i++) {
+              this.wallMap[i+'-'+j] = {
+                x:i,
+                y:j,
+                l:true,
+                t:true,
+                r:true,
+                b:true
+              }
+            }
+          }
+
+          stack = this.stack = []
+          cur = this.cur = wallMap['0-0']
+          delete wallMap['0-0']
+          cur.l=false
+          wallMap[`${width-1}-${height-1}`].r=false
+          walls.push(cur)
+        }
+
+        cur = this.cur
+        wallMap = this.wallMap
+        stack = this.stack
+
+        let nbs = []
+        let x = cur.x
+        let y = cur.y
+        if (wallMap[`${x-1}-${y}`]) { nbs.push(wallMap[`${x-1}-${y}`]) }
+        if (wallMap[`${x}-${y-1}`]) { nbs.push(wallMap[`${x}-${y-1}`]) }
+        if (wallMap[`${x+1}-${y}`]) { nbs.push(wallMap[`${x+1}-${y}`]) }
+        if (wallMap[`${x}-${y+1}`]) { nbs.push(wallMap[`${x}-${y+1}`]) }
+        if (nbs.length > 0) {
+          stack.push(cur)
+          let o = cur
+          cur = nbs[parseInt(nbs.length*Math.random())]
+          walls.push(cur)
+          let n = cur
+          delete wallMap[`${cur.x}-${cur.y}`]
+          n.check = true
+          if (o.x-1==n.x) {
+            o.l=false
+            n.r=false
+          }
+          if (o.x+1==n.x) {
+            o.r=false
+            n.l=false
+          }
+          if (o.y-1===n.y) {
+            o.t=false
+            n.b=false
+          }
+          if (o.y+1==n.y) {
+            o.b=false
+            n.t=false
+          }
+        } else {
+          if (Date.now()%1000>500) {
+            cur = stack.pop()
+          } else {
+            cur = stack.shift()
+          }
+          if (!cur) {
+            return
+          }
+        }
+        this.cur = cur
+        return walls
+      }
+    }
+  </script>
+  <script comment="main" type="text/javascript">
+    class App {
+      constructor() {
+        this.sence = new Scene()
+        var gengerate = new WallGenerate()
+        var l = 0
+        var loop = ()=>{
+          var walls = gengerate.createWallsAsync()
+          while (walls) {
+            if (walls.length == l) {
+              walls = gengerate.createWallsAsync()
+            } else {
+              l = walls.length
+              break
+            }
+          }
+
+          if (walls) {
+            console.log(walls.length);
+            this.sence.drawWalls(walls)
+            setTimeout(()=>{loop()},20)
+          }
+        }
+        loop()
+      }
+    }
+    new App()
+  </script>
+</html>
