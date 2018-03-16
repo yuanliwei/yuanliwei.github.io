@@ -64,6 +64,21 @@
         g.restore()
       }
 
+      drawRole(x,y,img){
+        const {g,canvas,size} = this
+        const {leftPadding, topPadding} = size
+        const {step} = size
+        const {width, height} = img
+        var pl = (step - width)/2
+        var pt = (step - height)/2
+        g.save()
+        g.translate(leftPadding+pl,topPadding+pt)
+        g.beginPath()
+        g.drawImage(img,x*step,y*step)
+        g.closePath()
+        g.restore()
+      }
+
       drawWall(wall){
         const {x,y,l,t,r,b} = wall
         const {g, size} = this
@@ -215,10 +230,11 @@
   <script comment="main" type="text/javascript">
     class App {
       constructor() {
-        var size = new SizeUtil(40,20,40)
+        var size = this.size = new SizeUtil(16,14,100)
         this.sence = new Scene(size)
         var gengerate = new WallGenerate(size)
         var l = 0
+        var lastWalls = []
         var loop = ()=>{
           var walls = gengerate.createWallsAsync()
           while (walls) {
@@ -233,10 +249,58 @@
           if (walls) {
             // console.log(walls.length);
             this.sence.drawWalls(walls)
+            lastWalls = walls
             setTimeout(()=>{loop()},20)
+          } else {
+            this.startPlay(lastWalls)
           }
         }
         loop()
+        var img = this.img = new Image()
+        img.src = 'https://www.gravatar.com/avatar/0?s=40&d=monsterid'
+        this.roleX = 0
+        this.roleY = 0
+      }
+
+      startPlay(walls){
+        this.walls = walls
+        const {size, sence, img} = this
+        this.render()
+        var wallMap = {}
+        walls.forEach((wall)=>{
+          wallMap[`${wall.x}-${wall.y}`] = wall
+        })
+        document.body.addEventListener('keydown',(e)=>{
+          console.log(e,e.code);
+          let p = wallMap[`${this.roleX}-${this.roleY}`]
+          switch (e.code) {
+            case 'ArrowDown':
+              if (!p.b) { this.roleY++ }
+              break;
+            case 'ArrowUp':
+              if (!p.t) { this.roleY-- }
+              break;
+            case 'ArrowLeft':
+              if (!p.l) { this.roleX-- }
+              break;
+            case 'ArrowRight':
+              if (!p.r) { this.roleX++ }
+              break;
+            default:
+
+          }
+        })
+      }
+
+      render(){
+        const {size, sence, img, walls} = this
+
+        requestAnimationFrame(()=>{
+          this.render()
+        })
+        // sence.drawWalls(walls)
+
+        sence.drawRole(this.roleX,this.roleY,img)
       }
     }
     new App()
