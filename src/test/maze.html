@@ -16,7 +16,7 @@
   <body>
 
   </body>
-  <script comment="迷宫尺寸工具类" type="text/javascript">
+  <script comment="SizeUtil" type="text/javascript">
     class SizeUtil {
       constructor(width, height, padding) {
         this.width = width
@@ -39,68 +39,26 @@
       }
     }
   </script>
-  <script comment="场景画布" type="text/javascript">
+  <script comment="画布" type="text/javascript">
     class Scene {
-      constructor(size) {
+      constructor(size, timer) {
         this.size = size
+        this.timer = timer
+        this.models = []
         this.canvas = document.createElement('canvas')
         this.initCanvas()
       }
 
-      drawWalls(walls){
-        const {g,canvas,size} = this
-        const {leftPadding, topPadding} = size
-        g.clearRect(0,0,canvas.width,canvas.height)
-        g.save()
-        g.translate(leftPadding,topPadding)
-        g.beginPath()
-        g.strokeStyle = 'blue'
-        g.lineWidth = 1.5
-        walls.forEach((wall)=>{
-          this.drawWall(wall)
+      addModel(model){
+        this.models.push(model)
+      }
+
+      render() {
+        const {models, g, size} = this
+        g.clearRect(0,0,size.innerWidth,size.innerHeight)
+        models.forEach((model)=>{
+          model.render(g)
         })
-        g.stroke()
-        g.closePath()
-        g.restore()
-      }
-
-      drawRole(x,y,img){
-        const {g,canvas,size} = this
-        const {leftPadding, topPadding} = size
-        const {step} = size
-        const {width, height} = img
-        var pl = (step - width)/2
-        var pt = (step - height)/2
-        g.save()
-        g.translate(leftPadding+pl,topPadding+pt)
-        g.beginPath()
-        g.drawImage(img,x*step,y*step)
-        g.closePath()
-        g.restore()
-      }
-
-      drawWall(wall){
-        const {x,y,l,t,r,b} = wall
-        const {g, size} = this
-        const {step} = size
-        var x_ = x * step + step/2
-        var y_ = y * step + step/2
-        if (l) {
-          g.moveTo(x_-step/2,y_-step/2)
-          g.lineTo(x_-step/2,y_+step/2)
-        }
-        if (t) {
-          g.moveTo(x_-step/2,y_-step/2)
-          g.lineTo(x_+step/2,y_-step/2)
-        }
-        if (r) {
-          g.moveTo(x_+step/2,y_-step/2)
-          g.lineTo(x_+step/2,y_+step/2)
-        }
-        if (b) {
-          g.moveTo(x_-step/2,y_+step/2)
-          g.lineTo(x_+step/2,y_+step/2)
-        }
       }
 
       initCanvas(){
@@ -113,16 +71,37 @@
       }
     }
   </script>
-  <script comment="迷宫生成器" type="text/javascript">
-    class WallGenerate {
-      constructor(size) {
+  <script comment="迷宫" type="text/javascript">
+    class Maze {
+      constructor(size, timer) {
+        this.size = size
+        this.timer = timer
         this.walls = []
-        this.width = size.width
-        this.height = size.height
+        this.models = []
+        this.mazeAnimEnd = false
+        this.create()
+        this.init()
       }
 
-      createWalls(){
-        const {walls, width, height} = this
+      init(){
+        var wallMap = {}
+        this.walls.forEach((wall)=>{
+          wallMap[`${wall.x}-${wall.y}`] = wall
+        })
+        document.body.addEventListener('keydown',(e)=>{
+          if(!this.mazeAnimEnd) return
+          this.role.setWallMap(wallMap)
+          this.role[e.code] = true
+        })
+        document.body.addEventListener('keyup',(e)=>{
+          if(!this.mazeAnimEnd) return
+          this.role[e.code] = false
+        })
+      }
+
+      create(){
+        const {walls, size} = this
+        const {width, height} = size
         var wallMap = {}
         for (var j = 0; j < height; j++) {
           for (var i = 0; i < width; i++) {
@@ -134,7 +113,9 @@
         var cur = wallMap['0-0']
         delete wallMap['0-0']
         cur.check = true
+        // 入口
         cur.l=false
+        // 出口
         wallMap[`${width-1}-${height-1}`].r=false
         walls.push(cur)
         while (true) {
@@ -159,148 +140,235 @@
             if (o.y-1===n.y) { o.t=n.b=false }
             if (o.y+1==n.y) { o.b=n.t=false }
           } else {
-            cur = stack.pop()
+            cur = Math.random()>0.9?stack.shift():stack.pop()
             if (!cur) { break }
           }
         }
-
-        return walls
       }
 
-      createWallsAsync(){
-        const {walls, width, height} = this
+      addRole(role){
+        this.role = role
+        this.addModel(role)
+      }
 
-        var cur = null
-        var wallMap = null
-        var stack = null
-        if (!this.wallMap) {
-          wallMap = this.wallMap = {}
-          for (var j = 0; j < height; j++) {
-            for (var i = 0; i < width; i++) {
-              this.wallMap[i+'-'+j] = { x:i, y:j, l:true, t:true, r:true, b:true }
+      addModel(model){
+        this.models.push(model)
+      }
+
+      render(g) {
+        const {models, size, walls, mazeAnimEnd} = this
+        const {leftPadding, topPadding} = size
+        g.save()
+        g.translate(leftPadding,topPadding)
+        this.drawWalls(g, walls)
+        if (mazeAnimEnd) {
+          models.forEach((model)=>{
+            model.render(g)
+          })
+        }
+        g.restore()
+      }
+
+      drawWalls(g, wall){
+        const {walls, timer} = this
+        var time = timer.startDelta
+        var wallSize = time / 1
+        g.beginPath()
+        g.strokeStyle = 'blue'
+        g.lineWidth = 1.5
+        for (var i = 0; i < wallSize && i < walls.length; i++) {
+          this.drawWall(g, walls[i])
+        }
+        g.stroke()
+        g.closePath()
+
+        if (wallSize > walls.length) {
+          this.mazeAnimEnd = true
+        } else {
+          this.mazeAnimEnd = false
+        }
+      }
+
+      drawWall(g, wall){
+        const {x,y,l,t,r,b} = wall
+        var step = this.size.step
+        var x_ = x * step + step/2
+        var y_ = y * step + step/2
+        if (l) {
+          g.moveTo(x_-step/2,y_-step/2)
+          g.lineTo(x_-step/2,y_+step/2)
+        }
+        if (t) {
+          g.moveTo(x_-step/2,y_-step/2)
+          g.lineTo(x_+step/2,y_-step/2)
+        }
+        if (r) {
+          g.moveTo(x_+step/2,y_-step/2)
+          g.lineTo(x_+step/2,y_+step/2)
+        }
+        if (b) {
+          g.moveTo(x_-step/2,y_+step/2)
+          g.lineTo(x_+step/2,y_+step/2)
+        }
+      }
+    }
+  </script>
+  <script comment="Role" type="text/javascript">
+    class Role {
+      constructor(size, timer) {
+        this.walls = []
+        this.size = size
+        this.timer = timer
+        this.x = 0
+        this.y = 0
+        this.ArrowDown = false
+        this.ArrowUp = false
+        this.ArrowLeft = false
+        this.ArrowRight = false
+        this.posX = 0
+        this.posY = 0
+        this.speed = 0.3
+        this.loadHead()
+      }
+
+      loadHead(){
+        var img = new Image()
+        img.src = 'https://www.gravatar.com/avatar/0?s=40&d=monsterid'
+        img.crossOrigin = 'Anonymous'
+        img.onload= ()=>{
+          var c = document.createElement('canvas')
+          c.width = img.width
+          c.height = img.height
+          var g = c.getContext('2d')
+          g.drawImage(img,0,0)
+          var imgData = g.getImageData(0,0,img.width,img.height)
+          let buf = imgData.data
+          this.color = buf.slice(0,4)
+          for (var i = 0; i < buf.length; i++) {
+            let r = buf[i*4+0]
+            let g = buf[i*4+1]
+            let b = buf[i*4+2]
+            let a = buf[i*4+3]
+            if (r==this.color[0]&&g==this.color[1]&&b==this.color[2]){
+              buf[i*4+3] = 0
             }
           }
-
-          stack = this.stack = []
-          cur = this.cur = wallMap['0-0']
-          delete wallMap['0-0']
-          cur.l=false
-          wallMap[`${width-1}-${height-1}`].r=false
-          walls.push(cur)
-        }
-
-        cur = this.cur
-        wallMap = this.wallMap
-        stack = this.stack
-
-        let nbs = []
-        let x = cur.x
-        let y = cur.y
-        if (wallMap[`${x-1}-${y}`]) { nbs.push(wallMap[`${x-1}-${y}`]) }
-        if (wallMap[`${x}-${y-1}`]) { nbs.push(wallMap[`${x}-${y-1}`]) }
-        if (wallMap[`${x+1}-${y}`]) { nbs.push(wallMap[`${x+1}-${y}`]) }
-        if (wallMap[`${x}-${y+1}`]) { nbs.push(wallMap[`${x}-${y+1}`]) }
-        if (nbs.length > 0) {
-          stack.push(cur)
-          let o = cur
-          cur = nbs[parseInt(nbs.length*Math.random())]
-          walls.push(cur)
-          let n = cur
-          delete wallMap[`${cur.x}-${cur.y}`]
-          n.check = true
-          if (o.x-1==n.x) { o.l=n.r=false }
-          if (o.x+1==n.x) { o.r=n.l=false }
-          if (o.y-1===n.y) { o.t=n.b=false }
-          if (o.y+1==n.y) { o.b=n.t=false }
-        } else {
-          if (Date.now()%1000>500) {
-            cur = stack.pop()
-          } else {
-            cur = stack.shift()
+          g.putImageData(imgData,0,0)
+          img.onload = ()=>{
+            this.img = img
           }
-          if (!cur) {
-            return
-          }
+          img.src = c.toDataURL()
         }
-        this.cur = cur
-        return walls
       }
+
+      setWallMap(wallMap){
+        this.wallMap = wallMap
+      }
+
+      render(g){
+        const {canvas,size,img,posX,posY} = this
+        if (!img) { return }
+        this.countPosition()
+        const {step} = size
+        const {width, height} = img
+        var scale = 0.8 * step/width
+        var pl = (step - width*scale) / 2
+        var pt = (step - height*scale) / 2
+
+        g.save()
+        g.translate(pl,pt)
+        g.beginPath()
+        g.drawImage(img,posX,posY,width*scale,height*scale)
+        g.closePath()
+        g.restore()
+      }
+
+      countPosition(){
+        const {wallMap,timer,speed,posX,posY,canvas,size,img,ArrowDown, ArrowUp, ArrowLeft, ArrowRight} = this
+        if (!wallMap) { return }
+        const {step} = size
+
+        if (ArrowDown) { this.posY+=timer.delta*speed }
+        if (ArrowUp) { this.posY-=timer.delta*speed }
+        if (ArrowLeft) { this.posX-=timer.delta*speed }
+        if (ArrowRight) { this.posX+=timer.delta*speed }
+
+        this.x = parseInt((posX+step/2)/step)
+        this.y = parseInt((posY+step/2)/step)
+
+        if (this.x<0) {
+          this.x = 0
+          this.posX = 0
+        }
+        if (this.x >= size.width) {
+          this.x = size.width - 1
+          this.posX = step*this.x
+        }
+        if (this.y<0) {
+          this.y = 0
+          this.posY = 0
+        }
+        if (this.y >= size.height) {
+          this.y = size.height - 1
+          this.posY = step*this.y
+        }
+        let p = wallMap[`${this.x}-${this.y}`]
+        let pX = this.x*step
+        let pY = this.y*step
+
+        if (pX>this.posX&&p.l) { this.posX = pX }
+        if (pX<this.posX&&p.r) { this.posX = pX }
+        if (pY>this.posY&&p.t) { this.posY = pY }
+        if (pY<this.posY&&p.b) { this.posY = pY }
+
+        if (!ArrowLeft &&!ArrowRight) { this.posX = pX }
+        if (!ArrowDown &&!ArrowUp) { this.posY = pY }
+
+      }
+    }
+  </script>
+  <script comment="Timer" type="text/javascript">
+    class Timer {
+      constructor() {
+        this.lastTime = Date.now()
+        this.startTime = Date.now()
+        this.delta = 0
+        this.startDelta = 0
+      }
+
+      render(){
+        this.delta = Date.now() - this.lastTime
+        this.startDelta = Date.now() - this.startTime
+        this.lastTime = Date.now()
+      }
+
+      start(){
+        this.delta = 0
+        this.startTime = Date.now()
+      }
+
     }
   </script>
   <script comment="main" type="text/javascript">
     class App {
       constructor() {
-        var size = this.size = new SizeUtil(16,14,100)
-        this.sence = new Scene(size)
-        var gengerate = new WallGenerate(size)
-        var l = 0
-        var lastWalls = []
-        var loop = ()=>{
-          var walls = gengerate.createWallsAsync()
-          while (walls) {
-            if (walls.length == l) {
-              walls = gengerate.createWallsAsync()
-            } else {
-              l = walls.length
-              break
-            }
-          }
-
-          if (walls) {
-            // console.log(walls.length);
-            this.sence.drawWalls(walls)
-            lastWalls = walls
-            setTimeout(()=>{loop()},20)
-          } else {
-            this.startPlay(lastWalls)
-          }
-        }
-        loop()
-        var img = this.img = new Image()
-        img.src = 'https://www.gravatar.com/avatar/0?s=40&d=monsterid'
-        this.roleX = 0
-        this.roleY = 0
-      }
-
-      startPlay(walls){
-        this.walls = walls
-        const {size, sence, img} = this
+        this.timer = new Timer()
+        var size = new SizeUtil(40,30,100)
+        var maze = new Maze(size, this.timer)
+        var role = new Role(size, this.timer)
+        this.sence = new Scene(size, this.timer)
+        this.sence.addModel(maze)
+        maze.addRole(role)
         this.render()
-        var wallMap = {}
-        walls.forEach((wall)=>{
-          wallMap[`${wall.x}-${wall.y}`] = wall
-        })
-        document.body.addEventListener('keydown',(e)=>{
-          console.log(e,e.code);
-          let p = wallMap[`${this.roleX}-${this.roleY}`]
-          switch (e.code) {
-            case 'ArrowDown':
-              if (!p.b) { this.roleY++ }
-              break;
-            case 'ArrowUp':
-              if (!p.t) { this.roleY-- }
-              break;
-            case 'ArrowLeft':
-              if (!p.l) { this.roleX-- }
-              break;
-            case 'ArrowRight':
-              if (!p.r) { this.roleX++ }
-              break;
-            default:
-
-          }
-        })
       }
 
       render(){
-        const {size, sence, img, walls} = this
-
+        const {sence, timer} = this
+        sence.render()
+        timer.render()
         requestAnimationFrame(()=>{
           this.render()
         })
-        // sence.drawWalls(walls)
-
-        sence.drawRole(this.roleX,this.roleY,img)
       }
     }
     new App()
