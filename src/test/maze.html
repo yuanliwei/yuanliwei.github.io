@@ -20,30 +20,43 @@
   </body>
   <script comment="SizeUtil" type="text/javascript">
     class SizeUtil {
-      constructor(width, height, padding) {
+      constructor(app, width, height, padding) {
         this.width = width
         this.height = height
+        this.padding = padding
+        this.app = app
+
+        this.countSize()
+
+        window.addEventListener('resize',()=>{
+          this.countSize()
+          this.app.sence.canvas.width = this.innerWidth
+          this.app.sence.canvas.height = this.innerHeight
+        })
+
+      }
+
+      countSize(){
         this.innerWidth = window.innerWidth
         this.innerHeight = window.innerHeight
-        this.padding = padding
 
-        var step1 = parseInt((this.innerWidth-padding*2)/this.width)
-        var step2 = parseInt((this.innerHeight-padding*2)/this.height)
+        var step1 = parseInt((this.innerWidth-this.padding*2)/this.width)
+        var step2 = parseInt((this.innerHeight-this.padding*2)/this.height)
 
         this.step = Math.min(step1, step2)
 
-        var mazeWidth = width * this.step
-        var mazeHeight = height * this.step
+        var mazeWidth = this.width * this.step
+        var mazeHeight = this.height * this.step
 
         this.leftPadding = parseInt((this.innerWidth - mazeWidth)/2)
         this.topPadding = parseInt((this.innerHeight - mazeHeight)/2)
-
       }
     }
   </script>
   <script comment="画布" type="text/javascript">
     class Scene {
-      constructor(size, timer) {
+      constructor(app) {
+        const {size, timer} = app
         this.size = size
         this.timer = timer
         this.models = []
@@ -75,14 +88,15 @@
   </script>
   <script comment="迷宫" type="text/javascript">
     class Maze {
-      constructor(size, timer, network) {
+      constructor(app) {
+        const {size, timer, network} = app
         this.size = size
         this.timer = timer
         this.network = network
         this.walls = []
         this.models = []
         this.mazeAnimEnd = false
-        this.create()
+        // this.create()
         this.init()
       }
 
@@ -101,15 +115,6 @@
         this.walls = []
         const {walls, size, network} = this
         const {width, height} = size
-
-        if (network.data&&network.data.walls) {
-          console.log(network.data);
-          this.walls = JSON.parse(pako.inflate(network.data.walls, { to: 'string' }))
-          for (var username in network.data.players) {
-            this.addModel(new Player(size,network.ref.child('players'),username))
-          }
-          return
-        }
 
         var wallMap = {}
         for (var j = 0; j < height; j++) {
@@ -153,10 +158,6 @@
             if (!cur) { break }
           }
         }
-
-        if (network.data) {
-          network.ref.child('walls').set(pako.deflate(JSON.stringify(walls), { to: 'string' }))
-        }
       }
 
       addRole(role){
@@ -169,17 +170,42 @@
       }
 
       render(g) {
-        const {models, size, walls, mazeAnimEnd} = this
+        const {models, size, walls, mazeAnimEnd, role, network} = this
         const {leftPadding, topPadding} = size
         g.save()
         g.translate(leftPadding,topPadding)
         this.drawWalls(g, walls)
-        if (mazeAnimEnd) {
+        if (mazeAnimEnd && !role.gameover) {
           models.forEach((model)=>{
             model.render(g)
           })
+          role.render(g)
         }
         g.restore()
+
+        if (role.gameover) {
+          return
+        }
+
+        if (role.isSuccess()) {
+          network.ref.child('num').once('value',(data)=>{
+            network.ref.child('num').set(data.val()+1)
+          })
+          this.create()
+          network.ref.child('walls').set(pako.deflate(JSON.stringify(this.walls), { to: 'string' }))
+          let players = network.ref.child('players').once('value',(data)=>{
+            let players = data.val()
+            for (var key in players) {
+              let value = players[key]
+              if (value[0] == 0&&value[1]==0) {
+                network.ref.child('players').child(key).remove()
+              } else {
+                network.ref.child('players').child(key).set([0,0])
+              }
+            }
+            network.ref.child('signal').set(3)
+          })
+        }
       }
 
       drawWalls(g, wall){
@@ -228,11 +254,14 @@
   </script>
   <script comment="Role" type="text/javascript">
     class Role {
-      constructor(size, timer, playerRef,successCallback) {
-        this.name = parseInt(10000*Math.random())
+      constructor(app) {
+        const {size, timer, network} = app
+        if (!localStorage.mazeName) {
+          localStorage.mazeName = Date.now()
+        }
+        this.name = localStorage.mazeName
         this.walls = []
-        this.playerRef = playerRef
-        this.successCallback = successCallback
+        this.playerRef = network.ref.child('players')
         this.size = size
         this.timer = timer
         this.ArrowDown = false
@@ -241,45 +270,30 @@
         this.ArrowRight = false
         this.posX = 0
         this.posY = 0
-        this.speed = 0.3
-        this.gameover = false
+        this.speed = 0.05
         this.loadHead()
       }
 
       reset(){
-        this.posX = 0
-        this.posY = 0
         this.gameover = false
+        this.ArrowDown = false
+        this.ArrowUp = false
+        this.ArrowLeft = false
+        this.ArrowRight = false
+      }
+
+      isSuccess() {
+        const {x,y,size} = this
+        if (x==size.width-1&&y==size.height-1) {
+          this.gameover = true
+        }
+        return this.gameover
       }
 
       loadHead(){
-        var img = new Image()
-        img.src = `https://www.gravatar.com/avatar/${encodeURIComponent(this.name)}?s=40&d=monsterid`
-        img.crossOrigin = 'Anonymous'
-        img.onload= ()=>{
-          var c = document.createElement('canvas')
-          c.width = img.width
-          c.height = img.height
-          var g = c.getContext('2d')
-          g.drawImage(img,0,0)
-          var imgData = g.getImageData(0,0,img.width,img.height)
-          let buf = imgData.data
-          this.color = buf.slice(0,4)
-          for (var i = 0; i < buf.length; i++) {
-            let r = buf[i*4+0]
-            let g = buf[i*4+1]
-            let b = buf[i*4+2]
-            let a = buf[i*4+3]
-            if (r==this.color[0]&&g==this.color[1]&&b==this.color[2]){
-              buf[i*4+3] = 0
-            }
-          }
-          g.putImageData(imgData,0,0)
-          img.onload = ()=>{
-            this.img = img
-          }
-          img.src = c.toDataURL()
-        }
+        new UserPhoto(`https://www.gravatar.com/avatar/${(this.name)}?s=40&d=monsterid`).load((img)=>{
+          this.img = img
+        })
       }
 
       setWallMap(wallMap){
@@ -305,30 +319,22 @@
       }
 
       countPosition(){
-        const {wallMap,timer,speed,posX,posY,canvas,size,img,ArrowDown, ArrowUp, ArrowLeft, ArrowRight,gameover} = this
+        const {wallMap,timer,speed,posX,posY,canvas,size,img,ArrowDown, ArrowUp, ArrowLeft, ArrowRight} = this
         if (!wallMap) { return }
-        if (gameover) { return }
+        if (this.gameover) { return }
         const {step} = size
 
-        if (ArrowDown) { this.posY+=timer.delta*speed }
-        if (ArrowUp) { this.posY-=timer.delta*speed }
-        if (ArrowLeft) { this.posX-=timer.delta*speed }
+        if (ArrowDown)  { this.posY+=timer.delta*speed }
+        if (ArrowUp)    { this.posY-=timer.delta*speed }
+        if (ArrowLeft)  { this.posX-=timer.delta*speed }
         if (ArrowRight) { this.posX+=timer.delta*speed }
 
         let x = parseInt((posX+step/2)/step)
         let y = parseInt((posY+step/2)/step)
 
         if (x<0) { x = 0; this.posX = 0 }
-        if (x >= size.width) {
-          x = size.width - 1; this.posX = step*x
-          if (y == size.height - 1) {
-            this.gameover = true
-            this.successCallback()
-            console.log('success');
-            return ;
-          }
-        }
         if (y<0) { y = 0; this.posY = 0 }
+        if (x >= size.width) { x = size.width - 1; this.posX = step*x }
         if (y >= size.height) { y = size.height - 1; this.posY = step*y }
 
         let p = wallMap[`${x}-${y}`]
@@ -343,9 +349,17 @@
         if (!ArrowLeft &&!ArrowRight) { this.posX = pX }
         if (!ArrowDown &&!ArrowUp) { this.posY = pY }
 
-        if ((this.lastX != this.posX || this.lastY != this.posY)&&(!ArrowDown&&!ArrowUp&&!ArrowLeft&&!ArrowRight)) {
-          this.playerRef.child(`${this.name}`).set([this.posX,this.posY])
-          [this.lastX,this.lastY] = [this.posX,this.posY]
+        x = parseInt((posX+step/2)/step)
+        y = parseInt((posY+step/2)/step)
+
+        this.x = x
+        this.y = y
+
+        if (this.lastX != x || this.lastY != y) {
+          this.playerRef.child(`${this.name}`).set([x,y])
+          this.lastX = x
+          this.lastY = y
+          console.log('set player child',x,y);
         }
 
       }
@@ -353,50 +367,25 @@
   </script>
   <script comment="Player" type="text/javascript">
     class Player {
-      constructor(size,playerRef,username) {
+      constructor(app,name) {
+        const {size} = app
         this.size = size
-        this.playerRef = playerRef
-        this.username = username
+        this.name = name
         this.posX = 0
         this.posY = 0
         this.loadHead()
-        this.register()
       }
 
       loadHead(){
-        const {username} = this
-        var img = new Image()
-        img.src = `https://www.gravatar.com/avatar/${encodeURIComponent(username)}uuuuu?s=40&d=monsterid`
-        console.log(`https://www.gravatar.com/avatar/${encodeURIComponent(username)}uuuu?s=40&d=monsterid`);
-        img.crossOrigin = 'Anonymous'
-        img.onload= ()=>{
-          var c = document.createElement('canvas')
-          c.width = img.width
-          c.height = img.height
-          var g = c.getContext('2d')
-          g.drawImage(img,0,0)
-          var imgData = g.getImageData(0,0,img.width,img.height)
-          let buf = imgData.data
-          this.color = buf.slice(0,4)
-          for (var i = 0; i < buf.length; i++) {
-            let r = buf[i*4+0]
-            let g = buf[i*4+1]
-            let b = buf[i*4+2]
-            let a = buf[i*4+3]
-            if (r==this.color[0]&&g==this.color[1]&&b==this.color[2]){
-              buf[i*4+3] = 0
-            }
-          }
-          g.putImageData(imgData,0,0)
-          img.onload = ()=>{
-            this.img = img
-          }
-          img.src = c.toDataURL()
-        }
+        const {name} = this
+        new UserPhoto(`https://www.gravatar.com/avatar/${(name)}?s=40&d=monsterid`).load((img)=>{
+          this.img = img
+        })
+
       }
 
       render(g){
-        const {canvas,size,img,posX,posY} = this
+        const {canvas,size,img,x,y} = this
         if (!img) { return }
         const {step} = size
         const {width, height} = img
@@ -404,18 +393,15 @@
         var pl = (step - width*scale) / 2
         var pt = (step - height*scale) / 2
 
+        let posX = x*step
+        let posY = y*step
+
         g.save()
         g.translate(pl,pt)
         g.beginPath()
         g.drawImage(img,posX,posY,width*scale,height*scale)
         g.closePath()
         g.restore()
-      }
-
-      register(){
-        this.playerRef.child(encodeURIComponent(this.username)).on('value',(data)=>{
-          // [this.posX,this.posY] = data.val()
-        })
       }
     }
   </script>
@@ -443,53 +429,123 @@
   </script>
   <script comment="Network" type="text/javascript">
     class Network {
-      constructor(callback) {
+      constructor(app) {
+        this.app = app
         wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
         this.ref = wilddog.sync().ref("/maze");
         window.ref = this.ref
-        this.ref.once('value', (snapshot, prev)=> {
-          this.data = snapshot.val();
-          callback()
-        },(error)=>{
-          alert(error)
-          console.error(error);
-        });
+        ref.child('players').on('value',(data)=>{
+          let players = data.val()
+          for (var username in players) {
+            if (username != (app.role.name)) {
+              if (!Player.playerMap) { Player.playerMap = {} }
+              if (!Player.playerMap[username]) {
+                let player = new Player(app,ref.child('players'),username)
+                app.maze.addModel(player)
+                Player.playerMap[username] = player
+              } else {
+                let player = Player.playerMap[username]
+                player.x = players[username][0]
+                player.y = players[username][1]
+              }
+            }
+          }
+        })
+
+        this.ref.child('signal').on('value',(data)=>{
+          let signal = data.val()
+          if (signal == 3) { // 结束
+            this.startGame()
+          }
+        })
+        this.startGame()
+      }
+
+      startGame(){
+        const {app,ref} = this
+        ref.child('signal').set(0) // 开始
+        ref.child('players').once('value',(data)=>{
+          let players = data.val()
+          for (var username in players) {
+            if (username == (app.role.name)) {
+              app.role.posX = players[username][0]*app.size.step
+              app.role.posY = players[username][1]*app.size.step
+            }
+          }
+        })
+        ref.child('walls').once('value',(data)=>{
+          let walls = JSON.parse(pako.inflate(data.val(), { to: 'string' }))
+          app.maze.walls = walls
+          var wallMap = {}
+          walls.forEach((wall)=>{ wallMap[`${wall.x}-${wall.y}`] = wall })
+          app.role.setWallMap(wallMap)
+          app.role.reset()
+          app.timer.start()
+        })
+      }
+    }
+  </script>
+  <script comment="UserPhoto" type="text/javascript">
+    class UserPhoto {
+      constructor(url) {
+        this.url = url
+      }
+
+      load(callback){
+        if(!UserPhoto.imgMap){ UserPhoto.imgMap = {} }
+        if (UserPhoto.imgMap[this.url]) {
+          callback(UserPhoto.imgMap[this.url])
+          return
+        }
+        var img = new Image()
+        img.src = this.url
+        img.crossOrigin = 'Anonymous'
+        img.onload= ()=>{
+          var c = document.createElement('canvas')
+          c.width = img.width
+          c.height = img.height
+          var g = c.getContext('2d')
+          g.drawImage(img,0,0)
+          var imgData = g.getImageData(0,0,img.width,img.height)
+          let buf = imgData.data
+          this.color = buf.slice(0,4)
+          for (var i = 0; i < buf.length; i++) {
+            let r = buf[i*4+0]
+            let g = buf[i*4+1]
+            let b = buf[i*4+2]
+            let a = buf[i*4+3]
+            if (r==this.color[0]&&g==this.color[1]&&b==this.color[2]){
+              buf[i*4+3] = 0
+            }
+          }
+          g.putImageData(imgData,0,0)
+          img.onload = ()=>{
+            let headImg = img
+            UserPhoto.imgMap[this.url] = headImg
+            callback(headImg)
+          }
+          img.src = c.toDataURL()
+        }
       }
     }
   </script>
   <script comment="main" type="text/javascript">
     class App {
       constructor() {
-        var network = new Network(()=>{
-          this.timer = new Timer()
-          var size = new SizeUtil(5,3,100)
-          var maze = new Maze(size, this.timer,network)
-          var role = new Role(size, this.timer,network.ref.child('players'),()=>{
-            // onsuccess
-            network.ref.child('players').remove()
-            network.ref.child('players').child(role.name).set([0,0])
-            network.data.walls = null
-            maze.models = []
-            maze.addRole(role)
-            maze.create()
-            role.reset()
-            var wallMap = {}
-            maze.walls.forEach((wall)=>{
-              wallMap[`${wall.x}-${wall.y}`] = wall
-            })
-            role.setWallMap(wallMap)
-            this.timer.start()
-          })
-          var wallMap = {}
-          maze.walls.forEach((wall)=>{
-            wallMap[`${wall.x}-${wall.y}`] = wall
-          })
-          role.setWallMap(wallMap)
-          this.sence = new Scene(size, this.timer)
-          this.sence.addModel(maze)
-          maze.addRole(role)
-          this.render()
-        })
+        this.timer = new Timer()
+        this.network = new Network(this)
+        this.size = new SizeUtil(this,50,30,100)
+        this.maze = new Maze(this)
+        this.role = new Role(this)
+        this.sence = new Scene(this)
+        this.init()
+        this.render()
+      }
+
+      init(){
+        const {sence, maze, role} = this
+        sence.addModel(maze)
+        maze.addRole(role)
       }
 
       render(){
