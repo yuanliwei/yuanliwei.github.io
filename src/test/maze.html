@@ -13,11 +13,8 @@
     <script src="https://cdn.bootcss.com/moment.js/2.19.4/moment.min.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.19.4/locale/zh-cn.js"></script>
     <style media="screen">
-      html, body{
-        padding: 0px;
-        margin: 0px;
-        overflow: hidden;
-      }
+      html, body{ padding: 0px; margin: 0px; overflow: hidden; }
+      .table_body tr th,.table_body tr td{ vertical-align: inherit; }
     </style>
   </head>
 
@@ -32,60 +29,49 @@
         this.mainBtn = $(`<button type="button" class="main_btn btn btn-light m-3 fixed-top" style="left:auto;">PHB</button>`)
         $('body').append(this.mainBtn)
         this.tBody = this.el.find('.table_body')
-        this.btnWin = this.el.find('.win')
-        this.btnStep = this.el.find('.steps')
-        this.btnLogin = this.el.find('.login')
-        this.btnUpdate = this.el.find('.update')
-        this.btnRegister = this.el.find('.register')
+        this.tBtns = this.el.find( '.win, .steps, .login, .update, .register' )
         this.init()
       }
 
       init(){
-        const {el, mainBtn, tBody, btnWin, btnStep, btnLogin, btnUpdate, btnRegister, app} = this
+        const {el, mainBtn, tBody, tBtns, app} = this
         mainBtn.click(()=>{
           el.toggleClass('invisible')
           this.update()
         })
-        var e = (evt)=>{
-          btnWin.removeClass('active')
-          btnStep.removeClass('active')
-          btnLogin.removeClass('active')
-          btnUpdate.removeClass('active')
-          btnRegister.removeClass('active')
+
+        tBtns.click((evt)=>{
+          tBtns.removeClass('active')
           $(evt.target).addClass('active')
           this.update()
-        }
-        btnWin.click(e)
-        btnStep.click(e)
-        btnLogin.click(e)
-        btnUpdate.click(e)
-        btnRegister.click(e)
+        })
       }
 
       update(){
-        const {el, mainBtn, tBody, btnWin, btnStep, btnLogin, btnUpdate, btnRegister, app} = this
+        const {el, mainBtn, tBody, tBtns, app} = this
         var tbs = []
         var datas = [app.role.data]
         for (var sha1 in Player.playerMap) {
-          var data = Player.playerMap[sha1].data
-          datas.push(data)
+          datas.push(Player.playerMap[sha1].data)
         }
         datas.sort((l,r)=>{
-          if(btnWin.hasClass('active')){return r.win-l.win}
-          if(btnStep.hasClass('active')){return r.step-l.step}
-          if(btnLogin.hasClass('active')){return r.login-l.login}
-          if(btnUpdate.hasClass('active')){return r.update-l.update}
-          if(btnRegister.hasClass('active')){return r.register-l.register}
+          if(tBtns.hasClass('win active')){return r.win-l.win}
+          if(tBtns.hasClass('steps active')){return r.step-l.step}
+          if(tBtns.hasClass('login active')){return r.login-l.login}
+          if(tBtns.hasClass('update active')){return r.update-l.update}
+          if(tBtns.hasClass('register active')){return r.register-l.register}
           return r.win-l.win
         })
         for (var i = 0; i < datas.length; i++) {
           var data = datas[i]
-          tbs.push(`<tr> <th scope="row">${i+1}</th> <td><img class="rounded-circle"
-                   src="https://www.gravatar.com/avatar/${data.sha1}?s=40&d=monsterid&from=rank"></td>
-                   <td>${data.name}</td> <td>${data.win}</td> <td>${data.step}</td> <td>${data.login}</td>
-                   <td>${moment(data.update).format('YYYY-MM-DD HH:mm:ss')}</td>
-                   <td>${moment(data.register).format('YYYY-MM-DD HH:mm:ss')}</td>
-                   </tr>`)
+          tbs.push(`<tr><th scope="row">${i+1}</th>
+                     <td><img class="rounded-circle" src="https://www.gravatar.com/avatar/${data.sha1}?s=40&d=monsterid&from=rank"></td>
+                     <td class="text-left pl-3">${data.name}</td>
+                     <td>${data.win}</td> <td>${data.step}</td>
+                     <td>${data.login}</td>
+                     <td>${moment(data.update).format('YYYY-MM-DD HH:mm:ss')}</td>
+                     <td>${moment(data.register).format('YYYY-MM-DD HH:mm:ss')}</td>
+                    </tr>`)
         }
         this.tBody.html(tbs.join(''))
       }
@@ -93,12 +79,12 @@
       template(){
         return `<div class="order_container invisible container-fulid fixed-top h-100 w-100 pt-5"
           style="left: auto; background-color: rgba(10, 10, 10, 0.9);overflow-x:hidden;overflow-y:auto;">
-          <table class="table table-sm text-light table-hover">
+          <table class="table table-sm text-light table-hover text-center">
             <thead>
               <tr>
                 <th scope="col"><button type="button" class="btn btn-link text-light" disabled>NO.</button></th>
                 <th scope="col"><button type="button" class="btn btn-link text-light" disabled>HEAD</button></th>
-                <th scope="col"><button type="button" class="btn btn-link text-light" disabled>NAME</button></th>
+                <th class="text-left" scope="col"><button type="button" class="btn btn-link text-light" disabled>NAME</button></th>
                 <th scope="col"><button type="button" class="btn btn-link win">WIN</button></th>
                 <th scope="col"><button type="button" class="btn btn-link steps">STEPS</button></th>
                 <th scope="col"><button type="button" class="btn btn-link login">LOGIN</button></th>
@@ -107,7 +93,6 @@
               </tr>
             </thead>
             <tbody class="table_body">
-
             </tbody>
           </table>
           </div>`
@@ -117,10 +102,7 @@
   <script comment="SizeUtil" type="text/javascript">
     class SizeUtil {
       constructor(app, width, height, padding) {
-        this.width = width
-        this.height = height
-        this.padding = padding
-        this.app = app
+        [this.width, this.height, this.padding, this.app] = [width, height, padding, app]
 
         this.countSize()
 
@@ -133,19 +115,17 @@
       }
 
       countSize(){
-        this.innerWidth = window.innerWidth
-        this.innerHeight = window.innerHeight
+        [this.innerWidth, this.innerHeight] = [window.innerWidth, window.innerHeight]
+        var [step1, step2] = [(this.innerWidth-this.padding*2)/this.width, (this.innerHeight-this.padding*2)/this.height]
 
-        var step1 = parseInt((this.innerWidth-this.padding*2)/this.width)
-        var step2 = parseInt((this.innerHeight-this.padding*2)/this.height)
-
-        this.step = Math.min(step1, step2)
+        this.step = parseInt(Math.min(step1, step2))
 
         if (this.app.role) {
-          this.app.role.speed = this.step/(800)
+          this.app.role.speed = this.step/(400)
           this.app.role.posX = this.step * this.app.role.x
           this.app.role.posY = this.step * this.app.role.y
         }
+        this.app.dirty=true
       }
     }
   </script>
@@ -167,14 +147,30 @@
       }
 
       render() {
-        const {models, g, size} = this
+        const {models, g, size, app} = this
+        if (!app.dirty) { return }
         g.clearRect(0,0,size.innerWidth,size.innerHeight)
+        this.renderText(g)
         models.forEach((model)=>{
           model.render(g)
         })
-        g.font="30px red Verdana"
-        g.fillStyle = 'BLUE'
-        g.fillText(`第${this.level}关  ${this.app.role.name}`,50,40)
+        app.dirty = false
+      }
+
+      renderText(g){
+        const {models, size, app} = this
+        let fsize = size.innerHeight / 10
+        g.font= fsize+"px 华文彩云"
+        g.fillStyle = 'rgba(33,33,33,0.3)'
+        var text = `迷  宫`
+        var measure = g.measureText(text)
+        g.fillText(text, (size.innerWidth-measure.width)/2,(size.innerHeight)/2 - 2*fsize)
+        text = `第${this.level}关`
+        measure = g.measureText(text)
+        g.fillText(text, (size.innerWidth-measure.width)/2,(size.innerHeight)/2)
+        text = `${this.app.role.name}`
+        measure = g.measureText(text)
+        g.fillText(text, (size.innerWidth-measure.width)/2,(size.innerHeight)/2 + 2*fsize)
       }
 
       initCanvas(){
@@ -191,6 +187,7 @@
     class Maze {
       constructor(app) {
         const {size, timer, network} = app
+        this.app = app
         this.size = size
         this.timer = timer
         this.network = network
@@ -266,14 +263,26 @@
         this.models.push(model)
       }
 
+      countState(){
+        const {walls, timer, app} = this
+        var time = timer.startDelta
+        this.drawSize = time / 5
+        if (this.drawSize > walls.length + 50) {
+          this.mazeAnimEnd = true
+        } else {
+          this.mazeAnimEnd = false
+          app.dirty = true
+        }
+      }
+
       render(g) {
-        const {models, size, walls, mazeAnimEnd, role, network} = this
+        const {models, size, walls, mazeAnimEnd, role, network, app} = this
         const {width,height,step,innerWidth,innerHeight} = size
 
         g.save()
         g.translate((innerWidth - width * step)/2,(innerHeight - height * step)/2)
         this.drawWalls(g, walls)
-        if (mazeAnimEnd && !role.gameover) {
+        if (!role.gameover) {
           models.forEach((model)=>{
             model.render(g)
           })
@@ -289,23 +298,15 @@
       }
 
       drawWalls(g, wall){
-        const {walls, timer} = this
-        var time = timer.startDelta
-        var wallSize = time / 1
+        const {walls, drawSize} = this
         g.beginPath()
         g.strokeStyle = 'blue'
         g.lineWidth = 1.5
-        for (var i = 0; i < wallSize && i < walls.length; i++) {
+        for (var i = 0; i < drawSize && i < walls.length; i++) {
           this.drawWall(g, walls[i])
         }
         g.stroke()
         g.closePath()
-
-        if (wallSize > walls.length) {
-          this.mazeAnimEnd = true
-        } else {
-          this.mazeAnimEnd = false
-        }
       }
 
       drawWall(g, wall){
@@ -353,7 +354,7 @@
         this.ArrowRight = false
         this.posX = 0
         this.posY = 0
-        this.speed = (size.step/(800))
+        this.speed = (size.step/(400))
         this.loadHead()
       }
 
@@ -386,7 +387,6 @@
       render(g){
         const {canvas,size,img,posX,posY} = this
         if (!img) { return }
-        this.countPosition()
         const {step} = size
         const {width, height} = img
         var scale = 0.8 * step/width
@@ -429,8 +429,19 @@
         if (pY>this.posY&&p.t) { this.posY = pY }
         if (pY<this.posY&&p.b) { this.posY = pY }
 
-        if (!ArrowLeft &&!ArrowRight) { this.posX = pX }
-        if (!ArrowDown &&!ArrowUp) { this.posY = pY }
+        if (!ArrowLeft &&!ArrowRight) {
+          if (this.oldArrowLeft&&this.posX<pX) { this.posX = pX - step }
+          if (this.oldArrowRight&&this.posX>pX) { this.posX = pX + step }
+        }
+        if (!ArrowDown &&!ArrowUp) {
+          if (this.oldArrowUp&&this.posY<pY) { this.posY = pY - step }
+          if (this.oldArrowDown&&this.posY>pY) { this.posY = pY + step }
+        }
+
+        this.oldArrowLeft = ArrowLeft
+        this.oldArrowRight = ArrowRight
+        this.oldArrowDown = ArrowDown
+        this.oldArrowUp = ArrowUp
 
         x = parseInt((posX+step/2)/step)
         y = parseInt((posY+step/2)/step)
@@ -443,6 +454,12 @@
           this.lastY = y
           this.app.network.updatePosition(this.sha1,x,y)
           // console.log('set player child',x,y);
+        }
+
+        if(this.oldPosX!=this.posX||this.oldPosY!=this.posY){
+          this.oldPosX=this.posX
+          this.oldPosY=this.posY
+          this.app.dirty = true
         }
 
       }
@@ -551,8 +568,10 @@
               let player = new Player(app, players[sha1])
               app.maze.addModel(player)
               Player.playerMap[sha1] = player
+              app.dirty = true
             } else {
               let player = Player.playerMap[sha1]
+              if(player.x != players[sha1].x || player.y != players[sha1].y){ app.dirty = true }
               player.x = players[sha1].x
               player.y = players[sha1].y
               player.data = players[sha1]
@@ -577,11 +596,13 @@
         const {app,ref} = this
         ref.child('signal').set(0) // 开始
 
-        ref.child('players').child(app.role.sha1).once('value',(data)=>{
-          let player = data.val()
-          app.role.posX = player.x*app.size.step
-          app.role.posY = player.y*app.size.step
-          app.role.data = data
+        ref.child('players').child(app.role.sha1).transaction((currentValue)=>{
+          if(!currentValue) return currentValue;
+          app.role.posX = currentValue.x*app.size.step
+          app.role.posY = currentValue.y*app.size.step
+          app.role.data = currentValue
+          app.dirty = true
+          return currentValue
         })
         ref.child('walls').once('value',(data)=>{
           let walls = JSON.parse(pako.inflate(data.val(), { to: 'string' }))
@@ -591,9 +612,11 @@
           app.role.setWallMap(wallMap)
           app.role.reset()
           app.timer.start()
+          app.dirty = true
         })
         ref.child('num').once('value',(data)=>{
           app.sence.level = data.val()
+          app.dirty = true
         })
       }
 
@@ -686,9 +709,10 @@
   <script comment="main" type="text/javascript">
     class App {
       constructor() {
+        this.dirty = true
         this.timer = new Timer()
         this.network = new Network(this)
-        this.size = new SizeUtil(this,50,30,50)
+        this.size = new SizeUtil(this,50,30,10)
         this.maze = new Maze(this)
         this.role = new Role(this)
         this.sence = new Scene(this)
@@ -704,9 +728,11 @@
       }
 
       render(){
-        const {sence, timer} = this
+        const {sence, timer, maze, role} = this
         sence.render()
         timer.render()
+        maze.countState()
+        role.countPosition()
         requestAnimationFrame(()=>{
           this.render()
         })
