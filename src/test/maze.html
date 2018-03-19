@@ -644,6 +644,8 @@
 
       onVictory(){
         const {app, ref} = this
+        app.role.x = 0
+        app.role.y = 0
         ref.child('num').transaction((currentValue)=>{
           return (currentValue||0)+1
         })
