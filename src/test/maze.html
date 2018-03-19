@@ -206,6 +206,28 @@
         document.body.addEventListener('keyup',(e)=>{
           this.role[e.code] = false
         })
+
+        var oriListener = (e)=>{
+          var gamma = e.gamma
+          var beta = e.beta
+          var alpha = e.alpha
+          setTimeout(()=>{
+            if (this._lastGamma != gamma || this._lastBeta != beta) {
+              var [w,h] = [this.app.size.innerWidth,this.app.size.innerHeight]
+              if (w>h) { [beta,gamma]=[gamma,-beta] }
+              let range = 1
+              this.role['ArrowLeft']  = gamma <-range
+              this.role['ArrowRight'] = gamma > range
+              this.role['ArrowUp']    = beta <-range
+              this.role['ArrowDown']  = beta > range
+              this._lastGamma = gamma;
+              this._lastBeta = beta;
+            }
+          },10)
+
+        }
+        window.addEventListener('deviceorientation', oriListener, false);
+
       }
 
       create(){
@@ -652,6 +674,7 @@
       updatePosition(sha1,x,y){
         const {app, ref} = this
         ref.child('players').child(sha1).transaction((currentValue)=>{
+          if (!currentValue) { return currentValue }
           currentValue.step++
           currentValue.update=Date.now()
           currentValue.x = x
