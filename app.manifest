@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2018-3-12 10:29:27
+# 生成时间 2018-3-20 23:23:35
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -176,6 +176,7 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/escape/escape.html
 /src/escape/escape.js
 /src/game/five-in-a-row.html
+/src/game/maze.html
 /src/game/the-ball-ball-war.html
 /src/game/typing-game.html
 /src/game/typing-game.js
@@ -242,6 +243,7 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/test/encrypt.html
 /src/test/index.htm
 /src/test/loadTest.html
+/src/test/maze.html
 /src/test/mp3/bomb.mp3
 /src/test/mp3/fire.mp3
 /src/test/particle/css/style.css
