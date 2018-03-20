@@ -363,6 +363,9 @@
         if (!localStorage.mazeUserName) {
           let input = prompt('自定义姓名：')
           localStorage.mazeUserName = input&&input.trim().length>0?input.trim():new NameUtil().get()
+          let name = localStorage.mazeUserName
+          let sha1 = CryptoJS.SHA1(name).toString()
+          network.addNewPlayer(name, sha1)
         }
         this.name = localStorage.mazeUserName
         this.sha1 = CryptoJS.SHA1(this.name).toString()
@@ -661,6 +664,11 @@
           },100)
           return currentValue
         })
+      }
+
+      addNewPlayer(name, sha1){
+        const {app, ref} = this
+        ref.child('players').child(sha1).set( { name: name, sha1: sha1, x:0, y:0, update: Date.now(), win:0, login:0, step:0, register: Date.now() } )
       }
 
       addPlayer(name, sha1){
