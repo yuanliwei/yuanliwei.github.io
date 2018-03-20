@@ -303,7 +303,8 @@
 
         g.save()
         g.translate((innerWidth - width * step)/2,(innerHeight - height * step)/2)
-        this.drawWalls(g, walls)
+        this.drawWalls(g)
+        // this.drawPath(g)
         if (!role.gameover) {
           models.forEach((model)=>{
             model.render(g)
@@ -319,7 +320,74 @@
         if (role.isVictory()) { network.onVictory() }
       }
 
-      drawWalls(g, wall){
+      drawPath(g){
+        const {walls, drawSize, mazeAnimEnd, role, size} = this
+        const {width, height, step} = size
+        if (!mazeAnimEnd) { return }
+        if (!role.wallMap) { return }
+
+        let stack = this.stack
+        if (!stack) {
+          stack = []
+          let map = {}
+          for (var k in role.wallMap) {
+            map[k] = role.wallMap[k]
+          }
+          let cur = map['0-0']
+          stack.push(cur)
+          delete map['0-0']
+          while (true) {
+            // find neighbors
+            let {x,y} = cur
+            let tmp = null
+            if (!tmp&&map[`${x-1}-${y}`]) {
+              tmp = map[`${x-1}-${y}`]
+              tmp = tmp.r?null:tmp
+            }
+            if (!tmp&&map[`${x}-${y-1}`]) {
+              tmp = map[`${x}-${y-1}`]
+              tmp = tmp.b?null:tmp
+            }
+            if (!tmp&&map[`${x+1}-${y}`]) {
+              tmp = map[`${x+1}-${y}`]
+              tmp = tmp.l?null:tmp
+            }
+            if (!tmp&&map[`${x}-${y+1}`]) {
+              tmp = map[`${x}-${y+1}`]
+              tmp = tmp.t?null:tmp
+            }
+            if (tmp) {
+              cur = tmp
+              stack.push(cur)
+              delete map[`${cur.x}-${cur.y}`]
+            } else {
+              cur = stack.pop()
+            }
+            if (cur.x==width-1&&cur.y==height-1) {
+              break
+            }
+          }
+          this.stack = stack
+        }
+
+        g.beginPath()
+        g.strokeStyle = role.color
+        g.lineWidth = 5
+        let o = stack[0]
+        for (var i = 1; i < stack.length; i++) {
+          let n = stack[i]
+          let [x1,y1] = [o.x*step+step/2,o.y*step+step/2]
+          let [x2,y2] = [n.x*step+step/2,n.y*step+step/2]
+          g.moveTo(x1,y1)
+          g.lineTo(x2,y2)
+          o = n
+        }
+        g.stroke()
+        g.closePath()
+
+      }
+
+      drawWalls(g){
         const {walls, drawSize} = this
         g.beginPath()
         g.strokeStyle = 'blue'
@@ -400,8 +468,9 @@
       }
 
       loadHead(){
-        new UserPhoto(`https://www.gravatar.com/avatar/${this.sha1}?s=40&d=monsterid`).load((img)=>{
+        new UserPhoto(`https://www.gravatar.com/avatar/${this.sha1}?s=40&d=monsterid`).load((img,color)=>{
           this.img = img
+          this.color = color
         })
       }
 
@@ -528,8 +597,9 @@
       }
 
       loadHead(){
-        new UserPhoto(`https://www.gravatar.com/avatar/${this.sha1}?s=40&d=monsterid`).load((img)=>{
+        new UserPhoto(`https://www.gravatar.com/avatar/${this.sha1}?s=40&d=monsterid`).load((img, color)=>{
           this.img = img
+          this.color = color
         })
       }
 
@@ -732,7 +802,8 @@
           img.onload = ()=>{
             let headImg = img
             UserPhoto.imgMap[this.url] = headImg
-            callback(headImg)
+            this.color[3] = 1
+            callback(headImg, 'rgba('+this.color.join(',')+')')
           }
           img.src = c.toDataURL()
         }
