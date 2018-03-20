@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2018-3-20 23:23:35
+# 生成时间 2018-3-20 23:29:19
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -153,7 +153,6 @@ https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js
 /src/js/utils/wilddog-config.js
 https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/js/utils/wlog.js
-/.well-known/assetlinks.json
 /app.manifest
 /favicon.ico
 /icon/app-icon.png

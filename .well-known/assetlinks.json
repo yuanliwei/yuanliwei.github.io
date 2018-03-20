@@ -1,9 +1,0 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.ylw.open_dev",
-    "sha256_cert_fingerprints":
-    ["A4:D7:B7:4F:F3:A6:CA:B8:D7:73:72:D5:AB:AE:7B:15:76:D4:FC:54:E5:AE:DF:9C:A0:35:C5:5C:D7:C4:87:99"]
-  }
-}]
