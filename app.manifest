@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2018-4-15 11:25:53
+# 生成时间 2018-4-16 01:10:19
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -149,9 +149,13 @@ https://cdn.bootcss.com/golden-layout/1.5.9/goldenlayout.min.js
 /src/js/gen-java/SQL2Java.js
 /src/js/list/normal-list.js
 /src/js/list/fast-list.js
-https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js
+https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js
 /src/js/utils/wilddog-config.js
 https://cdn.bootcss.com/pako/1.0.5/pako.min.js
+https://cdn.bootcss.com/diff_match_patch/20121119/diff_match_patch.js
+https://cdn.bootcss.com/codemirror/5.25.2/addon/merge/merge.min.css
+https://cdn.bootcss.com/codemirror/5.25.2/addon/merge/merge.min.js
+https://cdn.bootcss.com/ajv/6.4.0/ajv.min.js
 /src/js/utils/wlog.js
 /app.manifest
 /favicon.ico
@@ -229,7 +233,8 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/restful-model/restful-model.html
 /src/restful-model/restful-model.js
 /src/restful-model/template.html
-/src/restful-vaild/restful-vaild.html
+/src/restful-valid/app.js
+/src/restful-valid/restful-valid.html
 /src/test/audio-test.html
 /src/test/bodymovin.html
 /src/test/codemirror-test.html

@@ -1,7 +1,7 @@
 (function () {
   var wilddog_script = document.createElement("script");
   var pako_script = document.createElement("script");
-  wilddog_script.src="https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js";
+  wilddog_script.src="https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js";
   pako_script.src="https://cdn.bootcss.com/pako/1.0.5/pako.min.js";
   if (typeof wilddog == "undefined") document.head.appendChild(wilddog_script);
   if (typeof pako == "undefined") document.head.appendChild(pako_script);

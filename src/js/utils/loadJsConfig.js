@@ -253,7 +253,7 @@ LoadES6.config({
     "/src/js/list/fast-list.js"
   ],
   "wilddog":[
-    "https://cdn.wilddog.com/sdk/js/2.5.6/wilddog.js"
+    "https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js"
   ],
   "wilddog-config":[
     "/src/js/utils/wilddog-config.js"

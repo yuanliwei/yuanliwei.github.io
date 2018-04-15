@@ -2,7 +2,7 @@ class App {
   constructor() {
     this.data = new AppData(this)
     this.searchBar = new SearchBar(this)
-    this.vaildPanel = new VaildPanel(this)
+    this.validPanel = new ValidPanel(this)
     this.diffPanel = new DiffPanel(this)
     this.schemaPanel = new SchemaPanel(this)
   }
@@ -18,6 +18,7 @@ class SchemaPanel {
     this.close = this.el.find('.close-btn')
     this.cancle = this.el.find('.cancle-btn')
     this.genSchemaBtn = this.el.find('.genSchema')
+    this.beautify = this.el.find('.beautify')
     this.themeInd = 0
     this.themeArr = [ "default", "3024-day", "3024-night", "abcdef", "ambiance", "base16-dark", "base16-light", "bespin", "blackboard", "cobalt", "colorforth", "dracula", "duotone-dark", "duotone-light", "eclipse", "elegant", "erlang-dark", "hopscotch", "icecoder", "isotope", "lesser-dark", "liquibyte", "material", "mbo", "mdn-like", "midnight", "monokai", "neat", "neo", "night", "panda-syntax", "paraiso-dark", "paraiso-light", "pastel-on-dark", "railscasts", "rubyblue", "seti", "solarized dark", "solarized light", "the-matrix", "tomorrow-night-bright", "tomorrow-night-eighties", "ttcn", "twilight", "vibrant-ink", "xq-dark", "xq-light", "yeti", "zenburn" ]
 
@@ -69,7 +70,7 @@ class SchemaPanel {
   }
 
   initClick(){
-    const {app, themeBtn, themeArr, fullscreenBtn,save, close, cancle, genSchemaBtn, urlInput, editor} = this
+    const {app, themeBtn, themeArr, fullscreenBtn,save, close, cancle, genSchemaBtn, urlInput, editor, beautify} = this
     themeBtn.click(()=>{
       this.themeInd++
       if (this.themeInd >= themeArr.length) {
@@ -112,12 +113,52 @@ class SchemaPanel {
           name: url
         }
       }
+      app.data.updateKeys(key, app.data.keys[key])
       app.data.saveObject(id, code)
       app.data.updateHistory(key, id)
       app.data.saveLocal()
       this.hide()
       app.searchBar.fireFilter()
       app.searchBar.hideDropDown()
+    })
+    genSchemaBtn.click(()=>{
+      var dialog = $(`
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <textarea class="form-control" placeholder="在此输入JSON...😀😁😂😄👅" rows="20"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="ok btn btn-outline-success" data-dismiss="modal">确定</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `)
+      $('body').append(dialog)
+      dialog.modal('show')
+      dialog.on('hidden.bs.modal', function (e) {
+        dialog.modal('dispose')
+        dialog.remove()
+      })
+      dialog.find('.ok').click(()=>{
+        var json = dialog.find('textarea').val().trim()
+        if (json.length > 0) {
+          var scheam = this.generateSchema(json)
+          this.editor.setValue(js_beautify(scheam))
+        }
+      })
+    })
+    beautify.click(()=>{
+      var code = editor.getValue()
+      editor.setValue(js_beautify(code))
     })
   }
 
@@ -153,6 +194,7 @@ class SchemaPanel {
       var obj = JSON.parse(jsonStr)
       return JSON.stringify(this.genSchema(obj))
     } catch (e) {
+      console.error(e);
       return JSON.stringify({
         "required": [ ],
         "properties": { }
@@ -186,6 +228,7 @@ class SchemaPanel {
       case "number": return {
         "type": "number"
       }
+      case "undefined": return { }
       default:
         console.error(new Error('unknown type : ' + (typeof obj)));
         throw new Error('unknown type : ' + (typeof obj))
@@ -223,7 +266,7 @@ class SchemaPanel {
   }
   buildElement(){
     var templ = `
-    <div class="container-fluid" style="position: absolute; top: 0px; bottom: 0px; background: aliceblue; height: 100%;">
+    <div class="container-fluid" style="position: absolute; top: 0px; bottom: 0px; background: aliceblue; height: 100%; z-index: 3;">
       <div class="row h-100">
         <div class="form-group p-3 col-12">
           <div class="cmh0 card h-100">
@@ -235,7 +278,7 @@ class SchemaPanel {
                   <button type="button" class="btn btn-outline-success close-btn">关闭</button>
                   <button type="button" class="btn btn-outline-danger genSchema">生成Schema</button>
                   <button type="button" class="btn btn-outline-warning">修改Url</button>
-                  <button type="button" class="btn btn-outline-info">Info</button>
+                  <button type="button" class="btn btn-outline-info beautify">格式化</button>
                   <button type="button" class="btn btn-outline-light">Light</button>
                   <button type="button" class="btn btn-outline-dark fullscreen">全屏</button>
                   <button type="button" class="btn btn-outline-primary change-theme">修改主题</button>
@@ -264,22 +307,41 @@ class AppData {
       localStorage["restful-valid"] = JSON.stringify({
         keys: {},
         objects: {},
-        histroy: {}
+        history: {}
       })
     }
     this.initData()
   }
   initData(){
-    var obj = JSON.parse(localStorage["restful-valid"])
-    this.keys = obj.keys
-    this.histroy = obj.histroy
-    this.objects = obj.objects
+    wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
+    this.ref = wilddog.sync().ref("/restful-valid");
+    // var obj = JSON.parse(localStorage["restful-valid"])
+    this.keys = {}
+    this.history = {}
+    this.objects = {}
+    this.ref.child("keys").once('value', (data)=>{
+      if (data.val()) {
+        this.keys = data.val()
+        this.app.searchBar.fireFilter()
+        this.app.searchBar.hideDropDown()
+      }
+    })
+    this.ref.child("history").once('value', (data)=>{
+      if (data.val()) {
+        var history = data.val()
+        for (var key in history) {
+          var value = history[key]
+          history[key] = pako.inflate(value, { to: 'string' }).split(',')
+        }
+        this.history = history
+      }
+    })
   }
   saveLocal(){
     localStorage["restful-valid"] = JSON.stringify({
       keys: this.keys,
       objects: this.objects,
-      histroy: this.histroy
+      history: this.history
     })
   }
   deleteKey(name){
@@ -293,16 +355,40 @@ class AppData {
     }
     this.objects[id] = {
       time: Date.now(),
-      code: code
+      code: pako.deflate(code, { to: 'string' })
     }
+    this.ref.child("objects").child(id).set(this.objects[id])
+  }
+  getObjectCode(id){
+    return new Promise((resolve, reject)=> {
+      this.ref.child("objects").child(id).once('value', (data)=>{
+        var obj = data.val()
+        var schema = ''
+        if (obj) {
+          schema = pako.inflate(obj.code, { to: 'string' });
+        }
+        resolve(schema)
+      })
+    });
+  }
+  updateKeys(key, obj){
+    this.ref.child("keys").child(key).set(obj)
   }
   updateHistory(key, id){
-    var o = this.histroy[key]
+    var o = this.history[key]
     if (!o) {
-      this.histroy[key] = [id]
+      this.history[key] = [id]
     } else {
-      this.histroy[key].push(id)
+      this.history[key].push(id)
     }
+    this.ref.child("history").child(key).transaction((currentValue)=>{
+      if (!currentValue) {
+        return pako.deflate(this.history[key].join(','), { to: 'string' })
+      }
+      var history = pako.inflate(currentValue, { to: 'string' }).split(',')
+      history.push(id)
+      return pako.deflate(this.history[key].join(','), { to: 'string' })
+    })
   }
   getNetObject(id){
     return new Promise(function(resolve, reject) {
@@ -320,21 +406,23 @@ class DiffPanel {
     this.app = app
   }
 }
-class VaildPanel {
+class ValidPanel {
   constructor(app) {
     this.app = app
     this.buildElement()
     $('body').append(this.el)
     this.addSchema = this.el.find('.add-schema')
     this.updateSchema = this.el.find('.update-schema')
-    this.vaild = this.el.find('.vaild-json')
+    this.valid = this.el.find('.valid-json')
     this.selAll = this.el.find('.select-all')
     this.jsons = this.el.find('.jsons')
+    this.beautify = this.el.find('.beautify')
     this.result = this.el.find('.result')
+    this.clear = this.el.find('.clear-json')
     this.initClick()
   }
   initClick(){
-    const {app, addSchema, updateSchema, selAll, jsons, vaild} = this
+    const {app, addSchema, updateSchema, selAll, jsons, valid, beautify, clear} = this
     addSchema.click(()=>{
       var name = app.searchBar.input.val()
       var jsonStr = jsons.val()
@@ -350,21 +438,30 @@ class VaildPanel {
         return
       }
 
-      app.schemaPanel.show({
-        name: obj.name,
-        code: app.data.objects[obj.id].code
+      app.data.getObjectCode(obj.id).then((schema)=>{
+        app.schemaPanel.show({
+          name: obj.name,
+          code: schema
+        })
       })
     })
     selAll.click(()=>{
       jsons.select()
     })
-    vaild.click(()=>{
+    valid.click(()=>{
       this.validJson()
+    })
+    beautify.click(()=>{
+      var code = jsons.val()
+      jsons.val(js_beautify(code))
+    })
+    clear.click(()=>{
+      jsons.val('')
     })
   }
 
   validJson(){
-    const {app, addSchema, updateSchema, selAll, jsons, vaild, result} = this
+    const {app, addSchema, updateSchema, selAll, jsons, valid, result} = this
     var localize_zh = function (errors) {
       if (!(errors && errors.length)) return;
       for (var i = 0; i < errors.length; i++) {
@@ -518,25 +615,26 @@ class VaildPanel {
       alert('没有选中的Schema')
       return
     }
-    var schema = app.data.objects[obj.id].code
-    var jsonStr = jsons.val()
-    var ajv = new Ajv({allErrors: true, removeAdditional: true})
-    try {
-      var valid = ajv.validate(JSON.parse(schema), JSON.parse(jsonStr));
-      if (!valid) {
-        localize_zh(ajv.errors);
-        var output = ajv.errorsText(ajv.errors)
-        console.log(ajv.errorsText(ajv.errors));
-        result.html(output.split(', ').map((item)=>{
-          return `<p>${item}</p>`
-        }).join(''))
-      } else {
-        result.html(`<p>验证通过！</p>`)
-      }
-    } catch (e) {
+    app.data.getObjectCode(obj.id).then((schema)=>{
+      var jsonStr = jsons.val()
+      var ajv = new Ajv({allErrors: true, removeAdditional: true})
+      try {
+        var valid = ajv.validate(JSON.parse(schema), JSON.parse(jsonStr));
+        if (!valid) {
+          localize_zh(ajv.errors);
+          var output = ajv.errorsText(ajv.errors)
+          console.log(ajv.errorsText(ajv.errors));
+          result.html(output.split(', ').map((item)=>{
+            return `<p>${item}</p>`
+          }).join(''))
+        } else {
+          result.html(`<p>验证通过！</p>`)
+        }
+      } catch (e) {
       console.error(e);
       result.html(`<pre>${e.stack}</pre>`)
     }
+    })
   }
   buildElement() {
     var templ = `
@@ -548,9 +646,9 @@ class VaildPanel {
               <h5 class="card-title">Card title</h5>
               <div class="row">
                 <div class="col-12 pb-1">
-                  <button type="button" class="btn btn-outline-primary vaild-json">验证</button>
-                  <button type="button" class="btn btn-outline-secondary">Secondary</button>
-                  <button type="button" class="btn btn-outline-success">Success</button>
+                  <button type="button" class="btn btn-outline-primary valid-json">验证</button>
+                  <button type="button" class="btn btn-outline-secondary beautify">格式化</button>
+                  <button type="button" class="btn btn-outline-success clear-json">Clear</button>
                   <button type="button" class="btn btn-outline-danger">Danger</button>
                   <button type="button" class="btn btn-outline-warning">Warning</button>
                   <button type="button" class="btn btn-outline-info select-all">全选</button>
@@ -586,8 +684,14 @@ class SearchBar {
     $('body').append(this.el)
     this.input = this.el.find('input')
     this.menus = this.el.find('.dropdown-menu')
+    this.clear = this.el.find('.clear-url')
     this.initInput()
     this.refreshList()
+    this.clear.click(()=>{
+      this.input.val('')
+      this.fireFilter()
+      this.hideDropDown()
+    })
   }
   refreshList(){
     clearTimeout(this.timer)
@@ -772,8 +876,13 @@ class SearchBar {
     <div class="container-fluid">
       <div class="row">
         <div class="dropdown p-3 col-12">
-          <input type="text" class="form-control" placeholder="Recipient's username" data-toggle="dropdown">
-          <div class="dropdown-menu" style="max-height:400px; width: 90%; overflow-y:auto;">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Recipient's username" data-toggle="dropdown">
+            <div class="dropdown-menu" style="max-height:400px; width: 90%; overflow-y:auto;">
+            </div>
+            <div class="input-group-append">
+              <button class="btn btn-outline-warning clear-url" type="button">Clear</button>
+            </div>
           </div>
         </div>
       </div>
