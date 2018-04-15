@@ -17,7 +17,7 @@ class SchemaPanel {
     this.save = this.el.find('.save')
     this.close = this.el.find('.close-btn')
     this.cancle = this.el.find('.cancle-btn')
-    this.genSchema = this.el.find('.genSchema')
+    this.genSchemaBtn = this.el.find('.genSchema')
     this.themeInd = 0
     this.themeArr = [ "default", "3024-day", "3024-night", "abcdef", "ambiance", "base16-dark", "base16-light", "bespin", "blackboard", "cobalt", "colorforth", "dracula", "duotone-dark", "duotone-light", "eclipse", "elegant", "erlang-dark", "hopscotch", "icecoder", "isotope", "lesser-dark", "liquibyte", "material", "mbo", "mdn-like", "midnight", "monokai", "neat", "neo", "night", "panda-syntax", "paraiso-dark", "paraiso-light", "pastel-on-dark", "railscasts", "rubyblue", "seti", "solarized dark", "solarized light", "the-matrix", "tomorrow-night-bright", "tomorrow-night-eighties", "ttcn", "twilight", "vibrant-ink", "xq-dark", "xq-light", "yeti", "zenburn" ]
 
@@ -69,7 +69,7 @@ class SchemaPanel {
   }
 
   initClick(){
-    const {app, themeBtn, themeArr, fullscreenBtn,save, close, cancle, genSchema, urlInput, editor} = this
+    const {app, themeBtn, themeArr, fullscreenBtn,save, close, cancle, genSchemaBtn, urlInput, editor} = this
     themeBtn.click(()=>{
       this.themeInd++
       if (this.themeInd >= themeArr.length) {
@@ -116,12 +116,14 @@ class SchemaPanel {
       app.data.updateHistory(key, id)
       app.data.saveLocal()
       this.hide()
-      app.searchBar.fireFilter(true)
+      app.searchBar.fireFilter()
+      app.searchBar.hideDropDown()
     })
   }
 
   show(obj){
     const {app, urlInput} = this
+    app.searchBar.hideDropDown()
     if (!this.hasShow) {
       $('body').append(this.el)
       this.initEditor()
@@ -135,7 +137,58 @@ class SchemaPanel {
     this.setupSize()
     if (obj) {
       urlInput.val(obj.name)
-      this.editor.setValue(obj.code)
+      if (obj.code) {
+        this.editor.setValue(obj.code)
+      } else {
+        obj.code = js_beautify(this.generateSchema(obj.json))
+        this.editor.setValue(obj.code)
+      }
+    } else {
+      urlInput.val('')
+      this.editor.setValue('')
+    }
+  }
+  generateSchema(jsonStr){
+    try {
+      var obj = JSON.parse(jsonStr)
+      return JSON.stringify(this.genSchema(obj))
+    } catch (e) {
+      return JSON.stringify({
+        "required": [ ],
+        "properties": { }
+      })
+    }
+  }
+  genSchema(obj){
+    let type = (typeof obj)
+    if (Array.isArray(obj)) {
+      type = "array"
+    }
+    switch (type) {
+      case 'object': return {
+        "type": "object",
+        "required": Object.keys(obj),
+        "properties": (()=>{
+          let p = {}
+          Object.keys(obj).forEach((item)=>{
+            p[item] = this.genSchema(obj[item])
+          })
+          return p
+        })()
+      }
+      case 'array': return {
+        "type": "array",
+        "items": this.genSchema(obj[0])
+      }
+      case "string": return {
+        "type": "string"
+      }
+      case "number": return {
+        "type": "number"
+      }
+      default:
+        console.error(new Error('unknown type : ' + (typeof obj)));
+        throw new Error('unknown type : ' + (typeof obj))
     }
   }
   hide(){
@@ -277,12 +330,18 @@ class VaildPanel {
     this.vaild = this.el.find('.vaild-json')
     this.selAll = this.el.find('.select-all')
     this.jsons = this.el.find('.jsons')
+    this.result = this.el.find('.result')
     this.initClick()
   }
   initClick(){
     const {app, addSchema, updateSchema, selAll, jsons, vaild} = this
     addSchema.click(()=>{
-      app.schemaPanel.show()
+      var name = app.searchBar.input.val()
+      var jsonStr = jsons.val()
+      app.schemaPanel.show({
+        name: name,
+        json: jsonStr
+      })
     })
     updateSchema.click(()=>{
       var obj = app.searchBar.findActive()
@@ -299,6 +358,185 @@ class VaildPanel {
     selAll.click(()=>{
       jsons.select()
     })
+    vaild.click(()=>{
+      this.validJson()
+    })
+  }
+
+  validJson(){
+    const {app, addSchema, updateSchema, selAll, jsons, vaild, result} = this
+    var localize_zh = function (errors) {
+      if (!(errors && errors.length)) return;
+      for (var i = 0; i < errors.length; i++) {
+        var e = errors[i];
+        var out;
+        switch (e.keyword) {
+          case '$ref':
+          out = '无法找到引用' + (e.params.ref);
+          break;
+          case 'additionalItems':
+          out = '';
+          var n = e.params.limit;
+          out += '不允许超过' + (n) + '个元素';
+          break;
+          case 'additionalProperties':
+          out = '不允许有额外的属性';
+          break;
+          case 'anyOf':
+          out = '数据应为 anyOf 所指定的其中一个';
+          break;
+          case 'const':
+          out = '应当等于常量';
+          break;
+          case 'contains':
+          out = '应当包含一个有效项';
+          break;
+          case 'custom':
+          out = '应当通过 "' + (e.keyword) + ' 关键词校验"';
+          break;
+          case 'dependencies':
+          out = '';
+          var n = e.params.depsCount;
+          out += '应当拥有属性' + (e.params.property) + '的依赖属性' + (e.params.deps);
+          break;
+          case 'enum':
+          out = '应当是预设定的枚举值之一';
+          break;
+          case 'exclusiveMaximum':
+          out = '';
+          var cond = e.params.comparison + " " + e.params.limit;
+          out += '应当为 ' + (cond);
+          break;
+          case 'exclusiveMinimum':
+          out = '';
+          var cond = e.params.comparison + " " + e.params.limit;
+          out += '应当为 ' + (cond);
+          break;
+          case 'false schema':
+          out = '布尔模式出错';
+          break;
+          case 'format':
+          out = '应当匹配格式 "' + (e.params.format) + '"';
+          break;
+          case 'formatExclusiveMaximum':
+          out = 'formatExclusiveMaximum 应当是布尔值';
+          break;
+          case 'formatExclusiveMinimum':
+          out = 'formatExclusiveMinimum 应当是布尔值';
+          break;
+          case 'formatMaximum':
+          out = '';
+          var cond = e.params.comparison + " " + e.params.limit;
+          out += '应当是 ' + (cond);
+          break;
+          case 'formatMinimum':
+          out = '';
+          var cond = e.params.comparison + " " + e.params.limit;
+          out += '应当是 ' + (cond);
+          break;
+          case 'if':
+          out = '应当匹配模式 "' + (e.params.failingKeyword) + '" ';
+          break;
+          case 'maximum':
+          out = '';
+          var cond = e.params.comparison + " " + e.params.limit;
+          out += '应当为 ' + (cond);
+          break;
+          case 'maxItems':
+          out = '';
+          var n = e.params.limit;
+          out += '不应多于 ' + (n) + ' 个项';
+          break;
+          case 'maxLength':
+          out = '';
+          var n = e.params.limit;
+          out += '不应多于 ' + (n) + ' 个字符';
+          break;
+          case 'maxProperties':
+          out = '';
+          var n = e.params.limit;
+          out += '不应有多于 ' + (n) + ' 个属性';
+          break;
+          case 'minimum':
+          out = '';
+          var cond = e.params.comparison + " " + e.params.limit;
+          out += '应当为 ' + (cond);
+          break;
+          case 'minItems':
+          out = '';
+          var n = e.params.limit;
+          out += '不应少于 ' + (n) + ' 个项';
+          break;
+          case 'minLength':
+          out = '';
+          var n = e.params.limit;
+          out += '不应少于 ' + (n) + ' 个字符';
+          break;
+          case 'minProperties':
+          out = '';
+          var n = e.params.limit;
+          out += '不应有少于 ' + (n) + ' 个属性';
+          break;
+          case 'multipleOf':
+          out = '应当是 ' + (e.params.multipleOf) + ' 的整数倍';
+          break;
+          case 'not':
+          out = '不应当匹配 "not" schema';
+          break;
+          case 'oneOf':
+          out = '只能匹配一个 "oneOf" 中的 schema';
+          break;
+          case 'pattern':
+          out = '应当匹配模式 "' + (e.params.pattern) + '"';
+          break;
+          case 'patternRequired':
+          out = '应当有属性匹配模式 ' + (e.params.missingPattern);
+          break;
+          case 'propertyNames':
+          out = '属性名 \'' + (e.params.propertyName) + '\' 无效';
+          break;
+          case 'required':
+          out = '应当有必需属性 ' + (e.params.missingProperty);
+          break;
+          case 'switch':
+          out = '由于 ' + (e.params.caseIndex) + ' 失败，未通过 "switch" 校验, ';
+          break;
+          case 'type':
+          out = '应当是 ' + (e.params.type) + ' 类型';
+          break;
+          case 'uniqueItems':
+          out = '不应当含有重复项 (第 ' + (e.params.j) + ' 项与第 ' + (e.params.i) + ' 项是重复的)';
+          break;
+          default:
+          continue;
+        }
+        e.message = out;
+      }
+    };
+    var obj = app.searchBar.findActive()
+    if (!obj) {
+      alert('没有选中的Schema')
+      return
+    }
+    var schema = app.data.objects[obj.id].code
+    var jsonStr = jsons.val()
+    var ajv = new Ajv({allErrors: true, removeAdditional: true})
+    try {
+      var valid = ajv.validate(JSON.parse(schema), JSON.parse(jsonStr));
+      if (!valid) {
+        localize_zh(ajv.errors);
+        var output = ajv.errorsText(ajv.errors)
+        console.log(ajv.errorsText(ajv.errors));
+        result.html(output.split(', ').map((item)=>{
+          return `<p>${item}</p>`
+        }).join(''))
+      } else {
+        result.html(`<p>验证通过！</p>`)
+      }
+    } catch (e) {
+      console.error(e);
+      result.html(`<pre>${e.stack}</pre>`)
+    }
   }
   buildElement() {
     var templ = `
@@ -328,11 +566,10 @@ class VaildPanel {
         <div class="col-12 p-3">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
               <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
+              <div class="result" contenteditable="true">
+
+              </div>
             </div>
           </div>
         </div>
@@ -456,7 +693,7 @@ class SearchBar {
     listData[0].active = true
     this.refreshList()
   }
-  fireFilter(hide){
+  fireFilter(){
     const {app,input,menus} = this
     const {data} = app
     var val = input.val().trim()
@@ -515,9 +752,11 @@ class SearchBar {
     }
     this.listData = list
     this.refreshList()
-    if (!hide) {
-      menus.addClass('show')
-    }
+    menus.addClass('show')
+  }
+  hideDropDown(){
+    const {app,input,menus} = this
+    menus.removeClass('show')
   }
   cloneItem(item){
     return {

@@ -10,7 +10,7 @@
       font-size: 1.5rem;
       font-family: Consolas!important;
     }
-    
+
     .CodeMirror-focused .cm-matchhighlight {
       /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);*/
       background-position: bottom;
@@ -35,7 +35,7 @@
     new Load().hide()
       .load("/src/js/utils/loadJsConfig.js")
       .load("jquery", "popper", "beautify", "crypto", "pako", "fontawesome")
-      .load("bootstrap", "codemirror", "diff_match_patch")
+      .load("bootstrap", "codemirror", "diff_match_patch", "ajv")
       .load("codemirror-javascript", "codemirror-show-hint", "codemirror-addons",
             "codemirror-fullscreen", "codemirror-comment", "codemirror-dialog",
             "codemirror-merge", "codemirror-theme").show()

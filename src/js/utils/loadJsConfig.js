@@ -268,6 +268,9 @@ LoadES6.config({
     "https://cdn.bootcss.com/codemirror/5.25.2/addon/merge/merge.min.css",
     "https://cdn.bootcss.com/codemirror/5.25.2/addon/merge/merge.min.js"
   ],
+  "ajv":[
+    "https://cdn.bootcss.com/ajv/6.4.0/ajv.min.js"
+  ],
   "wlog":[
     "/src/js/utils/wlog.js"
   ]
