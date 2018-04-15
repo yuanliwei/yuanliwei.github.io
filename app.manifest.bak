@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2018-3-20 23:29:19
+# 生成时间 2018-4-15 11:25:53
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -229,6 +229,7 @@ https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 /src/restful-model/restful-model.html
 /src/restful-model/restful-model.js
 /src/restful-model/template.html
+/src/restful-vaild/restful-vaild.html
 /src/test/audio-test.html
 /src/test/bodymovin.html
 /src/test/codemirror-test.html

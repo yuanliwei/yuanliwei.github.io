@@ -261,6 +261,13 @@ LoadES6.config({
   "pako":[
     "https://cdn.bootcss.com/pako/1.0.5/pako.min.js"
   ],
+  "diff_match_patch":[
+    "https://cdn.bootcss.com/diff_match_patch/20121119/diff_match_patch.js"
+  ],
+  "codemirror-merge":[
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/merge/merge.min.css",
+    "https://cdn.bootcss.com/codemirror/5.25.2/addon/merge/merge.min.js"
+  ],
   "wlog":[
     "/src/js/utils/wlog.js"
   ]
