@@ -1,5 +1,5 @@
 var StringUtil = {};
-  
+
   StringUtil.upperBegin = function(item) {
     return item.replace(/(\w)/, function(match) {
       return match.toUpperCase();
@@ -142,4 +142,3 @@ var StringUtil = {};
       }
     });
   };
-

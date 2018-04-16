@@ -116,7 +116,7 @@ class SchemaPanel {
       app.data.updateKeys(key, app.data.keys[key])
       app.data.saveObject(id, code)
       app.data.updateHistory(key, id)
-      app.data.saveLocal()
+      app.data.saveLocal(key, id)
       this.hide()
       app.searchBar.fireFilter()
       app.searchBar.hideDropDown()
@@ -302,23 +302,12 @@ class SchemaPanel {
 class AppData {
   constructor(app) {
     this.app = app
-    var v = localStorage["restful-valid"]
-    if (!v) {
-      localStorage["restful-valid"] = JSON.stringify({
-        keys: {},
-        objects: {},
-        history: {}
-      })
-    }
     this.initData()
   }
   initData(){
     wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
     this.ref = wilddog.sync().ref("/restful-valid");
-    // var obj = JSON.parse(localStorage["restful-valid"])
     this.keys = {}
-    this.history = {}
-    this.objects = {}
     this.ref.child("keys").once('value', (data)=>{
       if (data.val()) {
         this.keys = data.val()
@@ -326,38 +315,30 @@ class AppData {
         this.app.searchBar.hideDropDown()
       }
     })
-    this.ref.child("history").once('value', (data)=>{
-      if (data.val()) {
-        var history = data.val()
-        for (var key in history) {
-          var value = history[key]
-          history[key] = pako.inflate(value, { to: 'string' }).split(',')
-        }
-        this.history = history
-      }
-    })
   }
-  saveLocal(){
-    localStorage["restful-valid"] = JSON.stringify({
-      keys: this.keys,
-      objects: this.objects,
-      history: this.history
-    })
+  saveLocal(key, id){
+    localStorage[`restful-valid-${key}`] = id
   }
   deleteKey(name){
     var key = CryptoJS.SHA1(name).toString()
     delete this.keys[key]
   }
   saveObject(id, code){
-    var obj = this.objects[id]
-    if (obj) {
-      return ;
-    }
     this.objects[id] = {
       time: Date.now(),
       code: pako.deflate(code, { to: 'string' })
     }
     this.ref.child("objects").child(id).set(this.objects[id])
+  }
+  addFireCountNum(key){
+    this.ref.child("keys").child(key).transaction((currentValue)=>{
+      if (!currentValue) {
+        return currentValue
+      }
+      currentValue.num++
+      this.keys[key].num = currentValue.num
+      return currentValue
+    })
   }
   getObjectCode(id){
     return new Promise((resolve, reject)=> {
@@ -375,30 +356,14 @@ class AppData {
     this.ref.child("keys").child(key).set(obj)
   }
   updateHistory(key, id){
-    var o = this.history[key]
-    if (!o) {
-      this.history[key] = [id]
-    } else {
-      this.history[key].push(id)
-    }
     this.ref.child("history").child(key).transaction((currentValue)=>{
       if (!currentValue) {
-        return pako.deflate(this.history[key].join(','), { to: 'string' })
+        return pako.deflate([id].join(','), { to: 'string' })
       }
       var history = pako.inflate(currentValue, { to: 'string' }).split(',')
       history.push(id)
-      return pako.deflate(this.history[key].join(','), { to: 'string' })
+      return pako.deflate(history.join(','), { to: 'string' })
     })
-  }
-  getNetObject(id){
-    return new Promise(function(resolve, reject) {
-      var objects = {
-        "1":"1123",
-        "2":"2123",
-        "3":"3123"
-      }
-      resolve(objects[id])
-    });
   }
 }
 class DiffPanel {
@@ -764,7 +729,8 @@ class SearchBar {
     obj.num++
     input.val(obj.name)
     menus.removeClass('show')
-    app.data.keys[CryptoJS.SHA1(obj.name).toString()].num++
+    var key = CryptoJS.SHA1(obj.name).toString()
+    app.data.addFireCountNum(key)
   }
 
   fireArrowUp(){
@@ -850,7 +816,7 @@ class SearchBar {
     })
     if (list.length>0) {
       list.sort((l,h)=>{
-        return l.num - h.num
+        return h.num - l.num
       })
       list[0].active = true
     }

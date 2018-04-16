@@ -38,8 +38,8 @@
 
   <!-- <script src="../build/three.js"></script>
   <script src="js/libs/stats.min.js"></script> -->
-  <script src="../../js/utils/loadJsConfig.js" charset="utf-8"></script>
-  <script src="../../js/utils/load.js" charset="utf-8"></script>
+  <script src="/src/js/utils/loadJsConfig.js" charset="utf-8"></script>
+  <script src="/src/js/utils/load.js" charset="utf-8"></script>
 
   <script>
 
@@ -268,7 +268,7 @@
 
   }
 
-  new Load().load("../js/utils/loadJsConfig.js")
+  new Load().load("/src/js/utils/loadJsConfig.js")
     .load("three.js", "Stats", "wlog")
     .then(()=>{
       container = document.createElement( 'div' );

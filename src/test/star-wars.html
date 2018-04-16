@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width,initial-scale=1.0" name="viewport">
   <title>STAR WARS</title>
-  <script src="../js/utils/load.js" charset="utf-8"></script>
+  <script src="/src/js/utils/load.js" charset="utf-8"></script>
   <style media="screen">
     :root {
       --size: 2;
@@ -188,7 +188,7 @@
     }
 
     new Load().hide()
-      .load("../js/utils/loadJsConfig.js")
+      .load("/src/js/utils/loadJsConfig.js")
       .load("jquery", "popper", "wilddog", "pako")
       .load("bootstrap", "wilddog-config", "jqueryui", "jquery-terminal")
       .load("./data/star-wars.js").show()

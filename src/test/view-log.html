@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0" name="viewport">
     <title>View Log</title>
-    <script src="../js/utils/load.js" charset="utf-8"></script>
-    <script src="../js/utils/wlog.js" charset="utf-8"></script>
+    <script src="/src/js/utils/load.js" charset="utf-8"></script>
+    <script src="/src/js/utils/wlog.js" charset="utf-8"></script>
     <style media="screen">
       .force-wrap{
         white-space: pre-wrap;
@@ -175,12 +175,12 @@
 
       var fireworks = null;
       new Load().hide()
-        .load("../js/utils/loadJsConfig.js")
+        .load("/src/js/utils/loadJsConfig.js")
         .load("jquery", "popper", "fontawesome", "common-utils", "csshake")
         .load("bootstrap", "jqueryui", "wlog")
         .then(startReceiveLog)
         .show()
-        .load("./particle/js/BeautifulFireworks.js", "../js/utils/AudioPool.js")
+        .load("./particle/js/BeautifulFireworks.js", "/src/js/utils/AudioPool.js")
         .then(()=> fireworks = new BeautifulFireworks("canvas", "./mp3/fire.mp3", "./mp3/bomb.mp3"))
         .then(()=>{
           PageState.load("#autoscroll", "#terminalstyle");

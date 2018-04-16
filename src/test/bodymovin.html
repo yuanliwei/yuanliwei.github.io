@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width,initial-scale=1.0" name="viewport">
   <title>bodymovin test</title>
-  <script src="../js/utils/load.js" charset="utf-8"></script>
+  <script src="/src/js/utils/load.js" charset="utf-8"></script>
 </head>
 <body>
   <div class="container">
@@ -39,6 +39,7 @@
     var anim = null;
     var path = 'https://yuanliwei.github.io/src/test/res/TwitterHeart.json';
     function initScene(){
+      wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
       format.extend(String.prototype);
       $( "#slider" ).slider({
         min: 0,
@@ -120,9 +121,9 @@
     }
 
     new Load().hide()
-      .load("../js/utils/loadJsConfig.js")
+      .load("/src/js/utils/loadJsConfig.js")
       .load("jquery", "popper", "bodymovin", "wilddog", "string-format")
-      .load("jqueryui", "bootstrap", "wilddog-config")
+      .load("jqueryui", "bootstrap")
       .load("./data/bodymovin.js").show()
       .then(initScene);
 

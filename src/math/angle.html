@@ -6,33 +6,19 @@
     <meta content="width=device-width,initial-scale=1.0" name="viewport">
 
     <title>Regex</title>
-    <!-- utils -->
-    <script src="../js/utils/jquery.js"></script>
-    <script src="../js/utils/StringUtil.js"></script>
-    <script src="../js/utils/string-format.js"></script>
-    <script src="../js/utils/beautify.js"></script>
-    <script src="../js/utils/code-format.js"></script>
-    <script src="../js/utils/common.js"></script>
-    <!--bootstrap-->
-    <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/css/bootstrap-theme.css" />
-    <script src="../../bootstrap-3.3.6-dist/js/bootstrap.js"></script>
-    <!-- highlight -->
-    <link rel="stylesheet" href="../../highlight/styles/default.css">
-    <script src="../../highlight/highlight.pack.js"></script>
-    <!-- func -->
-    <script src="../js/escape/MD5.js"></script>
-    <script src="../js/escape/Base64.js"></script>
-    <script src="../js/escape/he.js"></script>
-    <script src="../js/escape/crypto-js.js"></script>
-    <script src="../js/escape/escape.js"></script>
-    <!-- local -->
-    <script src="../js/math/Angle.js"></script>
+    <style media="screen">
+      html,body{
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+    <script src="/src/js/utils/load.js" charset="utf-8"></script>
+    <script src="./Angle.js"></script>
 </head>
 
 <body>
   <div id="tips" style="position: absolute; left:0px; top:0px;">
-    hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+    
   </div>
   <canvas id="canvas" class="canvas" width="300" height="300"></canvas>
 
@@ -40,6 +26,7 @@
     var angle;
     function initEvent() {
       var canvas = $('#canvas')[0];
+      canvas.height = document.body.clientHeight
       var points = [];
       var curPoint;
       var moved;
@@ -52,7 +39,6 @@
         downPos = {x:e.clientX,y:e.clientY}
       });
       $('#canvas').mousemove(function (e) {
-        // points.push({x:e.clientX,y:e.clientY});
         if(e.buttons == 1){
           curPoint.x = e.clientX;
           curPoint.y = e.clientY;
@@ -70,11 +56,15 @@
       });
 
     }
-    $(function() {
-      console.log('====================hello==============');
-      initEvent();
-      angle.draw();
-    });
+    new Load().hide()
+      .load("/src/js/utils/loadJsConfig.js")
+      .load("jquery", "popper")
+      .load("bootstrap").show()
+      .then(function() {
+          console.log('====================hello==============');
+          initEvent();
+          angle.draw();
+      });
   </script>
 
 </body>

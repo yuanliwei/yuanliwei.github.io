@@ -219,17 +219,10 @@ LoadES6.config({
   "vkbeautify":[
     "/src/js/utils/vkbeautify.js"
   ],
-  "escapes":[
-    "/src/js/escape/MD5.js",
-    "/src/js/escape/Base64.js",
-    "/src/js/escape/he.js",
-    "/src/js/escape/crypto-js.js",
-    "/src/js/escape/escape.js"
-  ],
   "java-model":[
-    "/src/js/java-model/Modifiers.js",
-    "/src/js/java-model/Filed.js",
-    "/src/js/java-model/ClassModel.js"
+    "/src/gen/java-model/Modifiers.js",
+    "/src/gen/java-model/Filed.js",
+    "/src/gen/java-model/ClassModel.js"
   ],
   "common":[
     "/src/js/utils/common.js"
@@ -238,19 +231,19 @@ LoadES6.config({
     "/src/js/utils/PageState.js"
   ],
   "gen-java":[
-    "/src/js/gen-java/Fileds2Java.js",
-    "/src/js/gen-java/Json2Java.js",
-    "/src/js/gen-java/GenXML.js",
-    "/src/js/gen-java/GenJavaTemplate.js"
+    "/src/gen/gen-java/Fileds2Java.js",
+    "/src/gen/gen-java/Json2Java.js",
+    "/src/gen/gen-java/GenXML.js",
+    "/src/gen/gen-java/GenJavaTemplate.js"
   ],
   "gen-java-1":[
-    "/src/js/gen-java/SQL2Java.js"
+    "/src/gen/gen-java/SQL2Java.js"
   ],
   "normal-list":[
-    "/src/js/list/normal-list.js"
+    "/src/list/normal-list.js"
   ],
   "fast-list":[
-    "/src/js/list/fast-list.js"
+    "/src/list/fast-list.js"
   ],
   "wilddog":[
     "https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js"

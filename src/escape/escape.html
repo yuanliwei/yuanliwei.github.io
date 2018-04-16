@@ -4,7 +4,7 @@
       <meta charset="utf-8" />
       <meta content="width=device-width,initial-scale=1.0" name="viewport">
       <title>编解码</title>
-      <script src="../js/utils/load.js" charset="utf-8"></script>
+      <script src="/src/js/utils/load.js" charset="utf-8"></script>
   </head>
   <body>
     <div class="container">
@@ -53,13 +53,15 @@
     </div>
     <script type="text/javascript">
         new Load().hide()
-        .load("../js/utils/loadJsConfig.js")
-        .load("jquery", "popper", "string-format", "beautify",
-              "escapes", "highlight")
-        .load("bootstrap", "jquery.qrcode", "JsBarcode")
-        .load("../js/utils/StringUtil.js",
-              "../js/utils/common.js",
-              "../js/utils/code-format.js",
+        .load("/src/js/utils/loadJsConfig.js")
+        .load("jquery", "popper", "string-format", "beautify", "highlight")
+        .load("bootstrap", "jquery.qrcode", "JsBarcode", "crypto")
+        .load("/src/js/utils/StringUtil.js",
+              "/src/js/utils/common.js",
+              "/src/js/utils/code-format.js",
+              "/src/escape/he.js",
+              "/src/escape/Base64.js",
+              "/src/escape/escape-api.js",
               "./escape.js").show()
         .then(function() {
           console.log('====================hello==============');
