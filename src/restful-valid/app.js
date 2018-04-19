@@ -136,6 +136,7 @@ class SchemaPanel {
                 <textarea class="form-control" placeholder="在此输入JSON...😀😁😂😄👅" rows="20"></textarea>
               </div>
               <div class="modal-footer">
+                <button type="button" class="paste btn btn-outline-info">粘贴</button>
                 <button type="button" class="ok btn btn-outline-success" data-dismiss="modal">确定</button>
               </div>
             </div>
@@ -154,6 +155,19 @@ class SchemaPanel {
           var scheam = this.generateSchema(json)
           this.editor.setValue(js_beautify(scheam))
         }
+      })
+      dialog.find('.paste').click(()=>{
+        if (!navigator.clipboard) {
+          new Alert("danger","提示信息",`不能从剪贴板读取数据，无法访问剪贴板API。剪贴板API需要在 chrome 66+ 中才能使用，请及时更新到新版 Chrome 体验更多新增特性。`,`关于剪贴板API详情查看<a href="https://googlechrome.github.io/samples/async-clipboard/index.html">Asynchronous Clipboard API Sample</a>`).show()
+          return
+        }
+        navigator.clipboard.readText()
+        .then(text => {
+          dialog.find('textarea').val(text)
+        })
+        .catch(() => {
+          new Alert("danger","提示信息",`不能从剪贴板读取数据，可能是本网站的剪贴板读取权限被您给禁用了，如需查看权限设置请在地址栏输入 <b>chrome://settings/content/clipboard</b>，请务必设置允许本网站访问剪贴板。`,`关于剪贴板API详情查看<a href="https://googlechrome.github.io/samples/async-clipboard/index.html">Asynchronous Clipboard API Sample</a>`).show()
+        });
       })
     })
     beautify.click(()=>{
@@ -384,10 +398,11 @@ class ValidPanel {
     this.beautify = this.el.find('.beautify')
     this.result = this.el.find('.result')
     this.clear = this.el.find('.clear-json')
+    this.paste = this.el.find('.paste-text')
     this.initClick()
   }
   initClick(){
-    const {app, addSchema, updateSchema, selAll, jsons, valid, beautify, clear} = this
+    const {app, addSchema, updateSchema, selAll, jsons, valid, beautify, clear, paste} = this
     addSchema.click(()=>{
       var name = app.searchBar.input.val()
       var jsonStr = jsons.val()
@@ -422,6 +437,19 @@ class ValidPanel {
     })
     clear.click(()=>{
       jsons.val('')
+    })
+    paste.click(()=>{
+      if (!navigator.clipboard) {
+        new Alert("danger","提示信息",`不能从剪贴板读取数据，无法访问剪贴板API。剪贴板API需要在 chrome 66+ 中才能使用，请及时更新到新版 Chrome 体验更多新增特性。`,`关于剪贴板API详情查看<a href="https://googlechrome.github.io/samples/async-clipboard/index.html">Asynchronous Clipboard API Sample</a>`).show()
+        return
+      }
+      navigator.clipboard.readText()
+      .then(text => {
+        jsons.val(text)
+      })
+      .catch(() => {
+        new Alert("danger","提示信息",`不能从剪贴板读取数据，可能是本网站的剪贴板读取权限被您给禁用了，如需查看权限设置请在地址栏输入 <b>chrome://settings/content/clipboard</b>，请务必设置允许本网站访问剪贴板。`,`关于剪贴板API详情查看<a href="https://googlechrome.github.io/samples/async-clipboard/index.html">Asynchronous Clipboard API Sample</a>`).show()
+      });
     })
   }
 
@@ -615,8 +643,8 @@ class ValidPanel {
                   <button type="button" class="btn btn-outline-secondary beautify">格式化</button>
                   <button type="button" class="btn btn-outline-success clear-json">Clear</button>
                   <button type="button" class="btn btn-outline-danger">Danger</button>
-                  <button type="button" class="btn btn-outline-warning">Warning</button>
-                  <button type="button" class="btn btn-outline-info select-all">全选</button>
+                  <button type="button" class="btn btn-outline-warning select-all">全选</button>
+                  <button type="button" class="btn btn-outline-info paste-text">粘贴</button>
                   <button type="button" class="btn btn-outline-light">Light</button>
                   <button type="button" class="btn btn-outline-dark update-schema">修改 Schema</button>
                   <button type="button" class="btn btn-outline-primary add-schema">添加 Schema</button>
@@ -640,6 +668,29 @@ class ValidPanel {
     </div>
     `
     this.el = $(templ)
+  }
+}
+class Alert {
+  constructor(type, title, body, message) {
+    this.alertDig = $(`
+    <div class="alert alert-${type} w-50 m-5 fixed-top" style="z-index:1051" role="alert">
+      <h4 class="alert-heading">${title}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </h4>
+      <p>${body}</p>
+      <hr>
+      <p class="mb-0">${message}</p>
+    </div>
+      `)
+  }
+  show(){
+    document.body.append(this.alertDig[0])
+    this.alertDig.on('closed.bs.alert',()=>{
+      this.alertDig.alert('dispose')
+      this.alertDig.remove()
+    })
   }
 }
 class SearchBar {

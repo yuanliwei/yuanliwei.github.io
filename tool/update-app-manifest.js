@@ -1,17 +1,18 @@
 const fs = require('fs');
-
+const path = require('path');
+console.log(__dirname,path.join(__dirname,'../src/js/utils/loadJsConfig.js'),path.join(__dirname,'..'));
 var ignores = '.git,doc,tool,coffee'.split(',')
 
-function listFiles(path, paths) {
+function listFiles(path,length, paths) {
   var files = fs.readdirSync(path);
   for (var i = 0; i < files.length; i++) {
     if (ignores.includes(files[i])) continue
     var file = path + '/' + files[i]
     var stat = fs.statSync(file);
     if (stat.isDirectory() == true) {
-      listFiles(file, paths);
+      listFiles(file,length, paths);
     } else {
-      paths.push(file.substr(2))
+      paths.push(file.substr(length))
     }
   }
 }
@@ -25,9 +26,10 @@ function listSource() {
         urls = urls.concat(value)
     }
   }
-  var src = fs.readFileSync('../src/js/utils/loadJsConfig.js', {encoding: 'utf-8'})
+  var src = fs.readFileSync(path.join(__dirname,'../src/js/utils/loadJsConfig.js'), {encoding: 'utf-8'})
   eval(src)
-  listFiles('..', urls)
+  var dir = path.join(__dirname,'..')
+  listFiles(dir,dir.length, urls)
   urls = [...new Set(urls)]
   return urls.join('\n')
 }
@@ -59,33 +61,8 @@ function updateManifest() {
     return line.trim()
   }).join('\n')
 
-  fs.writeFileSync('../app.manifest', manifest, {encoding: 'utf-8'})
+  fs.writeFileSync(path.join(__dirname,'../app.manifest'), manifest, {encoding: 'utf-8'})
   console.log(`manifest update on ${now}`);
 }
 
-var lastUpdateTime = 0;
-
-function watch(dir) {
-  fs.watch(dir, (event, filename)=> {
-    if (ignores.includes(filename)) return
-    var diff = Date.now() - lastUpdateTime
-    lastUpdateTime = Date.now()
-    if (diff < 100) return
-    console.log('event is: ' + event + 'filename:' + filename + ' now:' + Date.now());
-    updateManifest()
-  })
-
-  var files = fs.readdirSync(dir);
-  for (var i = 0; i < files.length; i++) {
-    if (ignores.includes(files[i])) continue
-    var file = dir + '/' + files[i]
-    var stat = fs.statSync(file)
-    if (stat.isDirectory() == true) {
-      watch(file);
-    }
-  }
-}
-
-watch('..')
-console.log('start watch...');
 updateManifest()
