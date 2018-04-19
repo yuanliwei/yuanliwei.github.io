@@ -248,9 +248,6 @@ LoadES6.config({
   "wilddog":[
     "https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js"
   ],
-  "wilddog-config":[
-    "/src/js/utils/wilddog-config.js"
-  ],
   "pako":[
     "https://cdn.bootcss.com/pako/1.0.5/pako.min.js"
   ],

@@ -3,7 +3,6 @@ class App {
     this.data = new AppData(this)
     this.searchBar = new SearchBar(this)
     this.validPanel = new ValidPanel(this)
-    this.diffPanel = new DiffPanel(this)
     this.schemaPanel = new SchemaPanel(this)
   }
 }
@@ -25,7 +24,6 @@ class SchemaPanel {
   }
 
   handleExtraKeys(){
-    var self = this
     var extraKeys = {
       "Alt-/": "autocomplete",
       "Tab": (cm)=> cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" ")),
@@ -338,11 +336,12 @@ class AppData {
     delete this.keys[key]
   }
   saveObject(id, code){
-    this.objects[id] = {
+    var obj = {
       time: Date.now(),
       code: pako.deflate(code, { to: 'string' })
     }
-    this.ref.child("objects").child(id).set(this.objects[id])
+    localStorage[`restful-objects-${id}`] = JSON.stringify(obj)
+    this.ref.child("objects").child(id).set(obj)
   }
   addFireCountNum(key){
     this.ref.child("keys").child(key).transaction((currentValue)=>{
@@ -381,8 +380,104 @@ class AppData {
   }
 }
 class DiffPanel {
-  constructor(app) {
+  constructor(app,value, orig1, orig2, mergeResult) {
     this.app = app
+    this.buildElement()
+    this.el.appendTo('body')
+    this.mergeResult = mergeResult
+    this.value = value || ''
+    this.orig1 = orig1 || ''
+    this.orig2 = orig2 || ''
+    this.panes = 2
+    this.connect = "align"
+    this.collapse = false
+    this.highlight = true
+
+    this.initEvent()
+
+    this.initUI()
+  }
+  initUI(){
+    const {app} = this
+    this.el.find('.merge-view').html('')
+    this.dv = CodeMirror.MergeView(this.el.find('.merge-view')[0], {
+      value: this.value,
+      origLeft: this.panes == 3 ? this.orig1 : null,
+      orig: this.orig2,
+      matchBrackets : true,
+      lineNumbers: true,
+      mode: {name: "javascript"},
+      highlightDifferences: this.highlight,
+      connect: this.connect,
+      collapseIdentical: this.collapse
+    });
+
+    this.handleResize()
+
+  }
+  initEvent(){
+    this.el.find('.merge-ok').click(()=>{
+      $('body').removeClass('modal-open')
+      var result = this.dv.edit.getValue()
+      this.el.remove()
+      document.removeEventListener('resize', this.handle)
+      this.mergeResult(result)
+    })
+    this.el.find('.merge-two-way').click(()=>{
+      this.panes = 2
+      this.initUI()
+    })
+    this.el.find('.merge-three-way').click(()=>{
+      this.panes = 3
+      this.initUI()
+    })
+    this.el.find('.merge-optionally').click(()=>{
+      this.toggleDifferences()
+    })
+    this.el.find('.merge-collapse').click(()=>{
+      this.collapse = !this.collapse
+      this.initUI()
+    })
+    this.el.find('.merge-align').click(()=>{
+      this.connect = this.connect ? null : 'align'
+      this.initUI()
+    })
+
+    this.handleResize = ()=> {
+      var height = this.el.find('.merge-view').height()
+      this.resize(height, this.dv)
+    }
+    document.addEventListener('resize', this.handleResize)
+  }
+
+  toggleDifferences() {
+    this.dv.setShowDifferences(this.highlight = !this.highlight);
+  }
+
+  resize(height, mergeView) {
+    if (mergeView.leftOriginal())
+    mergeView.leftOriginal().setSize(null, height);
+    mergeView.editor().setSize(null, height);
+    if (mergeView.rightOriginal())
+    mergeView.rightOriginal().setSize(null, height);
+    mergeView.wrap.style.height = height + "px";
+  }
+
+  buildElement(){
+    this.el = $(`
+      <div class="CodeMirror-fullscreen d-flex flex-column bg-faded">
+        <div class="text-right p-2 btn-pane" style="background: aliceblue;">
+          <button type="button" class="btn btn-outline-primary merge-two-way">two-way</button>
+          <button type="button" class="btn btn-outline-primary merge-three-way">three-way</button>
+          <button type="button" class="btn btn-outline-primary merge-optionally">optionally</button>
+          <button type="button" class="btn btn-outline-primary merge-collapse">collapse</button>
+          <button type="button" class="btn btn-outline-primary merge-align">align</button>
+          <button type="button" class="btn btn-outline-primary merge-ok">完成</button>
+        </div>
+        <div class="bg-success h-100 merge-view">
+        </div>
+      </div>
+        `)
   }
 }
 class ValidPanel {
@@ -399,6 +494,7 @@ class ValidPanel {
     this.result = this.el.find('.result')
     this.clear = this.el.find('.clear-json')
     this.paste = this.el.find('.paste-text')
+    this.diff = this.el.find('.diff-btn')
     this.initClick()
   }
   initClick(){
@@ -452,7 +548,23 @@ class ValidPanel {
       });
     })
   }
-
+  showDiffButton(name, localId, netId){
+    const {app} = this
+    this.diff.removeClass('invisible')
+    this.diff.click(()=>{
+      Promise.all([app.data.getObjectCode(localId), app.data.getObjectCode(netId)]).then((data)=>{
+        new DiffPanel(app,data[1],data[1],data[0],(value)=>{
+          app.schemaPanel.show({
+            name: name,
+            code: value
+          })
+        })
+      })
+    })
+  }
+  hideDiffButton(){
+    this.diff.addClass('invisible')
+  }
   validJson(){
     const {app, addSchema, updateSchema, selAll, jsons, valid, result} = this
     var localize_zh = function (errors) {
@@ -624,9 +736,9 @@ class ValidPanel {
           result.html(`<p>验证通过！</p>`)
         }
       } catch (e) {
-      console.error(e);
-      result.html(`<pre>${e.stack}</pre>`)
-    }
+        console.error(e);
+        result.html(`<pre>${e.stack}</pre>`)
+      }
     })
   }
   buildElement() {
@@ -642,7 +754,7 @@ class ValidPanel {
                   <button type="button" class="btn btn-outline-primary valid-json">验证</button>
                   <button type="button" class="btn btn-outline-secondary beautify">格式化</button>
                   <button type="button" class="btn btn-outline-success clear-json">Clear</button>
-                  <button type="button" class="btn btn-outline-danger">Danger</button>
+                  <button type="button" class="btn btn-outline-danger diff-btn">DIFF</button>
                   <button type="button" class="btn btn-outline-warning select-all">全选</button>
                   <button type="button" class="btn btn-outline-info paste-text">粘贴</button>
                   <button type="button" class="btn btn-outline-light">Light</button>
@@ -726,7 +838,22 @@ class SearchBar {
         })
         this.fireActive()
       })
+      var obj = listData.filter((item)=>{
+       return item.active
+     })[0]
+     this.refreshDiffButton(obj)
     },100)
+  }
+  refreshDiffButton(obj){
+    if (!obj) { return }
+    const {app} = this
+    var key = CryptoJS.SHA1(obj.name).toString()
+    var id = localStorage[`restful-valid-${key}`]
+    if (id && id != obj.id) {
+      app.validPanel.showDiffButton(obj.name, id, obj.id)
+    } else {
+      app.validPanel.hideDiffButton()
+    }
   }
   initInput(){
     const {app,input,menus} = this
@@ -769,6 +896,7 @@ class SearchBar {
     var obj = listData.filter((item)=>{
       return item.active
     })[0]
+    this.refreshDiffButton(obj)
     return obj
   }
   fireActive(){

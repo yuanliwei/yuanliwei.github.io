@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2018-4-19 23:01:42
+# 生成时间 2018-4-20 00:46:05
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -145,7 +145,6 @@ https://cdn.bootcss.com/golden-layout/1.5.9/goldenlayout.min.js
 /src/list/normal-list.js
 /src/list/fast-list.js
 https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js
-/src/js/utils/wilddog-config.js
 https://cdn.bootcss.com/pako/1.0.5/pako.min.js
 https://cdn.bootcss.com/diff_match_patch/20121119/diff_match_patch.js
 https://cdn.bootcss.com/codemirror/5.25.2/addon/merge/merge.min.css
