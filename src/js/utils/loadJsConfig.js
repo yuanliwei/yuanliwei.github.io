@@ -164,7 +164,7 @@ LoadES6.config({
     "https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"
   ],
   "bodymovin":[
-    "https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js"
+    "https://cdn.bootcss.com/bodymovin/4.13.0/bodymovin.min.js"
   ],
   "csshake":[
     "https://cdn.bootcss.com/csshake/1.5.2/csshake.min.css"

@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2018-4-20 00:46:05
+# 生成时间 2018-4-20 08:16:35
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -110,7 +110,7 @@ https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css
 https://cdn.bootcss.com/three.js/r83/three.min.js
 https://cdn.bootcss.com/stats.js/r16/Stats.min.js
 https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js
-https://cdn.bootcss.com/bodymovin/4.5.8/bodymovin.js
+https://cdn.bootcss.com/bodymovin/4.13.0/bodymovin.min.js
 https://cdn.bootcss.com/csshake/1.5.2/csshake.min.css
 https://cdn.bootcss.com/js-beautify/1.6.12/beautify.min.js
 https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js
