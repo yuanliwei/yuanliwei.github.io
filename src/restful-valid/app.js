@@ -240,6 +240,9 @@ class SchemaPanel {
       case "number": return {
         "type": "number"
       }
+      case "boolean": return {
+        "type": "boolean"
+      }
       case "undefined": return { }
       default:
         console.error(new Error('unknown type : ' + (typeof obj)));
