@@ -986,31 +986,51 @@ class AssignJson2Java {
 
   toJava(json){
     try {
-      json = JSON.parse(json)
+      var xxxx = {}
+      eval(`xxxx = ${json}`)
+      json = xxxx
     } catch (e) {
+      var msg = e.message
+      console.log('origin',msg);
+      var stack = e.stack
+      var pos = json.length
+      while(pos > 0){
+        pos -= 10
+        try {
+          var xxxx = {}
+          eval(`xxxx = ${json.substr(0,pos)}`)
+        } catch (e) {
+          if (msg != e.message) {
+            break
+          }
+        }
+      }
       console.log(e.message);
       console.error(e);
-      var str = ''
-      if (e.message&&e.message.includes('Unexpected token m in JSON at position')) {
-        var pos = parseInt(e.message.split(' ').pop())
-        str += json.substr(pos-10,pos+30)
-      }
-      return str+'\n\n'+e.stack
+      var str = json.substr(pos-10,30)
+      return str+'\n\n'+stack
     }
     var keys = Object.keys(json)
+    var length = 16
+    keys.forEach((item)=>{
+      length = Math.max(item.length,length)
+    })
+    length++
     var results = []
-    results.push(`JSONObject jsObj = JSON.parseObject(json);`);
+    let space = ' '.repeat(length-17+1)
+    results.push(`JSONObject jsObj${space}= JSON.parseObject(json);`);
     keys.forEach((item)=>{
       let data = json[item]
       let type = (typeof data)
+      let space = ' '.repeat(length-item.length)
       if (type == 'string') {
-        results.push(`${item} = jsObj.getString("${item}");`);
+        results.push(`${item}${space}= jsObj.getString("${item}");`);
       }
       if (type == 'number') {
         if (data%1 == 0) {
-          results.push(`${item} = jsObj.getIntValue("${item}");`);
+          results.push(`${item}${space}= jsObj.getIntValue("${item}");`);
         } else {
-          results.push(`${item} = jsObj.getFloatValue("${item}");`);
+          results.push(`${item}${space}= jsObj.getFloatValue("${item}");`);
         }
       }
     })
