@@ -979,3 +979,41 @@ var JsonJavaUrl = (function () {
     return Json2Java;
 
 })();
+
+class AssignJson2Java {
+  constructor() {
+  }
+
+  toJava(json){
+    try {
+      json = JSON.parse(json)
+    } catch (e) {
+      console.log(e.message);
+      console.error(e);
+      var str = ''
+      if (e.message&&e.message.includes('Unexpected token m in JSON at position')) {
+        var pos = parseInt(e.message.split(' ').pop())
+        str += json.substr(pos-10,pos+30)
+      }
+      return str+'\n\n'+e.stack
+    }
+    var keys = Object.keys(json)
+    var results = []
+    results.push(`JSONObject jsObj = JSON.parseObject(json);`);
+    keys.forEach((item)=>{
+      let data = json[item]
+      let type = (typeof data)
+      if (type == 'string') {
+        results.push(`${item} = jsObj.getString("${item}");`);
+      }
+      if (type == 'number') {
+        if (data%1 == 0) {
+          results.push(`${item} = jsObj.getIntValue("${item}");`);
+        } else {
+          results.push(`${item} = jsObj.getFloatValue("${item}");`);
+        }
+      }
+    })
+    return results.join('\n')
+  }
+}
