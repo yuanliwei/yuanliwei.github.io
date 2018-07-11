@@ -23,9 +23,16 @@ function initChart(ctx) {
           datasets: [{
               label: '# of Votes',
               data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
+              backgroundColor: JSON.parse(JSON.stringify(backgroundColor)),
+              borderColor: JSON.parse(JSON.stringify(borderColor)),
               borderWidth: 1
+          },{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: JSON.parse(JSON.stringify(backgroundColor)),
+              borderColor: JSON.parse(JSON.stringify(borderColor)),
+              borderWidth: 1,
+              type: 'line'
           }]
       },
       options: {
@@ -76,6 +83,8 @@ function setDatas(datas) {
     myChart.data.labels.push(i);
     myChart.data.datasets.forEach((dataset) => {
         dataset.data.push(data);
+        dataset.backgroundColor.push(backgroundColor[i%backgroundColor.length]);
+        dataset.borderColor.push(borderColor[i%borderColor.length]);
     });
   }
   myChart.update()
@@ -85,6 +94,8 @@ function addData(label, data) {
     myChart.data.labels.push(label);
     myChart.data.datasets.forEach((dataset) => {
         dataset.data.push(data);
+        dataset.backgroundColor.push(backgroundColor[i%backgroundColor.length]);
+        dataset.borderColor.push(borderColor[i%borderColor.length]);
     });
     myChart.update();
 }
@@ -93,6 +104,8 @@ function clearData() {
   myChart.data.labels = []
   myChart.data.datasets.forEach((dataset) => {
       dataset.data = [];
+      dataset.backgroundColor = [];
+      dataset.borderColor = [];
   });
   myChart.update();
 }
