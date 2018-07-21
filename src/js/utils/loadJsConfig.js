@@ -185,10 +185,8 @@ LoadES6.config({
     "https://cdn.bootcss.com/string-format/0.5.0/string-format.min.js"
   ],
   "chart":[
-    // "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.min.js",
-    // "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.min.js"
-    "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.js",
-    "https://cdn.bootcss.com/Chart.js/2.6.0/Chart.bundle.js"
+    "https://cdn.bootcss.com/Chart.js/2.7.2/Chart.js",
+    "https://cdn.bootcss.com/Chart.js/2.7.2/Chart.bundle.js"
   ],
   "sql":[
     "https://cdn.bootcss.com/sql.js/0.4.0/js/sql.js"
