@@ -1,4 +1,7 @@
 function initEvent() {
+    $('.copy-to-up').click(()=>{
+      $('#code_input').val($('pre code').text())
+    })
     var input = $('#code_input')[0];
     input.onchange = onChange;
     input.onkeyup = onChange;
@@ -34,6 +37,13 @@ function onChange() {
         case 17: fun = Escape.htmlDecode; break;
         case 18: fun = 18; break;
         case 19: fun = 19; break;
+        case 20: fun = Escape.encodeGZIP; break;
+        case 21: fun = Escape.decodeGZIP; break;
+        case 22: fun = Escape.encodeZIP; break;
+        case 23: fun = Escape.decodeZIP; break;
+        case 24: fun = Escape.formatJSON; break;
+        case 25: fun = Escape.formatXML; break;
+        case 26: fun = Escape.formatSQL; break;
 
         default:
             fun = Escape.encodeURIComponent;

@@ -21,6 +21,11 @@
               <label class="radio-inline"><input type="radio" name="genMode" value="16"> Html编码 </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="17"> Html解码 </label>
               <br/>
+              <label class="radio-inline"><input type="radio" name="genMode" value="20"> GZIP编码 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="21"> GZIP解码 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="22"> ZIP编码 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="23"> ZIP解码 </label>
+              <br/>
               <label class="radio-inline"><input type="radio" name="genMode" value="5"> native2ascii </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="6"> ascii2native </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="7"> HtmlEncode </label>
@@ -36,12 +41,20 @@
               <label class="radio-inline"><input type="radio" name="genMode" value="15"> UNICODE解码 </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="18"> 二维码 </label>
               <label class="radio-inline"><input type="radio" name="genMode" value="19"> 条形码 </label>
+              <br>
+              <label class="radio-inline"><input type="radio" name="genMode" value="24"> JSON格式化 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="25"> XML格式化 </label>
+              <label class="radio-inline"><input type="radio" name="genMode" value="26"> SQL格式化 </label>
             </div>
           </form>
         </div>
 
         <div class="col-12 mt-2">
           <textarea id="code_input" class="form-control" rows="5" spellcheck="false"> </textarea>
+        </div>
+
+        <div class="col-12 text-center">
+          <button type="button" class="copy-to-up btn btn-success m-2"><i class="fa fa-arrow-up fa-2x"></i></button>
         </div>
 
         <div class="col-12 mt-2">
@@ -54,8 +67,8 @@
     <script type="text/javascript">
         new Load().hide()
         .load("/src/js/utils/loadJsConfig.js")
-        .load("jquery", "popper", "string-format", "beautify", "highlight")
-        .load("bootstrap", "jquery.qrcode", "JsBarcode", "crypto")
+        .load("jquery", "popper", "string-format", "beautify", "fontawesome", "highlight")
+        .load("bootstrap", "jquery.qrcode", "JsBarcode", "crypto", "pako", "jszip", "vkbeautify")
         .load("/src/js/utils/StringUtil.js",
               "/src/js/utils/common.js",
               "/src/js/utils/code-format.js",
