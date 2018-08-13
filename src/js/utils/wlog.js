@@ -42,9 +42,9 @@
     return wilddog.sync().ref("/test-view-log");
   }
 
-  window.addEventListener("error", function (e) {
-    e.error = e.error || {}
-    wlog("Error:" + e.message + "\n" + e.error.stack+"\n\tat:"+e.filename+" (line:"+e.lineno+" col:"+e.colno+")");
+  window.addEventListener("error", function(e) {
+    var stack = e.error && e.error.stack || ' --- '
+    wlog("Error:" + e.message + "\n" + stack + "\n\tat:" + e.filename + " (line:" + e.lineno + " col:" + e.colno + ")");
   });
 
   window.wlog = log;
