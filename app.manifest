@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2018-8-13 11:02:52
+# 生成时间 2018-11-10 19:19:23
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -167,6 +167,8 @@ https://cdn.bootcss.com/ajv/6.4.0/ajv.min.js
 /src/chart/chart.html
 /src/chart/chart.js
 /src/chart/chartjs-plugin-zoom.min.js
+/src/editor/diff-editor.html
+/src/editor/editor.html
 /src/escape/Base64.js
 /src/escape/escape-api.js
 /src/escape/escape.html
