@@ -320,7 +320,7 @@ class AppData {
     this.initData()
   }
   initData(){
-    wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
+    wilddog.initializeApp({ syncURL: "https://wd8264361507otxfxw.wilddogio.com" });
     this.ref = wilddog.sync().ref("/restful-valid");
     this.keys = {}
     this.ref.child("keys").once('value', (data)=>{

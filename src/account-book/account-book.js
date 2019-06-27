@@ -160,7 +160,7 @@ function onSave() {
 
 function saveToDog(row){
       // 初始化
-      wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
+      wilddog.initializeApp({ syncURL: "https://wd8264361507otxfxw.wilddogio.com" });
       var ref = wilddog.sync().ref("/account");
       // child() 用来定位到某个节点。
 

@@ -38,7 +38,7 @@
   }
 
   function getRef() {
-    wilddog.initializeApp({ syncURL: "https://ylw-wuziqi.wilddogio.com" });
+    wilddog.initializeApp({ syncURL: "https://wd8264361507otxfxw.wilddogio.com" });
     return wilddog.sync().ref("/test-view-log");
   }
 
