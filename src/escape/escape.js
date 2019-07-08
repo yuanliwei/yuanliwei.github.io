@@ -1,6 +1,6 @@
 function initEvent() {
-    $('.copy-to-up').click(()=>{
-      $('#code_input').val($('pre code').text())
+    $('.copy-to-up').click(() => {
+        $('#code_input').val($('pre code').text())
     })
     var input = $('#code_input')[0];
     input.onchange = onChange;
@@ -37,6 +37,7 @@ function onChange() {
         case 17: fun = Escape.htmlDecode; break;
         case 18: fun = 18; break;
         case 19: fun = 19; break;
+        case 27: fun = 27; break;
         case 20: fun = Escape.encodeGZIP; break;
         case 21: fun = Escape.decodeGZIP; break;
         case 22: fun = Escape.encodeZIP; break;
@@ -49,19 +50,30 @@ function onChange() {
             fun = Escape.encodeURIComponent;
             break;
     }
-    if(fun == 18){
-      $('pre code').html('')
-      // L : 1, M : 0, Q : 3, H : 2
-      $('pre code').qrcode({text:input, correctLevel: 1});
-      saveConfig();
-      return
+    if (fun == 18) {
+        $('pre code').html('')
+        // L : 1, M : 0, Q : 3, H : 2
+        $('pre code').qrcode({ text: input, correctLevel: 1 });
+        saveConfig();
+        return
     }
-    if(fun == 19){
-      $('pre code').html('')
-      $('pre code').append('<img id="barcode">')
-      $("#barcode").JsBarcode(input);
-      saveConfig();
-      return
+    if (fun == 19) {
+        $('pre code').html('')
+        $('pre code').append('<img id="barcode">')
+        $("#barcode").JsBarcode(input);
+        saveConfig();
+        return
+    }
+    if (fun == 27) {
+        $('pre code').html('')
+        $('pre code').append('<img id="base64image">')
+        input = input.replace(/[\r|\n]+/g, '').trim()
+        if (!input.startsWith('data:image')) {
+            input = 'data:image/png;base64,' + input
+        }
+        $("#base64image").attr('src', input);
+        saveConfig();
+        return
     }
     var javaSrc;
     try {
