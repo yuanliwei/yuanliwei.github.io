@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 生成时间 2019-7-13 16:50:08
+# 生成时间 2019-7-15 15:56:49
 
 # 指定不进行缓存的资源文件
 NETWORK:
@@ -292,5 +292,6 @@ https://cdn.bootcss.com/ajv/6.4.0/ajv.min.js
 /src/test/view-log.html
 /src/test/web-components-test1.html
 /src/test/web-components.html
+/src/test/wiki-doc.html
 /src/zip-parse/zip-parse.html
 /src/zip-parse/zip-parse.js
