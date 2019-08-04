@@ -1,3 +1,10 @@
+const StringUtil = require('../../js/utils/StringUtil')
+const ClassModel = require('../java-model/ClassModel')
+const Filed = require('../java-model/Filed')
+const Modifiers = require('../java-model/Modifiers')
+var extend = function (child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
 /*
 Fileds 转 Java model
 使用：
@@ -497,3 +504,9 @@ var FiledsJava = (function () {
   return Fileds2Java;
 
 })();
+
+
+module.exports.FiledsJavaDbOrmlite = FiledsJavaDbOrmlite
+module.exports.FiledsJavaDbXutils = FiledsJavaDbXutils
+module.exports.FiledsJavaDbXutils3 = FiledsJavaDbXutils3
+module.exports.FiledsJava = FiledsJava

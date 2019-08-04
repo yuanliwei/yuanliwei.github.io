@@ -1,3 +1,10 @@
+const StringUtil = require('../../js/utils/StringUtil')
+const ClassModel = require('../java-model/ClassModel')
+const Filed = require('../java-model/Filed')
+const Modifiers = require('../java-model/Modifiers')
+
+var extend = function (child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 /*
 JSON 转 Java model
@@ -1037,3 +1044,10 @@ class AssignJson2Java {
     return results.join('\n')
   }
 }
+
+
+module.exports.JsonJavaDbOrmlite = JsonJavaDbOrmlite
+module.exports.JsonJavaDbXutils = JsonJavaDbXutils
+module.exports.JsonJavaDbXutils3 = JsonJavaDbXutils3
+module.exports.JsonJava = JsonJava
+module.exports.JsonJavaUrl = JsonJavaUrl

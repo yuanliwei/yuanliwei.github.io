@@ -1,3 +1,7 @@
+const { FiledsJavaDbOrmlite,
+  FiledsJavaDbXutils,
+  FiledsJavaDbXutils3,
+  FiledsJava } = require('./Fileds2Java')
 
 /*
  从SQL建表语句创建java对象
@@ -16,21 +20,21 @@ PRIMARY KEY (`word_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='词汇基本信息表';
  */
 var SQLJava, SQLJavaDbOrmlite, SQLJavaDbXutils, SQLJavaDbXutils3,
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  extend = function (child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-SQLJavaDbOrmlite = (function(superClass) {
+SQLJavaDbOrmlite = (function (superClass) {
   extend(SQLJavaDbOrmlite, superClass);
 
-  function SQLJavaDbOrmlite() {}
+  function SQLJavaDbOrmlite() { }
 
-  SQLJavaDbOrmlite.prototype.toJava = function(sqlStr, opts) {
+  SQLJavaDbOrmlite.prototype.toJava = function (sqlStr, opts) {
     var filedStr;
     filedStr = this.parseSql2FiledsStr(sqlStr, opts);
     return SQLJavaDbOrmlite.__super__.toJava.call(this, filedStr, opts);
   };
 
-  SQLJavaDbOrmlite.prototype.parseSql2FiledsStr = function(sqlStr, opts) {
+  SQLJavaDbOrmlite.prototype.parseSql2FiledsStr = function (sqlStr, opts) {
     var className, i, key, keyStr, len, ref, reg, regBrackets, regKey, regName, regNote, regType, resultArr, sqlS, strFile, strFiles, strKeyName, strName, strNote, strType, strTypeValue, value;
     reg = /CREATE +TABLE +([`|\S]+) +\(/i;
     className = (ref = sqlStr.match(reg)) != null ? ref[1] : void 0;
@@ -119,12 +123,12 @@ SQLJavaDbOrmlite = (function(superClass) {
 
 })(FiledsJavaDbOrmlite);
 
-SQLJavaDbXutils = (function(superClass) {
+SQLJavaDbXutils = (function (superClass) {
   extend(SQLJavaDbXutils, superClass);
 
-  function SQLJavaDbXutils() {}
+  function SQLJavaDbXutils() { }
 
-  SQLJavaDbXutils.prototype.toJava = function(sqlStr, opts) {
+  SQLJavaDbXutils.prototype.toJava = function (sqlStr, opts) {
     var filedStr;
     filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr(sqlStr, opts);
     return SQLJavaDbXutils.__super__.toJava.call(this, filedStr, opts);
@@ -134,12 +138,12 @@ SQLJavaDbXutils = (function(superClass) {
 
 })(FiledsJavaDbXutils);
 
-SQLJavaDbXutils3 = (function(superClass) {
+SQLJavaDbXutils3 = (function (superClass) {
   extend(SQLJavaDbXutils3, superClass);
 
-  function SQLJavaDbXutils3() {}
+  function SQLJavaDbXutils3() { }
 
-  SQLJavaDbXutils3.prototype.toJava = function(sqlStr, opts) {
+  SQLJavaDbXutils3.prototype.toJava = function (sqlStr, opts) {
     var filedStr;
     filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr(sqlStr, opts);
     return SQLJavaDbXutils3.__super__.toJava.call(this, filedStr, opts);
@@ -149,12 +153,12 @@ SQLJavaDbXutils3 = (function(superClass) {
 
 })(FiledsJavaDbXutils3);
 
-SQLJava = (function(superClass) {
+SQLJava = (function (superClass) {
   extend(SQLJava, superClass);
 
-  function SQLJava() {}
+  function SQLJava() { }
 
-  SQLJava.prototype.toJava = function(sqlStr, opts) {
+  SQLJava.prototype.toJava = function (sqlStr, opts) {
     var filedStr;
     filedStr = new SQLJavaDbOrmlite().parseSql2FiledsStr(sqlStr, opts);
     return SQLJava.__super__.toJava.call(this, filedStr, opts);
@@ -163,3 +167,8 @@ SQLJava = (function(superClass) {
   return SQLJava;
 
 })(FiledsJava);
+
+module.exports.SQLJava = SQLJava
+module.exports.SQLJavaDbOrmlite = SQLJavaDbOrmlite
+module.exports.SQLJavaDbXutils = SQLJavaDbXutils
+module.exports.SQLJavaDbXutils3 = SQLJavaDbXutils3

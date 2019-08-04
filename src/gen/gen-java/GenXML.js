@@ -215,3 +215,11 @@ var ConvertLua = (function () {
     return ConvertLua;
 
 })();
+
+module.exports.StyleXML = StyleXML
+module.exports.AlignComment = AlignComment
+module.exports.FormatCode = FormatCode
+module.exports.ParseLayoutXML = ParseLayoutXML
+module.exports.ParseLayoutXML2 = ParseLayoutXML2
+module.exports.Pom2Cmd = Pom2Cmd
+module.exports.ConvertLua = ConvertLua

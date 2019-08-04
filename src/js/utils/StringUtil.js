@@ -1,18 +1,18 @@
-var StringUtil = {};
+module.exports = class StringUtil {
 
-  StringUtil.upperBegin = function(item) {
-    return item.replace(/(\w)/, function(match) {
+  static upperBegin(item) {
+    return item.replace(/(\w)/, function (match) {
       return match.toUpperCase();
     });
   };
 
-  StringUtil.lowerBegin = function(item) {
-    return item.replace(/(\w)/, function(match) {
+  static lowerBegin(item) {
+    return item.replace(/(\w)/, function (match) {
       return match.toLowerCase();
     });
   };
 
-  StringUtil.formatJavaType = function(item) {
+  static formatJavaType(item) {
     switch (item) {
       case 'char':
       case 'string':
@@ -31,7 +31,7 @@ var StringUtil = {};
     }
   };
 
-  StringUtil.formatDbType = function(item) {
+  static formatDbType(item) {
     switch (item) {
       case 'String':
         return 'TEXT';
@@ -44,19 +44,19 @@ var StringUtil = {};
     }
   };
 
-  StringUtil.formatJavaVarName = function(item) {
-    return this.lowerBegin(item.replace(/(_\w)/g, function(match) {
+  static formatJavaVarName(item) {
+    return this.lowerBegin(item.replace(/(_\w)/g, function (match) {
       return match[1].toUpperCase();
     }));
   };
 
-  StringUtil.formatJSONVarName = function(item) {
-    return this.formatJavaVarName(item).replace(/([A-Z])/g, function(match) {
+  static formatJSONVarName(item) {
+    return this.formatJavaVarName(item).replace(/([A-Z])/g, function (match) {
       return '_' + match.toLowerCase();
     });
   };
 
-  StringUtil.format = function() {
+  static format() {
     var arg, args, i, item, j, len;
     args = arguments;
     item = args[0];
@@ -93,7 +93,7 @@ var StringUtil = {};
     return item;
   };
 
-  StringUtil.ascii2native = function(ascii) {
+  static ascii2native(ascii) {
     var code, i, j, len, native1, words;
     words = ascii.split('\\u');
     native1 = words[0];
@@ -110,7 +110,7 @@ var StringUtil = {};
     return native1;
   };
 
-  StringUtil.native2ascii = function(native_) {
+  static native2ascii(native_) {
     var ascii, char, charAscii, chars, code, i, j, len;
     chars = native_.split('');
     ascii = '';
@@ -128,11 +128,11 @@ var StringUtil = {};
     return ascii;
   };
 
-  StringUtil.formatStr = function() {
+  static formatStr() {
     var args, item;
     args = arguments;
     item = args[0];
-    return item.replace(/{(\d+)}/g, function(match, num) {
+    return item.replace(/{(\d+)}/g, function (match, num) {
       var i;
       i = parseInt(num) + 1;
       if (typeof args[i] !== 'undefined') {
@@ -142,3 +142,5 @@ var StringUtil = {};
       }
     });
   };
+}
+

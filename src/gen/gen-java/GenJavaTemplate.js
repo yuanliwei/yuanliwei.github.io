@@ -33,3 +33,5 @@ GenJavaTemplate = (function() {
   return GenJavaTemplate;
 
 })();
+
+module.exports.GenJavaTemplate = GenJavaTemplate

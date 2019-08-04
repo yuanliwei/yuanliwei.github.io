@@ -1,8 +1,8 @@
 //var Filed, Modifiers, StringUtil;
 
-//StringUtil = require('../utils/string-util');
+const StringUtil = require('../../js/utils/StringUtil');
 
-//Modifiers = require('./modifiers');
+const Modifiers = require('./Modifiers');
 
 var Filed = (function() {
 
@@ -149,3 +149,5 @@ var Filed = (function() {
   return Filed;
 
 })();
+
+module.exports = Filed

@@ -1,3 +1,30 @@
+const { FiledsJavaDbOrmlite,
+    FiledsJavaDbXutils,
+    FiledsJavaDbXutils3,
+    FiledsJava } = require('./gen-java/Fileds2Java')
+
+const { JsonJavaDbOrmlite,
+    JsonJavaDbXutils,
+    JsonJavaDbXutils3,
+    JsonJava,
+    JsonJavaUrl } = require('./gen-java/Json2Java')
+const { SQLJava,
+    SQLJavaDbOrmlite,
+    SQLJavaDbXutils,
+    SQLJavaDbXutils3 } = require('./gen-java/SQL2Java')
+const { GenJavaTemplate } = require('./gen-java/GenJavaTemplate')
+const { StyleXML,
+    AlignComment,
+    FormatCode,
+    ParseLayoutXML,
+    ParseLayoutXML2,
+    Pom2Cmd,
+    ConvertLua } = require('./gen-java/GenXML')
+const { CodeFormat } = require('../js/utils/code-format')
+
+const { loadConfig,
+    saveConfig } = require('../js/utils/common')
+
 function initEvent() {
     var input = $('#code_input')[0];
     input.onchange = onChange;
@@ -69,3 +96,10 @@ function onChange() {
 
     saveConfig();
 }
+
+
+loadConfig();
+initEvent();
+$('pre code').each(function (i, block) {
+    hljs.highlightBlock(block);
+});

@@ -36,3 +36,5 @@ CodeFormat.alignComment = function (input) {
     });
     return newLines.join('\n');
 };
+
+module.exports.CodeFormat = CodeFormat

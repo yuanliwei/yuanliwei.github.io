@@ -6,7 +6,7 @@
 
 //format.extend(String.prototype);
 
-//Modifiers = require('./modifiers');
+const Modifiers = require('./Modifiers');
 
 var ClassModel = (function() {
   function ClassModel() {
@@ -91,3 +91,5 @@ var ClassModel = (function() {
   return ClassModel;
 
 })();
+
+module.exports = ClassModel
