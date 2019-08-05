@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12 page-header">
+            <h1>编解码 <small>escape</small></h1>
+        </div>
+        <div class="col-12 mt-4">
+            <div id="mode-option-group" class="form-group col-sm-offset-2 col-12">
+                <label class="radio-inline"><input type="radio" name="genMode" value="1"> URL编码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="2"> URL解码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="3"> Base64编码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="4"> Base64解码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="16"> Html编码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="17"> Html解码 </label>
+                <br />
+                <label class="radio-inline"><input type="radio" name="genMode" value="20"> GZIP编码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="21"> GZIP解码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="22"> ZIP编码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="23"> ZIP解码 </label>
+                <br />
+                <label class="radio-inline"><input type="radio" name="genMode" value="5"> native2ascii </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="6"> ascii2native </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="7"> HtmlEncode </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="8"> HtmlDecode </label>
+                <br />
+                <label class="radio-inline"><input type="radio" name="genMode" value="9"> MD5 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="10"> SHA1 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="11"> SHA256 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="12"> SHA512 </label>
+                <br>
+                <label class="radio-inline"><input type="radio" name="genMode" value="13"> 格式化日期 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="14"> UNICODE编码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="15"> UNICODE解码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="18"> 二维码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="19"> 条形码 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="27"> Base64IMG </label>
+                <br>
+                <label class="radio-inline"><input type="radio" name="genMode" value="24"> JSON格式化 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="25"> XML格式化 </label>
+                <label class="radio-inline"><input type="radio" name="genMode" value="26"> SQL格式化 </label>
+            </div>
+            </form>
+        </div>
+
+        <div class="col-12 mt-2">
+            <textarea id="code_input" class="form-control" rows="5" spellcheck="false"> </textarea>
+        </div>
+
+        <div class="col-12 text-center">
+            <button type="button" class="copy-to-up btn btn-success m-2"><i class="fa fa-arrow-up fa-2x"></i></button>
+        </div>
+
+        <div class="col-12 mt-2">
+            <div class="code_output" contenteditable="true" spellcheck="false">
+                <pre><code class="java" id="code_output"> </code></pre>
+            </div>
+        </div>
+    </div>
+</div>

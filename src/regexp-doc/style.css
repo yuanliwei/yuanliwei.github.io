@@ -1,0 +1,13 @@
+table table {
+    font-size: 1em!important;
+}
+
+table table {
+    border: 1px #ded6d6 solid;
+    border-collapse: collapse;
+}
+
+table table td:nth-child(1) {
+    white-space: nowrap;
+    font-weight: bold;
+}

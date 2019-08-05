@@ -17,61 +17,61 @@ var borderColor = [
 ]
 function initChart(ctx) {
   myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-          datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: JSON.parse(JSON.stringify(backgroundColor)),
-              borderColor: JSON.parse(JSON.stringify(borderColor)),
-              borderWidth: 1
-          },{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: JSON.parse(JSON.stringify(backgroundColor)),
-              borderColor: JSON.parse(JSON.stringify(borderColor)),
-              borderWidth: 1,
-              type: 'line'
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          },
-          // Container for pan options
-          pan: {
-            // Boolean to enable panning
-            enabled: true,
-
-            // Panning directions. Remove the appropriate direction to disable
-            // Eg. 'y' would only allow panning in the y direction
-            mode: 'xy'
-          },
-
-          // Container for zoom options
-          zoom: {
-            // Boolean to enable zooming
-            enabled: true,
-
-            // Enable drag-to-zoom behavior
-            // drag: true,
-
-            // Zooming directions. Remove the appropriate direction to disable
-            // Eg. 'y' would only allow zooming in the y direction
-            mode: 'x'
+    type: 'bar',
+    data: {
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: JSON.parse(JSON.stringify(backgroundColor)),
+        borderColor: JSON.parse(JSON.stringify(borderColor)),
+        borderWidth: 1
+      }, {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: JSON.parse(JSON.stringify(backgroundColor)),
+        borderColor: JSON.parse(JSON.stringify(borderColor)),
+        borderWidth: 1,
+        type: 'line'
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
           }
+        }]
+      },
+      // Container for pan options
+      pan: {
+        // Boolean to enable panning
+        enabled: true,
+
+        // Panning directions. Remove the appropriate direction to disable
+        // Eg. 'y' would only allow panning in the y direction
+        mode: 'xy'
+      },
+
+      // Container for zoom options
+      zoom: {
+        // Boolean to enable zooming
+        enabled: true,
+
+        // Enable drag-to-zoom behavior
+        // drag: true,
+
+        // Zooming directions. Remove the appropriate direction to disable
+        // Eg. 'y' would only allow zooming in the y direction
+        mode: 'x'
       }
+    }
   });
 }
 
 function setSpaceSplitDataString(dataStr) {
-  dataStr = dataStr.replace(/[^\d\.]+/g,' ').trim()
-  var datas = dataStr.split(' ').map((str)=>{
+  dataStr = dataStr.replace(/[^\d\.]+/g, ' ').trim()
+  var datas = dataStr.split(' ').map((str) => {
     return parseFloat(str)
   })
   setDatas(datas)
@@ -82,30 +82,37 @@ function setDatas(datas) {
     var data = datas[i]
     myChart.data.labels.push(i);
     myChart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-        dataset.backgroundColor.push(backgroundColor[i%backgroundColor.length]);
-        dataset.borderColor.push(borderColor[i%borderColor.length]);
+      dataset.data.push(data);
+      dataset.backgroundColor.push(backgroundColor[i % backgroundColor.length]);
+      dataset.borderColor.push(borderColor[i % borderColor.length]);
     });
   }
   myChart.update()
 }
 
 function addData(label, data) {
-    myChart.data.labels.push(label);
-    myChart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-        dataset.backgroundColor.push(backgroundColor[i%backgroundColor.length]);
-        dataset.borderColor.push(borderColor[i%borderColor.length]);
-    });
-    myChart.update();
+  myChart.data.labels.push(label);
+  myChart.data.datasets.forEach((dataset) => {
+    dataset.data.push(data);
+    dataset.backgroundColor.push(backgroundColor[i % backgroundColor.length]);
+    dataset.borderColor.push(borderColor[i % borderColor.length]);
+  });
+  myChart.update();
 }
 
 function clearData() {
   myChart.data.labels = []
   myChart.data.datasets.forEach((dataset) => {
-      dataset.data = [];
-      dataset.backgroundColor = [];
-      dataset.borderColor = [];
+    dataset.data = [];
+    dataset.backgroundColor = [];
+    dataset.borderColor = [];
   });
   myChart.update();
 }
+
+
+module.exports.addData = addData
+module.exports.setDatas = setDatas
+module.exports.clearData = clearData
+module.exports.initChart = initChart
+module.exports.setSpaceSplitDataString = setSpaceSplitDataString

@@ -1,3 +1,6 @@
+const { loadConfig, saveConfig } = require('../js/utils/common')
+const vkbeautify = require('vkbeautify')
+
 var BookChapterList, BookList, CourseList, HomeworkList;
 
 function onClickPause(e) {
@@ -6,22 +9,22 @@ function onClickPause(e) {
 }
 
 function initEvent() {
-    var input = $('#input_json_text')[0];
-    input.onchange = onChange;
-    input.onkeyup = onChange;
-    $('#mode-option-group input, #gen-option-group input').click(function () {
-        onChange();
-    });
+  var input = $('#input_json_text')[0];
+  input.onchange = onChange;
+  input.onkeyup = onChange;
+  $('#mode-option-group input, #gen-option-group input').click(function () {
     onChange();
+  });
+  onChange();
 
-    $('#selectAll').click(function () {
-      var input = $('#input_json_text')[0];
-      input.select();
-    });
+  $('#selectAll').click(function () {
+    var input = $('#input_json_text')[0];
+    input.select();
+  });
 }
 
 function copy(str, mimetype) {
-  document.oncopy = function(event) {
+  document.oncopy = function (event) {
     event.clipboardData.setData(mimetype, str);
     event.preventDefault();
   };
@@ -29,52 +32,52 @@ function copy(str, mimetype) {
 }
 
 function onChange() {
-    saveConfig();
-    var json = $('#input_json_text').val();
+  saveConfig();
+  var json = $('#input_json_text').val();
 
-    var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
+  var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
-    var result;
-    try {
-      switch (mode) {
-        case 1: result = js_beautify(json, {}); break;
-        case 2: result = new BookList(json).html(); break;
-        case 3: result = new CourseList(json).html(); break;
-        case 4: result = new BookChapterList(json).html(); break;
-        case 5: result = new HomeworkList(json).html(); break;
-        case 6: result = new CombineRepeteLine(json).html(); break;
-        case 7: result = vkbeautify.xml(json, 4); break;
-      }
-    } catch (e) {
-      result = e.stack;
-      mode = 1;
-    }
-    $('pre code').removeClass('xml json')
+  var result;
+  try {
     switch (mode) {
-      case 1:
-        $('#result_content').html('');
-        $('pre code').text(result);
-        $('pre code').addClass('json').each(function (i, block) {
-          hljs.highlightBlock(block);
-        });
-        break;
-      case 7:
-        $('#result_content').html('');
-        $('pre code').text(result);
-        $('pre code').addClass('xml').each(function (i, block) {
-          hljs.highlightBlock(block);
-        });
-        break;
-      case 2:
-      case 3:
-      case 4:
-      case 5:
-      case 6:
-        $('pre code').text('');
-        $('#result_content').html(result);
-        break;
-      default:
+      case 1: result = js_beautify(json, {}); break;
+      case 2: result = new BookList(json).html(); break;
+      case 3: result = new CourseList(json).html(); break;
+      case 4: result = new BookChapterList(json).html(); break;
+      case 5: result = new HomeworkList(json).html(); break;
+      case 6: result = new CombineRepeteLine(json).html(); break;
+      case 7: result = vkbeautify.xml(json, 4); break;
     }
+  } catch (e) {
+    result = e.stack;
+    mode = 1;
+  }
+  $('pre code').removeClass('xml json')
+  switch (mode) {
+    case 1:
+      $('#result_content').html('');
+      $('pre code').text(result);
+      $('pre code').addClass('json').each(function (i, block) {
+        hljs.highlightBlock(block);
+      });
+      break;
+    case 7:
+      $('#result_content').html('');
+      $('pre code').text(result);
+      $('pre code').addClass('xml').each(function (i, block) {
+        hljs.highlightBlock(block);
+      });
+      break;
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+      $('pre code').text('');
+      $('#result_content').html(result);
+      break;
+    default:
+  }
 }
 
 BookList = (function () {
@@ -117,7 +120,7 @@ BookList = (function () {
         </div>
         `;
       var books = JSON.parse(json);
-      if(typeof books.data != "undefined") books = books.data;
+      if (typeof books.data != "undefined") books = books.data;
       var results = [];
       books.forEach(function (book) {
         castEndDate(book);
@@ -131,19 +134,19 @@ BookList = (function () {
 
     function castEndDate(book) {
       var endDate = book.end_date;
-      if(endDate < 1000) return;
+      if (endDate < 1000) return;
       book.end_date = new Date(endDate).Format("yyyy-MM-dd hh:mm:ss");
     }
     function castBookType(book) {
       var packType = book.packType;
       switch (packType) {
-        case 1: book.packType =  "1 - 听力风暴"; break;
-        case 2: book.packType =  "2 - 同步视听说"; break;
-        case 3: book.packType =  "3 - 语音风暴"; break;
-        case 4: book.packType =  "4 - 李大侠"; break;
-        case 5: book.packType =  "5 - 听说风暴"; break;
-        case 6: book.packType =  "6 - 2016版"; break;
-        default: book.packType =  packType + " - 未知的打包类型"; break;
+        case 1: book.packType = "1 - 听力风暴"; break;
+        case 2: book.packType = "2 - 同步视听说"; break;
+        case 3: book.packType = "3 - 语音风暴"; break;
+        case 4: book.packType = "4 - 李大侠"; break;
+        case 5: book.packType = "5 - 听说风暴"; break;
+        case 6: book.packType = "6 - 2016版"; break;
+        default: book.packType = packType + " - 未知的打包类型"; break;
       }
     }
     function castFlag(book) {
@@ -176,13 +179,13 @@ CombineRepeteLine = (function () {
     function getCombineRepeteLineHtml(json) {
       var strings = json.split('\n')
       var stringMap = {}
-      strings.forEach((str)=>{
+      strings.forEach((str) => {
         stringMap[str] = str;
       })
       strings = []
       for (var str in stringMap) {
-        if(str)
-        strings.push(str)
+        if (str)
+          strings.push(str)
       }
 
       return strings.join('<br>');
@@ -190,19 +193,19 @@ CombineRepeteLine = (function () {
 
     function castEndDate(book) {
       var endDate = book.end_date;
-      if(endDate < 1000) return;
+      if (endDate < 1000) return;
       book.end_date = new Date(endDate).Format("yyyy-MM-dd hh:mm:ss");
     }
     function castBookType(book) {
       var packType = book.packType;
       switch (packType) {
-        case 1: book.packType =  "1 - 听力风暴"; break;
-        case 2: book.packType =  "2 - 同步视听说"; break;
-        case 3: book.packType =  "3 - 语音风暴"; break;
-        case 4: book.packType =  "4 - 李大侠"; break;
-        case 5: book.packType =  "5 - 听说风暴"; break;
-        case 6: book.packType =  "6 - 2016版"; break;
-        default: book.packType =  packType + " - 未知的打包类型"; break;
+        case 1: book.packType = "1 - 听力风暴"; break;
+        case 2: book.packType = "2 - 同步视听说"; break;
+        case 3: book.packType = "3 - 语音风暴"; break;
+        case 4: book.packType = "4 - 李大侠"; break;
+        case 5: book.packType = "5 - 听说风暴"; break;
+        case 6: book.packType = "6 - 2016版"; break;
+        default: book.packType = packType + " - 未知的打包类型"; break;
       }
     }
     function castFlag(book) {
@@ -235,12 +238,12 @@ BookChapterList = (function () {
 
     function getBookChapterListHtml(json) {
       var chapters = JSON.parse(json);
-      if(typeof chapters.data != "undefined") chapters = chapters.data;
+      if (typeof chapters.data != "undefined") chapters = chapters.data;
 
       if (chapters.pages) {
         var datas = chapters
         chapters = []
-        var convert = (o)=>{
+        var convert = (o) => {
           o.display_order = o.displayOrder
           o.is_free = o.isFree
           o.parent_id = o.parentId
@@ -252,7 +255,7 @@ BookChapterList = (function () {
         if (datas.chapters) {
           chapters = chapters.concat(datas.chapters.map(convert))
         }
-        if(datas.tasks){
+        if (datas.tasks) {
           chapters = chapters.concat(datas.tasks.map(convert))
         }
       }
@@ -273,7 +276,7 @@ BookChapterList = (function () {
           <th>{xotPaperId}</th>
         </tr>`);
       chapters.forEach(function (chapter) {
-        if(!chapter.parent_id){
+        if (!chapter.parent_id) {
           results.push(getTableLine(chapter, 0));
           generateTableHtml(chapter.childs, results, 1);
         }
@@ -283,7 +286,7 @@ BookChapterList = (function () {
     }
 
     function generateTableHtml(chapters, results, deep) {
-      if(!chapters) return;
+      if (!chapters) return;
       chapters.forEach(function (chapter) {
         results.push(getTableLine(chapter, deep));
         generateTableHtml(chapter.childs, results, deep + 1);
@@ -309,14 +312,14 @@ BookChapterList = (function () {
 
     function castChapter(chapter, deep) {
       var name = chapter.name;
-      if(!name){
+      if (!name) {
         chapter.name = "-";
       } else {
         chapter.name = "　".repeat(deep) + chapter.name;
       }
-      if(!chapter.version) chapter.version = "-";
-      if(!chapter.versionTest) chapter.versionTest = "-";
-      if(!chapter.taskId) chapter.taskId = "-";
+      if (!chapter.version) chapter.version = "-";
+      if (!chapter.versionTest) chapter.versionTest = "-";
+      if (!chapter.taskId) chapter.taskId = "-";
       switch (chapter.type) {
         case 1: chapter.type = "章节"; break;
         case 2: chapter.type = "页面"; break;
@@ -326,7 +329,7 @@ BookChapterList = (function () {
       switch (chapter.is_free) {
         case 0: chapter.is_free = "不免费"; break;
         case 1: chapter.is_free = "免费"; break;
-        default : chapter.is_free = "不免费"; break;
+        default: chapter.is_free = "不免费"; break;
       }
       switch (parseInt(chapter.chapterType)) {
         case 1: chapter.chapterType = "普通"; break;
@@ -338,9 +341,9 @@ BookChapterList = (function () {
     }
 
     function parseChapterTree(chapters) {
-      chapters.sort(function(l, h){ return parseInt(l.display_order) - parseInt(h.display_order); });
+      chapters.sort(function (l, h) { return parseInt(l.display_order) - parseInt(h.display_order); });
       chapters.forEach(function (chapter) {
-        if(!chapter.parent_id && chapter.id){
+        if (!chapter.parent_id && chapter.id) {
           chapter.childs = [];
           parseChapterChilds(chapters, chapter, 0);
         }
@@ -348,12 +351,12 @@ BookChapterList = (function () {
     }
 
     function parseChapterChilds(chapters, chapter_, deep) {
-      if(deep > 10) {
+      if (deep > 10) {
         console.error("chapter tree deep > 20");
         return;
       }
       chapters.forEach(function (chapter) {
-        if(chapter_.id == chapter.parent_id){
+        if (chapter_.id == chapter.parent_id) {
           chapter_.childs.push(chapter);
           chapter.childs = [];
           parseChapterChilds(chapters, chapter, deep + 1);
@@ -404,8 +407,8 @@ CourseList = (function () {
         </div>
        `;
       var courses = JSON.parse(json);
-      if(typeof courses.data != "undefined"
-      && typeof courses.data.list != "undefined") courses = courses.data.list;
+      if (typeof courses.data != "undefined"
+        && typeof courses.data.list != "undefined") courses = courses.data.list;
       var results = [];
       courses.forEach(function (course) {
         castCourseVar(course);
@@ -422,7 +425,7 @@ CourseList = (function () {
       switch (status) {
         case 1: course.status = "1 - 当前课程"; break;
         case 2: course.status = "2 - 以往课程"; break;
-        default:  course.status = status + " - ??课程"; break;
+        default: course.status = status + " - ??课程"; break;
       }
     }
   }
@@ -469,7 +472,7 @@ HomeworkList = (function () {
         </div>
        `;
       var homeworks = JSON.parse(json);
-      if(typeof homeworks.data != "undefined"
+      if (typeof homeworks.data != "undefined"
         && typeof homeworks.data.list != "undefined") homeworks = homeworks.data.list;
       var results = [];
       homeworks.forEach(function (homework) {
@@ -485,7 +488,7 @@ HomeworkList = (function () {
       homework.end_time = new Date(homework.end_time).Format("yyyy-MM-dd hh:mm:ss");
 
       var params = homework.xot_param;
-      params = params.substr(1,params.length);
+      params = params.substr(1, params.length);
       var ps = params.split(",");
       homework.xot_param = {};
       ps.forEach(function (item) {
@@ -493,24 +496,26 @@ HomeworkList = (function () {
         homework.xot_param[items[0]] = parseInt(items[1]);
       });
       switch (homework.xot_param.question_render_type) {
-        case 1: homework.xot_param.question_render_type = "1 - 顺序";break;
-        case 2: homework.xot_param.question_render_type = "2 - 随机";break;
-        default: homework.xot_param.question_render_type = homework.xot_param.question_render_type + " - 错误";break;
+        case 1: homework.xot_param.question_render_type = "1 - 顺序"; break;
+        case 2: homework.xot_param.question_render_type = "2 - 随机"; break;
+        default: homework.xot_param.question_render_type = homework.xot_param.question_render_type + " - 错误"; break;
       }
       // 0-未开始，1-已开始，2-已交卷，3-已阅卷
       switch (homework.stustatus) {
-        case 0: homework.stustatus = "0-未开始";break;
-        case 1: homework.stustatus = "1-已开始";break;
-        case 2: homework.stustatus = "2-已交卷";break;
-        case 3: homework.stustatus = "3-已阅卷";break;
-        default: homework.stustatus = homework.stustatus + " - 错误";break;
+        case 0: homework.stustatus = "0-未开始"; break;
+        case 1: homework.stustatus = "1-已开始"; break;
+        case 2: homework.stustatus = "2-已交卷"; break;
+        case 3: homework.stustatus = "3-已阅卷"; break;
+        default: homework.stustatus = homework.stustatus + " - 错误"; break;
       }
       // 0-未开始，1-已开始，2-已交卷，3-已阅卷
       switch (homework.status) {
-        case 3: homework.status = "3-已结束";break;
-        default : homework.status = "0-未结束";break;
+        case 3: homework.status = "3-已结束"; break;
+        default: homework.status = "0-未结束"; break;
       }
     }
   }
   return HomeworkList;
 })();
+
+module.exports.initEvent = initEvent

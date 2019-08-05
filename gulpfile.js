@@ -28,13 +28,16 @@ gulp.task('dev-pack', function () {
     return browserify({ entries: './src/app.js', debug: true })
         .transform('brfs')
         .bundle()
-        .on('error', log.error)
         .pipe(source('app.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('dist/'))
-        .pipe(connect.reload());
+        .pipe(connect.reload())
+        .on('error', function (e) {
+            log.error(e)
+            this.emit('end')
+        })
 });
 
 gulp.task('watch', function () {
@@ -58,7 +61,6 @@ gulp.task('release', function () {
         .transform('brfs')
         .plugin('tinyify')
         .bundle()
-        .on('error', log.error)
         .pipe(source('app.js'))
         .pipe(buffer())
         .pipe(babel())
@@ -67,4 +69,8 @@ gulp.task('release', function () {
         .pipe(htmlmin({ removeComments: true, collapseWhitespace: true, collapseBooleanAttributes: false, removeEmptyAttributes: false, removeScriptTypeAttributes: true, removeStyleLinkTypeAttributes: true, minifyJS: true, minifyCSS: true }))
         .pipe(rename('index.html'))
         .pipe(gulp.dest('.'))
+        .on('error', function (e) {
+            log.error(e)
+            this.emit('end')
+        })
 });

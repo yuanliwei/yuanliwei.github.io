@@ -214,35 +214,6 @@ LoadES6.config({
     // "https://cdn.bootcss.com/golden-layout/1.5.9/css/goldenlayout-translucent-theme.css",
     "https://cdn.bootcss.com/golden-layout/1.5.9/goldenlayout.min.js"
   ],
-  "vkbeautify":[
-    "/src/js/utils/vkbeautify.js"
-  ],
-  "java-model":[
-    "/src/gen/java-model/Modifiers.js",
-    "/src/gen/java-model/Filed.js",
-    "/src/gen/java-model/ClassModel.js"
-  ],
-  "common":[
-    "/src/js/utils/common.js"
-  ],
-  "common-utils":[
-    "/src/js/utils/PageState.js"
-  ],
-  "gen-java":[
-    "/src/gen/gen-java/Fileds2Java.js",
-    "/src/gen/gen-java/Json2Java.js",
-    "/src/gen/gen-java/GenXML.js",
-    "/src/gen/gen-java/GenJavaTemplate.js"
-  ],
-  "gen-java-1":[
-    "/src/gen/gen-java/SQL2Java.js"
-  ],
-  "normal-list":[
-    "/src/list/normal-list.js"
-  ],
-  "fast-list":[
-    "/src/list/fast-list.js"
-  ],
   "wilddog":[
     "https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js"
   ],

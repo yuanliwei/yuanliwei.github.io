@@ -9,8 +9,9 @@ module.exports = class Index {
 
     async init() {
         const { app, loader } = this
-        await loader.load('jquery', 'particles', 'https://cdn.bootcss.com/packery/2.1.2/packery.pkgd.min.js')
+        await loader.load('jquery', 'particles')
         await loader.load('jqueryui')
+        await loader.load('https://cdn.bootcss.com/packery/2.1.2/packery.pkgd.min.js')
 
         const fs = require('fs')
         const style = document.createElement('style')

@@ -1,3 +1,6 @@
+const{loadConfig, saveConfig}=require('../js/utils/common')
+const Escape = require('./escape-api')
+
 function initEvent() {
     $('.copy-to-up').click(() => {
         $('#code_input').val($('pre code').text())
@@ -91,3 +94,6 @@ function onChange() {
 
     saveConfig();
 }
+
+
+module.exports.initEvent = initEvent
