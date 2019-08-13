@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
-    <title>接口校验工具</title>
-    <script src="/src/js/utils/load.js" charset="utf-8"></script>
-    <style media="screen">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+  <title>接口校验工具</title>
+  <script src="/src/js/utils/load.js" charset="utf-8"></script>
+  <style media="screen">
     .CodeMirror {
       font-size: 1.5rem;
-      font-family: Consolas!important;
+      font-family: Consolas !important;
     }
 
-    .cm-matchhighlight {background-color: lightgreen}
-    .CodeMirror-selection-highlight-scrollbar {background-color: green}
-    .CodeMirror-fullscreen{z-index: 2000!important;}
-    .no-transform{transform: inherit!important;}
-    .cm-invalidchar-u20{color: rgba(200,200,200,0.4);}
+    .cm-matchhighlight {
+      background-color: lightgreen
+    }
 
-    </style>
-  </head>
-  <body>
+    .CodeMirror-selection-highlight-scrollbar {
+      background-color: green
+    }
 
-  </body>
-  <script src="./app.js" charset="utf-8"></script>
-  <script type="text/javascript">
-    new Load().hide()
-      .load("/src/js/utils/loadJsConfig.js")
-      .load("jquery", "popper", "beautify", "crypto", "pako", "fontawesome", "wilddog")
-      .load("bootstrap", "codemirror", "diff_match_patch", "ajv")
-      .load("codemirror-javascript", "codemirror-show-hint", "codemirror-addons",
-            "codemirror-fullscreen", "codemirror-comment", "codemirror-dialog",
-            "codemirror-merge", "codemirror-theme").show()
-      .then(function() {
-        new App()
-      });
-  </script>
+    .CodeMirror-fullscreen {
+      z-index: 2000 !important;
+    }
+
+    .no-transform {
+      transform: inherit !important;
+    }
+
+    .cm-invalidchar-u20 {
+      color: rgba(200, 200, 200, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+
+</body>
+<script src="./app.js" charset="utf-8"></script>
+<script type="text/javascript">
+  new Load().hide()
+    .load("/src/js/utils/loadJsConfig.js")
+    .load("jquery", "popper", "beautify", "crypto", "pako", "fontawesome", "wilddog")
+    .load("bootstrap", "codemirror", "diff_match_patch", "ajv")
+    .load("codemirror-javascript", "codemirror-show-hint", "codemirror-addons",
+      "codemirror-fullscreen", "codemirror-comment", "codemirror-dialog",
+      "codemirror-merge", "codemirror-theme").show()
+    .then(function () {
+      new App()
+    });
+</script>
+
 </html>

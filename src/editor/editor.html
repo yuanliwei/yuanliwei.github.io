@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
   <title>EDITOR</title>
   <style media="screen">
-  html, body{
-    width:100%;
-    height:100%;
-    margin: 0px;
-    padding: 0px;
-    overflow: hidden;
-  }
-  #container{
-    height: 100%;
-  }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+      overflow: hidden;
+    }
+
+    #container {
+      height: 100%;
+    }
   </style>
 </head>
+
 <body>
   <div id="container" class=""> </div>
 </body>
 <script src="https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs/loader.js"></script>
 <script type="text/javascript">
-require.config({ paths: { 'vs': 'https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs' }});
-require(['vs/editor/editor.main'], function() {
-  var editor = monaco.editor.create(document.getElementById('container'), {
-    language: "javascript",
-    roundedSelection: false,
-    scrollBeyondLastLine: false,
-    readOnly: false,
-    theme: "vs",
-    fontSize: 20,
+  require.config({ paths: { 'vs': 'https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs' } });
+  require(['vs/editor/editor.main'], function () {
+    var editor = monaco.editor.create(document.getElementById('container'), {
+      language: "javascript",
+      roundedSelection: false,
+      scrollBeyondLastLine: false,
+      readOnly: false,
+      theme: "vs",
+      fontSize: 20,
+    });
   });
-});
 
 </script>
+
 </html>

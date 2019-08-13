@@ -49,7 +49,7 @@ var FastList = (function () {
         console.log(JSON.stringify(startIndexAndCurPosition));
         this.viewportHeightIndex = startIndex;
         this.viewportHeight = curPosition;
-        this.bottomLayout[0].style.top =  this.viewportHeight / (i+1) * this.datas.length + 'px';
+        this.bottomLayout[0].style.top = this.viewportHeight / (i + 1) * this.datas.length + 'px';
       }
       this.holderStack.forEach(function (holder) {
         holder.view[0].style.display = 'none';
@@ -78,8 +78,8 @@ var FastList = (function () {
       if (this.holderStack.length > 300) {
         this.recycle();
       }
-      for(var i=0; i<this.holderStack.length;i++){
-        if(index == this.holderStack[i]._index){
+      for (var i = 0; i < this.holderStack.length; i++) {
+        if (index == this.holderStack[i]._index) {
           return this.holderStack[i];
         }
       }
@@ -119,19 +119,19 @@ var FastList = (function () {
       return holder;
     };
 
-    this.bindData = function(i, holder, data){
+    this.bindData = function (i, holder, data) {
       this.handle.bindData(i, holder, data);
       holder._index = i;
       holder._data = data;
       if (this.viewportHeightIndex < i) {
         this.viewportHeightIndex = i;
         this.viewportHeight += holder.view.height();
-        this.bottomLayout[0].style.top =  this.viewportHeight / (i+1) * this.datas.length + 'px';
+        this.bottomLayout[0].style.top = this.viewportHeight / (i + 1) * this.datas.length + 'px';
       }
     };
 
     this.countStartIndexAndCurPosition = function (curPosition) {
-      var result = {'start':0, 'curPosition': this.itemTopOffset};
+      var result = { 'start': 0, 'curPosition': this.itemTopOffset };
       if (curPosition < this.windowHeight || this.datas.length < 200) {
         return result;
       }
@@ -140,8 +140,8 @@ var FastList = (function () {
         holder.view[0].style.display = 'none';
         this.holderCache.push(holder);
       }
-      for (var i = 0; i < this.datas.length; ) {
-        for (var j = 0; j < this.holderCache.length && i < this.datas.length; j++, i++) {
+      for (var i = 0; i < this.datas.length;) {
+        for (var j = 0; j < this.holderCache.length && i < this.datas.length; j++ , i++) {
           var data = this.datas[i];
           var holder = this.holderCache[j];
           this.handle.bindData(i, holder, data);
@@ -180,19 +180,19 @@ var FastList = (function () {
       var endIndex = this.holderStack.length;
       for (var i = 0; i < this.holderStack.length; i++) {
         var holder = this.holderStack[i];
-        if (this.getHolderTopOffset(holder) < this.overflowHeight*2 && this.getHolderBottomOffset(holder) > this.overflowHeight*2){
+        if (this.getHolderTopOffset(holder) < this.overflowHeight * 2 && this.getHolderBottomOffset(holder) > this.overflowHeight * 2) {
           startIndex = i;
-        } else if (this.getHolderTopOffset(holder) > this.overflowHeight*2 && this.getHolderBottomOffset(holder) < this.overflowHeight*2) {
+        } else if (this.getHolderTopOffset(holder) > this.overflowHeight * 2 && this.getHolderBottomOffset(holder) < this.overflowHeight * 2) {
           endIndex = i;
           break;
         }
       }
 
-      if(endIndex != this.holderStack.length){
+      if (endIndex != this.holderStack.length) {
         bottomArr = this.holderStack.splice(endIndex, this.holderStack.length);
       }
       if (startIndex != -1) {
-        topArr = this.holderStack.splice(0, startIndex+1);
+        topArr = this.holderStack.splice(0, startIndex + 1);
       }
 
       this.holderCache = this.holderCache.concat(topArr).concat(bottomArr);
@@ -220,7 +220,7 @@ var FastList = (function () {
 
     this.getHolderBottomOffset = function (holder) {
       var bottom = holder.view.offset().top + holder.view.height();
-      return this.windowHeight - ( bottom - this.scrollTop );
+      return this.windowHeight - (bottom - this.scrollTop);
     };
 
     this.scroll = function (event) {
@@ -279,7 +279,7 @@ var FastList = (function () {
       instance.scroll(event);
     });
   };
-  $(window).scroll(function(event){
+  $(window).scroll(function (event) {
     FastList.scroll(event);
   });
 

@@ -3,10 +3,10 @@ class ParseMain {
         var self = this
         this.dbFileElm = document.getElementById('dbfile');
 
-        this.dbFileElm.onchange = function(event) {
+        this.dbFileElm.onchange = function (event) {
             var f = event.target.files[0];
             var r = new FileReader();
-            r.onload = function(event) {
+            r.onload = function (event) {
                 var buffer = new Uint8Array(event.target.result)
                 if (!self.isEquals(buffer, 0, '504b0304')) {
                     alert('请选择zip文件');
@@ -45,35 +45,35 @@ class ParseMain {
         console.log((zipEndLocator));
 
         var zipDirEntrys = []
-        while (this.file.pos<zipEndLocator.directoryOffset+zipEndLocator.directorySize) {
-          var zipDirEntry = this.readZipDirEntry()
-          console.log(zipDirEntry.fileName);
-          zipDirEntrys.push(zipDirEntry)
+        while (this.file.pos < zipEndLocator.directoryOffset + zipEndLocator.directorySize) {
+            var zipDirEntry = this.readZipDirEntry()
+            console.log(zipDirEntry.fileName);
+            zipDirEntrys.push(zipDirEntry)
         }
 
         for (var i = 0; i < zipDirEntrys.length; i++) {
-          var zipDirEntry = zipDirEntrys[i]
-          console.log(zipDirEntry.fileName);
-          if (zipDirEntry.fileName.endsWith('xml')) {
-            this.unCompressedTextFile(zipDirEntry)
-          }
+            var zipDirEntry = zipDirEntrys[i]
+            console.log(zipDirEntry.fileName);
+            if (zipDirEntry.fileName.endsWith('xml')) {
+                this.unCompressedTextFile(zipDirEntry)
+            }
         }
 
         console.log('end');
 
     }
 
-    unCompressedTextFile(zipDirEntry){
-      this.file.seek(zipDirEntry.headerOffset,'SEEK_SET')
-      var zipFileRecord = this.readZipFileRecord(zipDirEntry)
-      var buffer = new Uint8Array(10 + zipDirEntry.compressedSize + 4 + 4)
-      buffer.set([0x1F,0x8B],0)
-      buffer.set([zipDirEntry.compression],2)
-      buffer.set([0,0,0,0,0,0,0],3)
-      buffer.set(zipFileRecord.data,10)
-      buffer.set(zipDirEntry.crc,zipDirEntry.compressedSize+10)
-      buffer.set(zipDirEntry.unCompressedSize,zipDirEntry.compressedSize+10+4)
-      console.log(new TextDecoder('utf-8').decode(pako.ungzip(buffer)))
+    unCompressedTextFile(zipDirEntry) {
+        this.file.seek(zipDirEntry.headerOffset, 'SEEK_SET')
+        var zipFileRecord = this.readZipFileRecord(zipDirEntry)
+        var buffer = new Uint8Array(10 + zipDirEntry.compressedSize + 4 + 4)
+        buffer.set([0x1F, 0x8B], 0)
+        buffer.set([zipDirEntry.compression], 2)
+        buffer.set([0, 0, 0, 0, 0, 0, 0], 3)
+        buffer.set(zipFileRecord.data, 10)
+        buffer.set(zipDirEntry.crc, zipDirEntry.compressedSize + 10)
+        buffer.set(zipDirEntry.unCompressedSize, zipDirEntry.compressedSize + 10 + 4)
+        console.log(new TextDecoder('utf-8').decode(pako.ungzip(buffer)))
     }
 
     readZipFileRecord(zipDirEntry) {

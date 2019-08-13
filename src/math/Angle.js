@@ -1,11 +1,11 @@
 var Angle;
 
-Angle = (function() {
+Angle = (function () {
   function Angle(canvas1, points) {
     this.canvas = canvas1;
     this.points = points;
-    this.initCanvas = (function(_this) {
-      return function() {
+    this.initCanvas = (function (_this) {
+      return function () {
         if (_this.g == null) {
           _this.g = _this.canvas.getContext('2d');
           _this.canvas.width = document.body.scrollWidth;
@@ -14,8 +14,8 @@ Angle = (function() {
         return 0;
       };
     })(this);
-    this.draw = (function(_this) {
-      return function() {
+    this.draw = (function (_this) {
+      return function () {
         var g, i, j, k, l, len, len1, len2, p, ref, ref1, ref2, results;
         _this.initTips();
         _this.initCanvas();
@@ -61,16 +61,16 @@ Angle = (function() {
         return results;
       };
     })(this);
-    this.getLength = (function(_this) {
-      return function(p, c) {
+    this.getLength = (function (_this) {
+      return function (p, c) {
         var x, y;
         x = p.x - c.x;
         y = p.y - c.y;
         return Math.sqrt(x * x + y * y);
       };
     })(this);
-    this.findPoint = (function(_this) {
-      return function(point) {
+    this.findPoint = (function (_this) {
+      return function (point) {
         var j, len, length, p, ref, result, short;
         short = 50;
         result = {
@@ -88,8 +88,8 @@ Angle = (function() {
         return result;
       };
     })(this);
-    this.initTips = (function(_this) {
-      return function() {
+    this.initTips = (function (_this) {
+      return function () {
         var p0, p00, p01, p02, p1, p2, tip;
         p00 = _this.points[0];
         p01 = _this.points[1];

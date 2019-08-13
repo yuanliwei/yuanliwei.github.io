@@ -13,10 +13,8 @@ module.exports = class GnuPlot {
         await loader.load("codemirror-javascript", "codemirror-show-hint", "codemirror-addons", "codemirror-fullscreen", "codemirror-comment", "codemirror-theme")
 
         const fs = require('fs')
-        const style = document.createElement('style')
-        style.innerHTML = fs.readFileSync(__dirname + '/style.css', 'utf-8')
-        document.head.append(style)
-        document.body.innerHTML = fs.readFileSync(__dirname + '/template.html', 'utf-8')
+        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
+        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
 
         require('./gnuplot_api.js')
 

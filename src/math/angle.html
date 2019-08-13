@@ -2,23 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width,initial-scale=1.0" name="viewport">
+  <meta charset="utf-8" />
+  <meta content="width=device-width,initial-scale=1.0" name="viewport">
 
-    <title>Regex</title>
-    <style media="screen">
-      html,body{
-        height: 100%;
-        overflow: hidden;
-      }
-    </style>
-    <script src="/src/js/utils/load.js" charset="utf-8"></script>
-    <script src="./Angle.js"></script>
+  <title>Regex</title>
+  <style media="screen">
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+  <script src="/src/js/utils/load.js" charset="utf-8"></script>
+  <script src="./Angle.js"></script>
 </head>
 
 <body>
   <div id="tips" style="position: absolute; left:0px; top:0px;">
-    
+
   </div>
   <canvas id="canvas" class="canvas" width="300" height="300"></canvas>
 
@@ -30,27 +31,27 @@
       var points = [];
       var curPoint;
       var moved;
-      var downPos = {x:-1000,y:-1000};
+      var downPos = { x: -1000, y: -1000 };
       angle = new Angle(canvas, points);
       $('#canvas').mousedown(function (e) {
-        curPoint = angle.findPoint({x:e.clientX,y:e.clientY});
+        curPoint = angle.findPoint({ x: e.clientX, y: e.clientY });
         angle.draw();
         moved = false;
-        downPos = {x:e.clientX,y:e.clientY}
+        downPos = { x: e.clientX, y: e.clientY }
       });
       $('#canvas').mousemove(function (e) {
-        if(e.buttons == 1){
+        if (e.buttons == 1) {
           curPoint.x = e.clientX;
           curPoint.y = e.clientY;
           angle.draw();
-          if(angle.getLength(downPos,{x:e.clientX,y:e.clientY})>5){
+          if (angle.getLength(downPos, { x: e.clientX, y: e.clientY }) > 5) {
             moved = true;
           }
         }
       });
       $('#canvas').mouseup(function (e) {
-        if(!moved) {
-          points.push({x:e.clientX,y:e.clientY});
+        if (!moved) {
+          points.push({ x: e.clientX, y: e.clientY });
         }
         angle.draw();
       });
@@ -60,10 +61,10 @@
       .load("/src/js/utils/loadJsConfig.js")
       .load("jquery", "popper")
       .load("bootstrap").show()
-      .then(function() {
-          console.log('====================hello==============');
-          initEvent();
-          angle.draw();
+      .then(function () {
+        console.log('====================hello==============');
+        initEvent();
+        angle.draw();
       });
   </script>
 

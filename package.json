@@ -17,6 +17,7 @@
     "@yuanliwei/web-loader": "^1.0.2",
     "brfs": "^2.0.2",
     "browserify": "^16.3.0",
+    "monaco-editor": "^0.17.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-connect": "^5.7.0",

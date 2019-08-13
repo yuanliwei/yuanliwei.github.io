@@ -21,11 +21,8 @@ module.exports = class Chart {
         require('./chartjs-plugin-zoom.min.js')
 
         const fs = require('fs')
-        const style = document.createElement('style')
-        style.innerHTML = fs.readFileSync(__dirname + '/style.css', 'utf-8')
-        document.head.append(style)
-        document.body.innerHTML = fs.readFileSync(__dirname + '/template.html', 'utf-8')
-
+        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
+        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
 
         var ctx = document.getElementById("myChart");
         initChart(ctx)

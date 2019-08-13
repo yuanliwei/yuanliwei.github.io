@@ -38,14 +38,14 @@ var NormalList = (function () {
 
     // 过滤数据
     this.filterDatas = function () {
-        var datas = [];
-        for (var i = 0; i < this.rawDatas.length; i++) {
-          var data = this.rawDatas[i];
-          if (this.filterData(data)) {
-            datas.push(data);
-          }
+      var datas = [];
+      for (var i = 0; i < this.rawDatas.length; i++) {
+        var data = this.rawDatas[i];
+        if (this.filterData(data)) {
+          datas.push(data);
         }
-        return datas;
+      }
+      return datas;
     };
 
     this.filterData = function (data) {
@@ -78,8 +78,8 @@ var NormalList = (function () {
     };
 
     this.getViewHolder = function (index) {
-        var holder = this.createViewHolder();
-        return holder;
+      var holder = this.createViewHolder();
+      return holder;
     };
 
     this.createViewHolder = function () {
@@ -90,7 +90,7 @@ var NormalList = (function () {
       return holder;
     };
 
-    this.bindData = function(i, holder, data){
+    this.bindData = function (i, holder, data) {
       this.handle.bindData(i, holder, data);
       holder._index = i;
       holder._data = data;
