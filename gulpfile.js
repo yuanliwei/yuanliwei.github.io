@@ -67,9 +67,9 @@ gulp.task('release', function () {
         .pipe(source('app.js'))
         .pipe(buffer())
         .pipe(babel())
-        // .pipe(uglify())
+        .pipe(uglify())
         .pipe(buildHtml())
-        // .pipe(htmlmin({ removeComments: true, collapseWhitespace: true, collapseBooleanAttributes: false, removeEmptyAttributes: false, removeScriptTypeAttributes: true, removeStyleLinkTypeAttributes: true, minifyJS: true, minifyCSS: true }))
+        .pipe(htmlmin({ removeComments: true, collapseWhitespace: true, collapseBooleanAttributes: false, removeEmptyAttributes: false, removeScriptTypeAttributes: true, removeStyleLinkTypeAttributes: true, minifyJS: true, minifyCSS: true }))
         .pipe(rename('index.html'))
         .pipe(gulp.dest('.'))
         .on('error', function (e) {
