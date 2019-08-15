@@ -11,21 +11,22 @@ canvas {
 }
 
 .grid-item {
-    background: #C09;
+    background: #029afb12;
     float: left;
     cursor: pointer;
     line-height: 70px;
+    border-radius: 10px;
     font-size: 1.5rem;
-    color: #F8F8F8;
+    color: #f7520a;
     text-align: center;
     border: 4px solid transparent;
     padding: 1em;
 }
 
 .grid-item {
-    min-width: 200px;
-    min-height: 200px;
-    line-height: 200px;
+    min-width: 100px;
+    min-height: 100px;
+    line-height: 100px;
 }
 
 .grid-item-small {
@@ -35,9 +36,9 @@ canvas {
 }
 
 .grid-item-large {
-    min-width: 300px;
-    min-height: 300px;
-    line-height: 300px;
+    min-width: 100px;
+    min-height: 100px;
+    line-height: 100px;
 }
 
 .grid-item.is-dragging, .grid-item.is-positioning-post-drag {

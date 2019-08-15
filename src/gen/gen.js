@@ -1,3 +1,5 @@
+//@ts-check
+
 const { FiledsJavaDbOrmlite,
     FiledsJavaDbXutils,
     FiledsJavaDbXutils3,
@@ -7,6 +9,7 @@ const { JsonJavaDbOrmlite,
     JsonJavaDbXutils,
     JsonJavaDbXutils3,
     JsonJava,
+    AssignJson2Java,
     JsonJavaUrl } = require('./gen-java/Json2Java')
 const { SQLJava,
     SQLJavaDbOrmlite,
@@ -36,22 +39,29 @@ function initEvent() {
 
 function onChange() {
     var input = $('#code_input').val();
-    var opts;
-    opts = {
+    var opts = {
         packageName: '',
         className: 'TestClassSpec',
         genSetter: true,
         genGetter: true,
         genInnerClass: true
     };
+    // @ts-ignore
     opts.packageName = $('#inputPackageName').val();
+    // @ts-ignore
     opts.className = $('#inputClassName').val();
+    // @ts-ignore
     opts.genSetter = $('#genSetter')[0].checked;
+    // @ts-ignore
     opts.genGetter = $('#genGetter')[0].checked;
+    // @ts-ignore
     opts.genInnerClass = $('#genInnerClass')[0].checked;
+    // @ts-ignore
     opts.simple = $('#GenJavaTemplateSimple')[0].checked;
 
-    var fileds2Java = new FiledsJavaDbXutils();
+    var fileds2Java;
+    fileds2Java = new FiledsJavaDbXutils();
+    // @ts-ignore
     var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
     switch (mode) {
@@ -84,13 +94,14 @@ function onChange() {
             break;
     }
 
-    fileds = input;
+    let fileds = input;
     var javaSrc = fileds2Java.toJava(fileds, opts);
     //     console.log('ssssssssss' + javaSrc);
     javaSrc = CodeFormat.alignComment(javaSrc);
     $('pre code').text(javaSrc);
 
     $('pre code').each(function (i, block) {
+        // @ts-ignore
         hljs.highlightBlock(block);
     });
 
@@ -101,5 +112,6 @@ function onChange() {
 loadConfig();
 initEvent();
 $('pre code').each(function (i, block) {
+    // @ts-ignore
     hljs.highlightBlock(block);
 });

@@ -1,3 +1,5 @@
+//@ts-check
+
 const { loadConfig, saveConfig } = require('../js/utils/common')
 const vkbeautify = require('vkbeautify')
 
@@ -19,6 +21,7 @@ function initEvent() {
 
   $('#selectAll').click(function () {
     var input = $('#input_json_text')[0];
+    // @ts-ignore
     input.select();
   });
 }
@@ -35,17 +38,20 @@ function onChange() {
   saveConfig();
   var json = $('#input_json_text').val();
 
+  // @ts-ignore
   var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
   var result;
   try {
     switch (mode) {
+      // @ts-ignore
       case 1: result = js_beautify(json, {}); break;
       case 2: result = new BookList(json).html(); break;
       case 3: result = new CourseList(json).html(); break;
       case 4: result = new BookChapterList(json).html(); break;
       case 5: result = new HomeworkList(json).html(); break;
       case 6: result = new CombineRepeteLine(json).html(); break;
+      // @ts-ignore
       case 7: result = vkbeautify.xml(json, 4); break;
     }
   } catch (e) {
@@ -58,6 +64,7 @@ function onChange() {
       $('#result_content').html('');
       $('pre code').text(result);
       $('pre code').addClass('json').each(function (i, block) {
+        // @ts-ignore
         hljs.highlightBlock(block);
       });
       break;
@@ -65,6 +72,7 @@ function onChange() {
       $('#result_content').html('');
       $('pre code').text(result);
       $('pre code').addClass('xml').each(function (i, block) {
+        // @ts-ignore
         hljs.highlightBlock(block);
       });
       break;
@@ -127,6 +135,7 @@ BookList = (function () {
         castBookType(book);
         castFlag(book);
         castValid(book);
+        // @ts-ignore
         results.push(bookTempl.format(book));
       });
       return results.join('<br>');
@@ -135,6 +144,7 @@ BookList = (function () {
     function castEndDate(book) {
       var endDate = book.end_date;
       if (endDate < 1000) return;
+      // @ts-ignore
       book.end_date = new Date(endDate).Format("yyyy-MM-dd hh:mm:ss");
     }
     function castBookType(book) {
@@ -170,7 +180,7 @@ BookList = (function () {
   return BookList;
 })();
 
-CombineRepeteLine = (function () {
+let CombineRepeteLine = (function () {
   function CombineRepeteLine(json) {
     this.json = json;
     this.html = function () {
@@ -194,6 +204,7 @@ CombineRepeteLine = (function () {
     function castEndDate(book) {
       var endDate = book.end_date;
       if (endDate < 1000) return;
+      // @ts-ignore
       book.end_date = new Date(endDate).Format("yyyy-MM-dd hh:mm:ss");
     }
     function castBookType(book) {
@@ -282,6 +293,7 @@ BookChapterList = (function () {
         }
       });
       var chapterTreeTempl = `<table class="table table-bordered table-striped table-hover"> {0} </table>`;
+      // @ts-ignore
       return chapterTreeTempl.format(results.join(''));
     }
 
@@ -307,6 +319,7 @@ BookChapterList = (function () {
           <td>{chapterType}</td>
           <td>{xotPaperId}</td>
         </tr>`;
+      // @ts-ignore
       return chapterTempl.format(chapter);
     }
 
@@ -412,14 +425,17 @@ CourseList = (function () {
       var results = [];
       courses.forEach(function (course) {
         castCourseVar(course);
+        // @ts-ignore
         results.push(courseTempl.format(course));
       });
       return results.join('<br>');
     }
     function castCourseVar(course) {
       var createTime = course.createTime;
+      // @ts-ignore
       course.createTime = new Date(createTime).Format('yyyy-MM-dd hh:mm:ss');
       var joinTime = course.joinTime;
+      // @ts-ignore
       course.joinTime = new Date(joinTime).Format('yyyy-MM-dd hh:mm:ss');
       var status = course.status;
       switch (status) {
@@ -477,14 +493,18 @@ HomeworkList = (function () {
       var results = [];
       homeworks.forEach(function (homework) {
         castCourseVar(homework);
+        // @ts-ignore
         results.push(homeworkTempl.format(homework));
       });
       return results.join('<br>');
     }
     function castCourseVar(homework) {
       var create_time = homework.create_time;
+      // @ts-ignore
       homework.create_time = new Date(create_time).Format("yyyy-MM-dd hh:mm:ss");
+      // @ts-ignore
       homework.begin_time = new Date(homework.begin_time).Format("yyyy-MM-dd hh:mm:ss");
+      // @ts-ignore
       homework.end_time = new Date(homework.end_time).Format("yyyy-MM-dd hh:mm:ss");
 
       var params = homework.xot_param;

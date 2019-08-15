@@ -28,6 +28,5 @@ module.exports = class Index extends BaseModel {
                 modified: modifiedModel
             });
         });
-
     }
 }

@@ -1051,3 +1051,4 @@ module.exports.JsonJavaDbXutils = JsonJavaDbXutils
 module.exports.JsonJavaDbXutils3 = JsonJavaDbXutils3
 module.exports.JsonJava = JsonJava
 module.exports.JsonJavaUrl = JsonJavaUrl
+module.exports.AssignJson2Java = AssignJson2Java

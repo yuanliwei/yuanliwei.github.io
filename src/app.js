@@ -17,22 +17,23 @@ class App {
     constructor() {
         Loader.config(require('./cfg/loaderConfig'))
         this.loader = new Loader()
-        window.onhashchange = (ev) => {
-            document.querySelectorAll('style').forEach(o => o.remove())
-            switch (location.hash) {
-                case '#/editor/diff-editor': return new EditorDiff(this)
-                case '#/editor/editor': return new Editor(this)
-                case '#/three.js/particle/fireworks': return new GnuPlot(this)
-                case '#/gnuplot': return new GnuPlot(this)
-                case '#/chart': return new Chart(this)
-                case '#/regexp-doc': return new RegExpDoc(this)
-                case '#/json-tool': return new JsonTool(this)
-                case '#/escape': return new Escape(this)
-                case '#/generate': return new Generate(this)
-                default: return new Index(this)
-            }
+        onhashchange = () => location.reload()
+        this.initPage()
+    }
+
+    initPage() {
+        switch (location.hash) {
+            case '#/editor/diff-editor': return new EditorDiff(this)
+            case '#/editor/editor': return new Editor(this)
+            case '#/three.js/particle/fireworks': return new GnuPlot(this)
+            case '#/gnuplot': return new GnuPlot(this)
+            case '#/chart': return new Chart(this)
+            case '#/regexp-doc': return new RegExpDoc(this)
+            case '#/json-tool': return new JsonTool(this)
+            case '#/escape': return new Escape(this)
+            case '#/generate': return new Generate(this)
+            default: return new Index(this)
         }
-        window.onhashchange(null)
     }
 
     useStyle(styleText) {
