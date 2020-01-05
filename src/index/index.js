@@ -1,5 +1,3 @@
-/* global Particles, $ */
-
 import insertCSS from './style.scss'
 import templ from './template.html'
 import config from './config'

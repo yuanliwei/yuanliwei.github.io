@@ -1,3 +1,7 @@
+import format from 'string-format'
+
+format.extend(String.prototype);
+
 const StringUtil = require('../../js/utils/StringUtil')
 const ClassModel = require('../java-model/ClassModel')
 const Filed = require('../java-model/Filed')

@@ -10,6 +10,12 @@
         "sourceType": "module"
     },
     "extends": "eslint:recommended",
+    "globals": {
+        "$": "readonly",
+        "Particles": "readonly",
+        "js_beautify": "readonly",
+        "hljs": "readonly"
+    },
     "rules": {
         "no-const-assign": "warn",
         "no-this-before-super": "warn",

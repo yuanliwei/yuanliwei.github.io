@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npx rollup -c",
     "watch": "npx rollup -c -w",
-    "server": "http-server -c-1 -o index.html",
+    "server": "http-server -c-1 -o",
     "publish": "npx rollup -c rollup.config.min.js"
   },
   "devDependencies": {

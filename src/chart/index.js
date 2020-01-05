@@ -1,5 +1,3 @@
-/* global $ */
-
 import BaseModel from '../cfg/BaseModel'
 import insertCSS from './style.scss'
 import templ from './template.html'
