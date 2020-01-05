@@ -1,24 +1,18 @@
-module.exports = class GnuPlot {
-    constructor(app) {
-        this.app = app
-        this.loader = app.loader
-        this.init()
-    }
+import insertCSS from './style.scss'
+import templ from './template.html'
+import BaseModel from '../cfg/BaseModel'
+import './gnuplot_api.js'
+import App from './app'
 
-    async init() {
-        const { app, loader } = this
+export default class GnuPlot extends BaseModel {
 
-        await loader.load("jquery", "popper", "fontawesome", "csshake")
-        await loader.load("bootstrap", "jqueryui", "split", "codemirror")
-        await loader.load("codemirror-javascript", "codemirror-show-hint", "codemirror-addons", "codemirror-fullscreen", "codemirror-comment", "codemirror-theme")
+    async init({ load }) {
+        await load("jquery", "popper", "fontawesome", "csshake")
+        await load("bootstrap", "jqueryui", "split", "codemirror")
+        await load("codemirror-javascript", "codemirror-show-hint", "codemirror-addons", "codemirror-fullscreen", "codemirror-comment", "codemirror-theme")
 
-        const fs = require('fs')
-        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
-        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
-
-        require('./gnuplot_api.js')
-
-        const App = require('./app')
+        insertCSS()
+        document.body.innerHTML = templ
 
         new App()
     }

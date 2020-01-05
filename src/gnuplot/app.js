@@ -2,7 +2,7 @@ const {Gnuplot}=require('./gnuplot_api')
 
 class App {
   constructor() {
-    var gnuplot = this.gnuplot = new Gnuplot('https://yuanliwei.github.io/src/gnuplot/gnuplot.js');
+    var gnuplot = this.gnuplot = new Gnuplot('/src/gnuplot/gnuplot.js');
     gnuplot.onOutput = function (text) {
       console.log('output:' + text);
     };

@@ -1,5 +1,7 @@
-const{loadConfig, saveConfig}=require('../js/utils/common')
-const Escape = require('./escape-api')
+/* global $, hljs */
+
+import { loadConfig, saveConfig } from '../js/utils/common'
+import Escape from './escape-api'
 
 function initEvent() {
     $('.copy-to-up').click(() => {
@@ -96,4 +98,4 @@ function onChange() {
 }
 
 
-module.exports.initEvent = initEvent
+export { initEvent }

@@ -1,15 +1,10 @@
-module.exports = class RegExpDoc {
-    constructor(app) {
-        this.app = app
-        this.loader = app.loader
-        this.init()
-    }
+import BaseModel from '../cfg/BaseModel'
+import insertCSS from './style.scss'
+import templ from './template.html'
 
+export default class RegExpDoc extends BaseModel {
     async init() {
-        const { app, loader } = this
-
-        const fs = require('fs')
-        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
-        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
+        insertCSS()
+        document.body.innerHTML = templ
     }
 }

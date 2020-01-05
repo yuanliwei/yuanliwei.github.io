@@ -1,22 +1,17 @@
+/* global Particles, $ */
 
-module.exports = class Index {
+import insertCSS from './style.scss'
+import templ from './template.html'
+import config from './config'
+import BaseModel from '../cfg/BaseModel'
 
-    constructor(app) {
-        this.app = app
-        this.loader = app.loader
-        this.init()
-    }
-
-    async init() {
-        const { app, loader } = this
-        await loader.load('jquery', 'particles')
-        await loader.load('jqueryui')
-        await loader.load('https://cdn.bootcss.com/packery/2.1.2/packery.pkgd.min.js')
-
-        const fs = require('fs')
-        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
-        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
-
+class Index extends BaseModel {
+    async init({ load }) {
+        await load('jquery', 'particles')
+        await load('jqueryui')
+        await load('https://cdn.bootcss.com/packery/2.1.2/packery.pkgd.js')
+        insertCSS()
+        document.body.innerHTML = templ
         Particles.init({
             selector: 'canvas',
             maxParticles: 5,
@@ -34,7 +29,8 @@ module.exports = class Index {
         })
 
         let sleep = async (time) => new Promise((resolve) => setTimeout(resolve, time))
-        let cfg = [...require('./config')]
+
+        let cfg = [...config]
         while (cfg.length > 0) {
             let o = cfg.shift()
             let r = parseInt(Math.random() * 3)
@@ -48,4 +44,7 @@ module.exports = class Index {
             await sleep(100)
         }
     }
+
 }
+
+export default Index

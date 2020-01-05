@@ -1,22 +1,18 @@
-module.exports = class Escape {
-    constructor(app) {
-        this.app = app
-        this.loader = app.loader
-        this.init()
-    }
+import insertCSS from './style.scss'
+import templ from './template.html'
+import BaseModel from '../cfg/BaseModel'
+import { loadConfig } from '../js/utils/common'
+import { initEvent } from './escape'
 
-    async init() {
-        const { app, loader } = this
-        await loader.load("jquery", "popper", "string-format", "beautify", "fontawesome", "highlight")
-        await loader.load("bootstrap", "jquery.qrcode", "JsBarcode", "crypto", "pako", "jszip")
+export default class Escape extends BaseModel {
 
-        const { loadConfig, saveConfig } = require('../js/utils/common')
+    async init({ load }) {
+        await load("jquery", "popper", "beautify", "fontawesome", "highlight")
+        await load("bootstrap", "jquery.qrcode", "JsBarcode", "crypto", "pako", "jszip")
 
-        const { initEvent } = require('./escape')
 
-        const fs = require('fs')
-        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
-        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
+        insertCSS()
+        document.body.innerHTML = templ
 
         loadConfig();
         initEvent();

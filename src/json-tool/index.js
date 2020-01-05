@@ -1,21 +1,17 @@
-module.exports = class JsonTool {
-    constructor(app) {
-        this.app = app
-        this.loader = app.loader
-        this.init()
-    }
+import BaseModel from '../cfg/BaseModel'
+import insertCSS from './style.scss'
+import templ from './template.html'
+import { loadConfig } from '../js/utils/common'
+import { initEvent } from './json-tool'
 
-    async init() {
-        const { app, loader } = this
-        await loader.load("jquery", "popper", "string-format", "beautify", "highlight")
-        await loader.load("bootstrap")
+export default class JsonTool extends BaseModel {
 
-        const fs = require('fs')
-        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
-        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
+    async init({ load }) {
+        await load("jquery", "popper", "string-format", "beautify", "highlight")
+        await load("bootstrap")
 
-        const { loadConfig, saveConfig } = require('../js/utils/common')
-        const { initEvent } = require('./json-tool')
+        insertCSS()
+        document.body.innerHTML = templ
 
         loadConfig()
         initEvent()

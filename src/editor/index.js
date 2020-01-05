@@ -1,21 +1,22 @@
-// @ts-check
-const BaseModel = require('../cfg/BaseModel');
+import insertCSS from './style.scss'
+import templ from './template.html'
+import BaseModel from '../cfg/BaseModel'
 
-module.exports = class Index extends BaseModel {
+export default class Index extends BaseModel {
 
     /**
      * @param {Index} param0
      */
-    async init({ app, load }) {
+    async init({ load }) {
         await load('https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs/loader.js')
 
-        const fs = require('fs')
-        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
-        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
+        insertCSS()
+        document.body.innerHTML = templ
 
         window['require'].config({ paths: { 'vs': 'https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs' } })
         window['require'](['vs/editor/editor.main'], function () {
-            const monaco = window.monaco || require('monaco-editor');
+            /** @type{import('monaco-editor')*/
+            const monaco = window['monaco']
             var editor = monaco.editor.create(document.querySelector('.editor-container'), {
                 language: "javascript",
                 roundedSelection: false,

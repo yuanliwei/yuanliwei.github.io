@@ -987,15 +987,17 @@ var JsonJavaUrl = (function () {
 
 })();
 
+function parse(string) {
+    return (function () { return window['eval'](`(${string})`) })()
+}
+
 class AssignJson2Java {
   constructor() {
   }
 
   toJava(json){
     try {
-      var xxxx = {}
-      eval(`xxxx = ${json}`)
-      json = xxxx
+      json = parse(json)
     } catch (e) {
       var msg = e.message
       console.log('origin',msg);
@@ -1004,8 +1006,7 @@ class AssignJson2Java {
       while(pos > 0){
         pos -= 10
         try {
-          var xxxx = {}
-          eval(`xxxx = ${json.substr(0,pos)}`)
+         parse(json.substr(0,pos))
         } catch (e) {
           if (msg != e.message) {
             break

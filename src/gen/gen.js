@@ -1,32 +1,42 @@
-//@ts-check
+/* global $, hljs */
 
-const { FiledsJavaDbOrmlite,
+import {
+    FiledsJavaDbOrmlite,
     FiledsJavaDbXutils,
     FiledsJavaDbXutils3,
-    FiledsJava } = require('./gen-java/Fileds2Java')
+    FiledsJava
+} from './gen-java/Fileds2Java'
 
-const { JsonJavaDbOrmlite,
+import {
+    JsonJavaDbOrmlite,
     JsonJavaDbXutils,
     JsonJavaDbXutils3,
     JsonJava,
     AssignJson2Java,
-    JsonJavaUrl } = require('./gen-java/Json2Java')
-const { SQLJava,
+    JsonJavaUrl
+} from './gen-java/Json2Java'
+import {
+    SQLJava,
     SQLJavaDbOrmlite,
     SQLJavaDbXutils,
-    SQLJavaDbXutils3 } = require('./gen-java/SQL2Java')
-const { GenJavaTemplate } = require('./gen-java/GenJavaTemplate')
-const { StyleXML,
+    SQLJavaDbXutils3
+} from './gen-java/SQL2Java'
+import { GenJavaTemplate } from './gen-java/GenJavaTemplate'
+import {
+    StyleXML,
     AlignComment,
     FormatCode,
     ParseLayoutXML,
     ParseLayoutXML2,
     Pom2Cmd,
-    ConvertLua } = require('./gen-java/GenXML')
-const { CodeFormat } = require('../js/utils/code-format')
+    ConvertLua
+} from './gen-java/GenXML'
+import { CodeFormat } from '../js/utils/code-format'
 
-const { loadConfig,
-    saveConfig } = require('../js/utils/common')
+import {
+    loadConfig,
+    saveConfig
+} from '../js/utils/common'
 
 function initEvent() {
     var input = $('#code_input')[0];
@@ -46,22 +56,15 @@ function onChange() {
         genGetter: true,
         genInnerClass: true
     };
-    // @ts-ignore
     opts.packageName = $('#inputPackageName').val();
-    // @ts-ignore
     opts.className = $('#inputClassName').val();
-    // @ts-ignore
     opts.genSetter = $('#genSetter')[0].checked;
-    // @ts-ignore
     opts.genGetter = $('#genGetter')[0].checked;
-    // @ts-ignore
     opts.genInnerClass = $('#genInnerClass')[0].checked;
-    // @ts-ignore
     opts.simple = $('#GenJavaTemplateSimple')[0].checked;
 
     var fileds2Java;
     fileds2Java = new FiledsJavaDbXutils();
-    // @ts-ignore
     var mode = parseInt($('#mode-option-group input[name="genMode"]:checked').val());
 
     switch (mode) {
@@ -108,10 +111,11 @@ function onChange() {
     saveConfig();
 }
 
-
-loadConfig();
-initEvent();
-$('pre code').each(function (i, block) {
-    // @ts-ignore
-    hljs.highlightBlock(block);
-});
+export default () => {
+    loadConfig();
+    initEvent();
+    $('pre code').each(function (i, block) {
+        // @ts-ignore
+        hljs.highlightBlock(block);
+    });
+}

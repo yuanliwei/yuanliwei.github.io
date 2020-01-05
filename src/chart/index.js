@@ -1,28 +1,24 @@
-module.exports = class Chart {
-    constructor(app) {
-        this.app = app
-        this.loader = app.loader
-        this.init()
-    }
+/* global $ */
 
-    async init() {
-        const { app, loader } = this
+import BaseModel from '../cfg/BaseModel'
+import insertCSS from './style.scss'
+import templ from './template.html'
+import {
+    clearData,
+    initChart,
+    setSpaceSplitDataString
+} from './chart'
+import plugin_zoom from './chartjs-plugin-zoom.min.js'
 
-        await loader.load("jquery", "popper", "string-format", "beautify", "highlight", "chart")
-        await loader.load("bootstrap")
+export default class Chart extends BaseModel {
 
-        const { loadConfig, saveConfig } = require('../js/utils/common')
-        const { addData,
-            setDatas,
-            clearData,
-            initChart,
-            setSpaceSplitDataString } = require('./chart')
+    async init({ load }) {
+        await load("jquery", "popper", "beautify", "highlight", "chart")
+        await load("bootstrap")
+        plugin_zoom()
 
-        require('./chartjs-plugin-zoom.min.js')
-
-        const fs = require('fs')
-        app.useStyle(fs.readFileSync(__dirname + '/style.css'))
-        app.useTemplate(fs.readFileSync(__dirname + '/template.html'))
+        insertCSS()
+        document.body.innerHTML = templ
 
         var ctx = document.getElementById("myChart");
         initChart(ctx)

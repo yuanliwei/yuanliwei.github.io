@@ -1,16 +1,16 @@
-module.exports = class StringUtil {
+export default class StringUtil {
 
   static upperBegin(item) {
     return item.replace(/(\w)/, function (match) {
       return match.toUpperCase();
     });
-  };
+  }
 
   static lowerBegin(item) {
     return item.replace(/(\w)/, function (match) {
       return match.toLowerCase();
     });
-  };
+  }
 
   static formatJavaType(item) {
     switch (item) {
@@ -29,7 +29,7 @@ module.exports = class StringUtil {
       default:
         return 'ERROR TYPE';
     }
-  };
+  }
 
   static formatDbType(item) {
     switch (item) {
@@ -42,19 +42,19 @@ module.exports = class StringUtil {
       default:
         return 'ERROR TYPE';
     }
-  };
+  }
 
   static formatJavaVarName(item) {
     return this.lowerBegin(item.replace(/(_\w)/g, function (match) {
       return match[1].toUpperCase();
     }));
-  };
+  }
 
   static formatJSONVarName(item) {
     return this.formatJavaVarName(item).replace(/([A-Z])/g, function (match) {
       return '_' + match.toLowerCase();
     });
-  };
+  }
 
   static format() {
     var arg, args, i, item, j, len;
@@ -91,7 +91,7 @@ module.exports = class StringUtil {
       }
     }
     return item;
-  };
+  }
 
   static ascii2native(ascii) {
     var code, i, j, len, native1, words;
@@ -108,14 +108,13 @@ module.exports = class StringUtil {
       }
     }
     return native1;
-  };
+  }
 
   static native2ascii(native_) {
-    var ascii, char, charAscii, chars, code, i, j, len;
+    var ascii, charAscii, chars, code, i, j, len;
     chars = native_.split('');
     ascii = '';
     for (i = j = 0, len = chars.length; j < len; i = ++j) {
-      char = chars[i];
       code = Number(chars[i].charCodeAt(0));
       if (code > 127) {
         charAscii = code.toString(16);
@@ -126,7 +125,7 @@ module.exports = class StringUtil {
       }
     }
     return ascii;
-  };
+  }
 
   static formatStr() {
     var args, item;
@@ -141,6 +140,6 @@ module.exports = class StringUtil {
         return match;
       }
     });
-  };
+  }
 }
 

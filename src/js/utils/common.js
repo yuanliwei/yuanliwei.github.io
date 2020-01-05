@@ -1,6 +1,6 @@
-//@ts-check
+/* global $ */
+import format from 'string-format'
 
-// @ts-ignore
 format.extend(String.prototype);
 
 // 对Date的扩展，将 Date 转化为指定格式的String
@@ -40,7 +40,6 @@ function loadConfig() {
                 // @ts-ignore
                 case "text": input.value = Config[index]; break;
                 case "radio":
-                // @ts-ignore
                 case "checkbox": input.checked = Config[index]; break;
                 default: console.error("unknow type");
             }
@@ -70,7 +69,6 @@ function saveConfig() {
             // @ts-ignore
             case "text": Config[index] = input.value; break;
             case "radio":
-            // @ts-ignore
             case "checkbox": Config[index] = input.checked; break;
             default: console.error("unknow type");
         }
@@ -87,5 +85,4 @@ function saveConfig() {
     // console.log(configName + " - " + JSON.stringify(Config));
 }
 
-module.exports.loadConfig = loadConfig
-module.exports.saveConfig = saveConfig
+export { loadConfig, saveConfig }

@@ -1,21 +1,18 @@
-//@ts-check
-
-require("regenerator-runtime/runtime");
-
-const Loader = require('@yuanliwei/web-loader');
-const Index = require('./index/index')
-const Generate = require('./gen/index')
-const Escape = require('./escape/index')
-const JsonTool = require('./json-tool/index')
-const RegExpDoc = require('./regexp-doc/index')
-const Chart = require('./chart/index')
-const GnuPlot = require('./gnuplot/index')
-const Editor = require('./editor/index')
-const EditorDiff = require('./editor/index-diff')
+import Loader from '@yuanliwei/web-loader'
+import cfg from './cfg/loaderConfig'
+import Index from './index/index'
+import Generate from './gen/index'
+import Escape from './escape/index'
+import JsonTool from './json-tool/index'
+import RegExpDoc from './regexp-doc/index'
+import Chart from './chart/index'
+import GnuPlot from './gnuplot/index'
+import Editor from './editor/index'
+import EditorDiff from './editor/index-diff'
 
 class App {
     constructor() {
-        Loader.config(require('./cfg/loaderConfig'))
+        Loader.config(cfg)
         this.loader = new Loader()
         onhashchange = () => location.reload()
         this.initPage()
@@ -25,7 +22,7 @@ class App {
         switch (location.hash) {
             case '#/editor/diff-editor': return new EditorDiff(this)
             case '#/editor/editor': return new Editor(this)
-            case '#/three.js/particle/fireworks': return new GnuPlot(this)
+            // case '#/three.js/particle/fireworks': return new GnuPlot(this)
             case '#/gnuplot': return new GnuPlot(this)
             case '#/chart': return new Chart(this)
             case '#/regexp-doc': return new RegExpDoc(this)
@@ -50,4 +47,4 @@ class App {
 
 new App
 
-module.exports = App
+export default App

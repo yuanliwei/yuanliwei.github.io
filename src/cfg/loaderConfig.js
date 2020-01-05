@@ -1,4 +1,12 @@
-module.exports = {
+// hack for rollup-plugin-sass
+// eslint-disable-next-line no-undef
+const insertStyle = ___$insertStyle
+// eslint-disable-next-line no-undef
+___$insertStyle = (css) => () => {
+    insertStyle(css)
+}
+
+export default {
     "jquery": [
         "https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"
     ],
@@ -30,11 +38,11 @@ module.exports = {
         "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/show-hint.min.css",
         "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/show-hint.min.js"
     ],
-    "codemirror-javascript": [
-        "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/javascript-hint.min.js",
-        "https://cdn.bootcss.com/codemirror/5.25.2/addon/lint/javascript-lint.min.js",
-        "https://cdn.bootcss.com/codemirror/5.25.2/mode/javascript/javascript.min.js"
-    ],
+    // "codemirror-javascript": [
+    //     "https://cdn.bootcss.com/codemirror/5.25.2/addon/hint/javascript-hint.min.js",
+    //     "https://cdn.bootcss.com/codemirror/5.25.2/addon/lint/javascript-lint.min.js",
+    //     "https://cdn.bootcss.com/codemirror/5.25.2/mode/javascript/javascript.min.js"
+    // ],
     "codemirror-theme": [
         "https://cdn.bootcss.com/codemirror/5.25.2/theme/3024-day.min.css",
         "https://cdn.bootcss.com/codemirror/5.25.2/theme/3024-night.min.css",

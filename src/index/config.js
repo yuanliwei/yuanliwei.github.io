@@ -1,4 +1,4 @@
-module.exports = [
+export default [
     { href: '/generate', name: 'GENERATE' },
     { href: '/escape', name: 'ESCAPE' },
     // { href: '/restful-valid/restful-valid', name: 'JSON校验' },
