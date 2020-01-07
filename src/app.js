@@ -12,6 +12,7 @@ import EditorDiff from './editor/index-diff'
 
 class App {
     constructor() {
+        navigator.serviceWorker.register('./cache.js')
         Loader.config(cfg)
         this.loader = new Loader()
         onhashchange = () => location.reload()

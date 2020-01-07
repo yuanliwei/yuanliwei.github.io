@@ -510,7 +510,9 @@ var FiledsJava = (function () {
 })();
 
 
-module.exports.FiledsJavaDbOrmlite = FiledsJavaDbOrmlite
-module.exports.FiledsJavaDbXutils = FiledsJavaDbXutils
-module.exports.FiledsJavaDbXutils3 = FiledsJavaDbXutils3
-module.exports.FiledsJava = FiledsJava
+export {
+  FiledsJavaDbOrmlite,
+  FiledsJavaDbXutils,
+  FiledsJavaDbXutils3,
+  FiledsJava
+} 

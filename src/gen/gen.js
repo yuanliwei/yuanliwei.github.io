@@ -1,5 +1,3 @@
-/* global $, hljs */
-
 import {
     FiledsJavaDbOrmlite,
     FiledsJavaDbXutils,
