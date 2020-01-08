@@ -7,7 +7,7 @@ class Index extends BaseModel {
     async init({ load }) {
         await load('jquery', 'particles')
         await load('jqueryui')
-        await load('https://cdn.bootcss.com/packery/2.1.2/packery.pkgd.js')
+        await load('packery.pkgd')
         insertCSS()
         document.body.innerHTML = templ
         Particles.init({

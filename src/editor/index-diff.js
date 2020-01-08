@@ -8,10 +8,10 @@ export default class Index extends BaseModel {
      * @param {Index} param0
      */
     async init({ load }) {
-        await load('https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs/loader.js')
+        await load('/cdn/cdn.bootcss.com/monaco-editor/0.18.0/min/vs/loader.js')
         insertCSS()
         document.body.innerHTML = templ
-        window['require'].config({ paths: { 'vs': 'https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs' } })
+        window['require'].config({ paths: { 'vs': '/cdn/cdn.bootcss.com/monaco-editor/0.18.0/min/vs' } })
         window['require'](['vs/editor/editor.main'], function () {
             /** @type{import('monaco-editor')*/
             const monaco = window['monaco']

@@ -24,9 +24,9 @@
 <body>
   <div id="container" class=""> </div>
 </body>
-<script src="https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs/loader.js"></script>
+<script src="/cdn/cdn.bootcss.com/monaco-editor/0.18.0/min/vs/loader.js"></script>
 <script type="text/javascript">
-  require.config({ paths: { 'vs': 'https://cdn.bootcss.com/monaco-editor/0.14.3/min/vs' } });
+  require.config({ paths: { 'vs': '/cdn/cdn.bootcss.com/monaco-editor/0.18.0/min/vs' } });
   require(['vs/editor/editor.main'], function () {
     var editor = monaco.editor.createDiffEditor(document.getElementById('container'), {
       originalEditable: true,
