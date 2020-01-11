@@ -309,5 +309,8 @@ export default {
     ],
     "packery.pkgd": [
         "https://cdn.bootcss.com/packery/2.1.2/packery.pkgd.js"
+    ],
+    "dat.gui": [
+        "https://cdn.bootcss.com/dat-gui/0.7.6/dat.gui.min.js"
     ]
 }

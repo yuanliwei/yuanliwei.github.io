@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片存储数据</title>
+</head>
+
+<body>
+    <button id="save">保存数据到图片</button>
+    <button id="read">读取图片数据</button>
+    <button id="clean">CLEAN</button><br><br>
+    <textarea name="data" id="data" cols="80" rows="30"></textarea>
+</body>
+<script src="https://cdn.bootcss.com/pako/1.0.10/pako.min.js"></script>
+<script>
+    function encode(level, bytes) {
+        let arr = []
+        let bufIndex = 0
+        let initBufValue = 0
+        let buf = initBufValue
+        for (let i = 0; i < bytes.length; i++) {
+            let byt = bytes[i] & 0xFF
+            let bytIndex = 0
+            while (bytIndex++ < 8) {
+                buf = buf << 1
+                buf = buf | (byt >> 7)
+                byt = (byt << 1) & 0xFF
+                bufIndex++
+                if (bufIndex == level) {
+                    buf = buf << (8 - level)
+                    bufIndex = 0
+                    buf = buf | (0x01 < Math.max(7 - level, 0))
+                    arr.push(buf)
+                    buf = initBufValue
+                }
+            }
+        }
+        if (bufIndex > 0) {
+            buf = buf << (8 - bufIndex)
+            arr.push(buf)
+        }
+        return arr
+    }
+
+    function decode(level, bytes) {
+        let arr = []
+        let bufIndex = 0
+        let buf = 0
+        for (let i = 0; i < bytes.length; i++) {
+            let byt = bytes[i] & 0xFF
+            let bytIndex = 0
+            while (bytIndex++ < level) {
+                buf = buf << 1
+                buf = buf | (byt >> 7)
+                byt = (byt << 1) & 0xFF
+                bufIndex++
+                if (bufIndex == 8) {
+                    bufIndex = 0
+                    arr.push(buf)
+                    buf = 0
+                }
+            }
+        }
+        return arr
+    }
+
+    function long2byte(size) {
+        let bytes = []
+        bytes.push(0xFF & size)
+        bytes.push(0xFF & (size >> 8))
+        bytes.push(0xFF & (size >> 16))
+        bytes.push(0xFF & (size >> 24))
+        return bytes
+    }
+
+    function byte2long(bytes) {
+        return bytes[0] + (bytes[1] << 8) + (bytes[2] << 16) + (bytes[3] << 24)
+    }
+
+    function openFile(callback) {
+        let input = document.createElement('input')
+        input.type = 'file'
+        input.accept = 'image/*'
+        input.onchange = async (e) => {
+            var file = e.target.files[0]
+            let reader = new FileReader()
+            reader.readAsArrayBuffer(file)
+            reader.onload = function (event) {
+                let buffer = new Uint8Array(event.target.result)
+                let blob = new Blob([buffer]);
+                callback(blob)
+            }
+        }
+        input.click()
+    }
+
+    function blobToImg(blob, callback) {
+        let imgSrc = window.URL.createObjectURL(blob);
+        const img = document.createElement('img')
+        img.src = imgSrc
+        img.onload = () => {
+            window.URL.revokeObjectURL(imgSrc)
+            callback(img)
+        }
+    }
+
+    function createImage(dataString, img) {
+        const level = 1
+        // 准备数据
+        const encoder = new TextEncoder()
+        let bytes = encoder.encode(dataString)
+        bytes = pako.deflate(bytes)
+        bytes = new Uint8Array([...long2byte(bytes.length), ...bytes])
+        bytes = encode(4, bytes)
+
+        // 计算数据间距&图片大小
+        let cW = img.width
+        let cH = img.height
+        let safeSpace = 100
+        let scale = bytes.length / (img.width * img.height * 3 - safeSpace)
+        console.log('scale', scale)
+        if (scale > 0.7) {
+            scale = 0.7
+            cH = parseInt((bytes.length / scale + safeSpace) / 3 / cW + 1)
+        }
+        scale = parseInt(255 * scale) + 1
+
+        let canvas = document.createElement('canvas')
+        canvas.width = cW
+        canvas.height = cH
+        let ctx = canvas.getContext('2d')
+        ctx.fillStyle = '#FFFFFF'
+        ctx.fillRect(0, 0, cW, cH)
+        ctx.drawImage(img, 0, 0)
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        let data = imageData.data
+
+        data[0] = scale & 0xF0 | 0x8
+        data[1] = ((scale & 0x0F) << 4) | 0x8
+        data[2] = (parseInt(Math.random() * 255) & 0xF0) | 0x8
+
+        let bi = 0
+        let k = (data[1] & 0xF0) * (data[2] & 0xF0)
+        let skipCount = 0
+        let maxSkip = 255 / scale
+        for (let i = 4; i < data.length; i += 4) {
+            let pind = k % 3
+            k = (k + 7) * 13 % 99999997
+            data[i + 3] = 255
+
+            if (k / 99999997 > scale / 255 && skipCount < maxSkip) {
+                skipCount++
+                continue
+            }
+            skipCount = 0
+
+            data[i + pind] = bytes[bi++ % bytes.length]
+
+            pind++
+            if (pind == 3) pind = 0
+
+            data[i + pind] = bytes[bi++ % bytes.length]
+
+            pind++
+            if (pind == 3) pind = 0
+
+            data[i + pind] = bytes[bi++ % bytes.length]
+        }
+        if (bi < bytes.length) {
+            alert(`bi:${bi} length:${bytes.length}`)
+            throw new Error(`bi:${bi} length:${bytes.length}`)
+        }
+        ctx.putImageData(imageData, 0, 0)
+        return canvas
+    }
+
+    function readImageData(img) {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0)
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        let data = imageData.data
+        let scale = (data[0] & 0xF0) | ((data[1] >> 4) & 0x0F)
+        let k = (data[1] & 0xF0) * (data[2] & 0xF0)
+        let bytes = []
+        let maxSkip = 255 / scale
+        let skipCount = 0
+        for (let i = 4; i < data.length; i += 4) {
+            let pind = k % 3
+            k = (k + 7) * 13 % 99999997
+
+            if (k / 99999997 > scale / 255 && skipCount < maxSkip) {
+                skipCount++
+                continue
+            }
+            skipCount = 0
+
+            bytes.push(data[i + pind])
+
+            pind++
+            if (pind == 3) pind = 0
+
+            bytes.push(data[i + pind])
+
+            pind++
+            if (pind == 3) pind = 0
+
+            bytes.push(data[i + pind])
+        }
+        try {
+            bytes = decode(4, bytes)
+            let length = byte2long(bytes)
+            bytes = bytes.slice(4, 4 + length)
+            bytes = pako.inflate(bytes)
+            let decoder = new TextDecoder()
+            const str = decoder.decode(bytes)
+            return str
+        } catch (e) {
+            console.error(e);
+            alert(e.stack || e)
+            return e
+        }
+    }
+
+    function downloadBlob(blob) {
+        var a = document.createElement("a")
+        a.href = window.URL.createObjectURL(blob)
+        a.download = `IMS-${new Date().toLocaleString()}.png`;
+        a.onclick = () => {
+            setTimeout(() => {
+                window.URL.revokeObjectURL(a.href)
+            }, 15000);
+        }
+        a.click()
+    }
+
+    new class App {
+        constructor() {
+            const textarea = document.querySelector('#data')
+            textarea.value = document.body.innerHTML
+            document.querySelector('#save').onclick = () => {
+                openFile(blob => {
+                    blobToImg(blob, (img) => {
+                        document.body.append(img)
+                        let canvas = createImage(textarea.value, img)
+                        document.body.append(canvas)
+                        canvas.toBlob(blob => downloadBlob(blob))
+                    })
+                })
+            }
+            document.querySelector('#read').onclick = () => {
+                openFile(blob => {
+                    blobToImg(blob, (img) => {
+                        document.body.append(img)
+                        let data = readImageData(img)
+                        textarea.value = data
+                    })
+                })
+            }
+            document.querySelector('#clean').onclick = () => {
+                document.querySelectorAll('img,canvas').forEach(e => e.remove())
+                textarea.value = ''
+            }
+        }
+    }
+</script>
+
+</html>

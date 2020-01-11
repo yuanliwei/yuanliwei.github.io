@@ -7,50 +7,50 @@ class LoadES6 {
 
   load() {
     var params = [...arguments];
-    this.promise = this.promise.then(()=>{
+    this.promise = this.promise.then(() => {
       console.log("load:" + JSON.stringify(params));
       var promises = LoadES6.getLoadPromises(params);
-      return Promise.all(promises).catch((e)=>console.error(e));
-    });
+      return Promise.all(promises).catch((e) => console.error(e));
+    })
     return new LoadES6(this.promise);
   }
 
   then(callback, isAsync) {
-    this.promise = this.promise.then((data)=>{
-      return new Promise((resolve, reject)=>{
+    this.promise = this.promise.then((data) => {
+      return new Promise((resolve) => {
         if (isAsync) {
           callback(resolve, data);
         } else {
           data = callback(data);
           resolve(data);
         }
-      }).catch((e)=>console.error(e));
+      }).catch((e) => console.error(e));
     });
     return new LoadES6(this.promise);
   }
 
   wait(millis) {
-    return this.then((resolve)=>{ setTimeout(resolve, millis) }, true);
+    return this.then((resolve) => { setTimeout(resolve, millis) }, true);
   }
 
   hide(selector) {
     selector = selector || 'body';
-    return this.then(()=> { document.querySelector(selector).style.display='none' })
+    return this.then(() => { document.querySelector(selector).style.display = 'none' })
   }
 
   show(selector) {
     selector = selector || 'body';
-    return this.then(()=> { document.querySelector(selector).style.display='' })
+    return this.then(() => { document.querySelector(selector).style.display = '' })
   }
 
-  static config(config){
+  static config(config) {
     Object.assign(LoadES6.configuration, config)
   }
 
   static getLoadPromises(params) {
     var urls = LoadES6.getUrls(params);
-    var promises = urls.map(url=>{
-      return new Promise((resolve, reject)=>{
+    var promises = urls.map(url => {
+      return new Promise((resolve) => {
         var type = LoadES6.parseType(url);
         switch (type) {
           case "js":
@@ -65,7 +65,7 @@ class LoadES6 {
       });
     });
     return promises;
-  };
+  }
 
   static loadScript(url, resolve) {
     var node = document.createElement('script');
@@ -74,18 +74,18 @@ class LoadES6 {
     node.async = true;
     node.src = url;
     LoadES6.appendNode(node, url, resolve);
-  };
+  }
 
   static loadLink(url, resolve) {
     var node = document.createElement('link');
     node.rel = "stylesheet";
     node.href = url;
     LoadES6.appendNode(node, url, resolve);
-  };
+  }
 
   static getUrls(params) {
     var urls = [];
-    params.forEach((param)=> {
+    params.forEach((param) => {
       if (typeof param == "function") {
         param()
         return
@@ -119,10 +119,9 @@ class LoadES6 {
   static parseType(url) {
     var urlArr = url.split('?');
     var urls = urlArr[0].split('.');
-    var end = urls[urls.length-1];
+    var end = urls[urls.length - 1];
     return end.toLowerCase();
   }
-
 }
 
 LoadES6.loaded = {};
