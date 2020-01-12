@@ -6,6 +6,8 @@ import sass from 'rollup-plugin-sass'
 import html from 'rollup-plugin-html'
 import builtins from 'rollup-plugin-node-builtins'
 import globals from 'rollup-plugin-node-globals'
+import svelte from 'rollup-plugin-svelte'
+import livereload from 'rollup-plugin-livereload'
 
 export default {
     input: './src/app.js',
@@ -13,11 +15,19 @@ export default {
         file: './dest/bundle.js',
         format: 'iife',
         sourcemap: true,
-        globals: { }
+        globals: {}
     },
-    plugins: [resolve(), commonjs(), globals(), builtins(), html(), sass({
+    plugins: [svelte({
+        dev: true,
+        extensions: ['.svelte']
+    }),
+    resolve({
+        browser: true,
+        dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
+    }), commonjs(), globals(), builtins(), html(), sass({
         insert: true,
         output: 'dest/style.css',
-    })],
+    }),
+    livereload('dest/bundle.js')],
     external: ['monaco-editor']
 }

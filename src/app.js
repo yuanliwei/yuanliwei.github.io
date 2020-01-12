@@ -9,6 +9,7 @@ import Chart from './chart/index'
 import GnuPlot from './gnuplot/index'
 import Editor from './editor/index'
 import EditorDiff from './editor/index-diff'
+import QRScan from './qr-scan/QRScan.svelte'
 
 class App {
     constructor() {
@@ -21,6 +22,7 @@ class App {
 
     initPage() {
         switch (location.hash) {
+            case '#/qrscan': return new QRScan({target: document.body})
             case '#/editor/diff-editor': return new EditorDiff(this)
             case '#/editor/editor': return new Editor(this)
             // case '#/three.js/particle/fireworks': return new GnuPlot(this)

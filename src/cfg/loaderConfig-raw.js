@@ -155,7 +155,8 @@ export default {
         "https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css"
     ],
     "fontawesome": [
-        "https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        "https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css",
+        "https://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0"
     ],
     "three.js": [
         "https://cdn.bootcss.com/three.js/r83/three.min.js"

@@ -1,6 +1,7 @@
 export default [
     { href: '/generate', name: 'GENERATE' },
     { href: '/escape', name: 'ESCAPE' },
+    { href: '/qrscan', name: '扫一扫' },
     // { href: '/restful-valid/restful-valid', name: 'JSON校验' },
     { href: '/json-tool', name: 'JSON TOOL' },
     // { href: '/test/bodymovin', name: 'BODY MOVIN' },
