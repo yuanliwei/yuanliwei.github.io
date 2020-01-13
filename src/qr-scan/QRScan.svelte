@@ -112,10 +112,10 @@
     /* background-color: aliceblue; */
   }
   #output {
+    padding: 5em;
     position: fixed;
-    top: 100px;
     font-size: 1.3em;
-    color: aliceblue
+    color: rgb(47, 0, 255)
   }
 
   #content {
@@ -137,10 +137,10 @@
       <mwc-icon-button slot="navigationIcon" icon="menu" />
       <div slot="title">扫一扫</div>
       <div id="content">
-        <canvas id="canvas"   />
-        <div id="output"  >
+        <canvas id="canvas" hidden/>
+        <div id="output" hidden>
           <div id="outputMessage">No QR code detected.</div>
-          <div  >
+          <div hidden>
             <b>Data:</b>
             <span id="outputData" />
           </div>
