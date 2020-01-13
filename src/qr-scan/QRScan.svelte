@@ -5,6 +5,7 @@
   import "@material/mwc-top-app-bar";
   import "@material/mwc-drawer";
   import "@material/mwc-icon-button";
+  import { onMount } from 'svelte';
 
   let checked = localStorage["scan-autoJump"] == "true";
   let toggleChecked = () => {
@@ -12,7 +13,7 @@
     localStorage["scan-autoJump"] = checked;
   };
 
-  setTimeout(() => {
+  onMount(() => {
     let drawer = document.getElementsByTagName("mwc-drawer")[0];
     let container = drawer.parentNode;
     container.addEventListener("MDCTopAppBar:nav", function(e) {
@@ -110,7 +111,6 @@
 <style>
   canvas {
     width: 80%;
-    /* background-color: aliceblue; */
   }
   #output {
     padding: 5em;
