@@ -3,6 +3,8 @@
   import "@material/mwc-formfield";
   import "@material/mwc-checkbox";
   import "@material/mwc-top-app-bar";
+  import "@material/mwc-drawer";
+  import "@material/mwc-icon-button";
 
   let checked = localStorage["scan-autoJump"] == "true";
   let toggleChecked = () => {
@@ -11,6 +13,12 @@
   };
 
   setTimeout(() => {
+    let drawer = document.getElementsByTagName("mwc-drawer")[0];
+    let container = drawer.parentNode;
+    container.addEventListener("MDCTopAppBar:nav", function(e) {
+      drawer.open = !drawer.open;
+    });
+
     let video = document.createElement("video");
     let canvasElement = document.getElementById("canvas");
     let canvas = canvasElement.getContext("2d");
@@ -100,24 +108,44 @@
 
 <style>
   canvas {
-    width: 100%;
+    width: 80%;
+    /* background-color: aliceblue; */
+  }
+  #output {
+    position: fixed;
+    top: 100px;
+    font-size: 1.3em;
+    color: aliceblue
+  }
+
+  #content {
+    display: flex;
+    justify-content: center;
   }
 </style>
 
-<!-- 二维码解码 -->
-<mwc-top-app-bar>
-  <div slot="title">扫一扫</div>
+<mwc-drawer hasHeader type="modal">
+  <span slot="title">扫一扫</span>
   <div>
     <mwc-formfield id="autoJump" label="网址自动跳转">
       <mwc-checkbox on:click={toggleChecked} {checked} />
     </mwc-formfield>
-    <canvas id="canvas" hidden />
-    <div id="output" hidden>
-      <div id="outputMessage">No QR code detected.</div>
-      <div hidden>
-        <b>Data:</b>
-        <span id="outputData" />
-      </div>
-    </div>
   </div>
-</mwc-top-app-bar>
+  <div slot="appContent">
+    <!-- 二维码解码 -->
+    <mwc-top-app-bar>
+      <mwc-icon-button slot="navigationIcon" icon="menu" />
+      <div slot="title">扫一扫</div>
+      <div id="content">
+        <canvas id="canvas"   />
+        <div id="output"  >
+          <div id="outputMessage">No QR code detected.</div>
+          <div  >
+            <b>Data:</b>
+            <span id="outputData" />
+          </div>
+        </div>
+      </div>
+    </mwc-top-app-bar>
+  </div>
+</mwc-drawer>
