@@ -93,8 +93,9 @@
           outputMessage.hidden = true;
           outputData.parentElement.hidden = false;
           outputData.innerText = code.data;
-          if (checked) {
+          if (checked && code.data && code.data.match(/^https?:\/\//)) {
             location.href = code.data;
+            return
           }
         } else {
           outputMessage.hidden = false;
