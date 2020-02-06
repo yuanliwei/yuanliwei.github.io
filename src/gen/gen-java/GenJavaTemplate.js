@@ -1,37 +1,54 @@
-var GenJavaTemplate;
-
-GenJavaTemplate = (function() {
-  function GenJavaTemplate() {}
-
-  GenJavaTemplate.prototype.generate = function(text, opts) {
-    var lines, results, simpleTempl, simpleTemplItem, templ, templItem;
-    templItem = "  b.a(\"{0}\\r\\n\");";
-    templ = "public String build() {\n  MessageFormatBuilder b = new MessageFormatBuilder();\n{0}\n  return b.build();\n}\n\nclass MessageFormatBuilder {\n\n  StringBuilder sb;\n\n  public MessageFormatBuilder() {\n    super();\n    this.sb = new StringBuilder();\n  }\n\n  public void a(String message, Object... params) {\n    sb.append(MessageFormat.format(message, params));\n  }\n\n  public String build() {\n    return sb.toString();\n  }\n\n}";
-    simpleTemplItem = "  b.append(\"{0}\\r\\n\");";
-    simpleTempl = "public String build() {\n  StringBuilder b = new StringBuilder();\n{0}\n  return b.toString();\n}";
-    text = text.replace(/\r\n/g, '\n');
-    text = text.replace(/\\/g, '\\\\');
-    text = text.replace(/"/g, '\\"');
-    lines = text.split('\n');
-    results = [];
-    lines.forEach(function(item) {
-      if (opts.simple) {
-        return results.push(simpleTemplItem.format(item));
-      } else {
-        return results.push(templItem.format(item));
-      }
-    });
-    if (opts.simple) {
-      return simpleTempl.format(results.join('\n'));
-    } else {
-      return templ.format(results.join('\n'));
+class GenJavaTemplate {
+    generate(text, opts) {
+        text = text.replace(/\r\n/g, '\n');
+        text = text.replace(/\\/g, '\\\\');
+        text = text.replace(/"/g, '\\"');
+        let lines = text.split('\n');
+        let results = [];
+        lines.forEach(function (item) {
+            if (opts.simple) {
+                return results.push(`  b.append("${item}\\r\\n");`)
+            } else {
+                return results.push(`  b.a("${item}\\r\\n");`)
+            }
+        });
+        if (opts.simple) {
+            return `public String build() {
+          StringBuilder b = new StringBuilder();
+          ${results.join('\n')}
+          return b.toString();
+        }`
+        } else {
+            return `public String build() {
+          MessageFormatBuilder b = new MessageFormatBuilder();
+          ${results.join('\n')}
+            return b.build();
+        }
+          
+          class MessageFormatBuilder {
+            
+              StringBuilder sb;
+            
+              public MessageFormatBuilder() {
+                super();
+                this.sb = new StringBuilder();
+            }
+          
+            public void a(String message, Object... params) {
+                sb.append(MessageFormat.format(message, params));
+            }
+          
+            public String build() {
+                return sb.toString();
+            }
+          
+        }`
+        }
     }
-  };
+    toJava(text, opts) {
+        return this.generate(text, opts)
+    }
 
-  GenJavaTemplate.prototype.toJava = GenJavaTemplate.prototype.generate;
+}
 
-  return GenJavaTemplate;
-
-})();
-
-module.exports.GenJavaTemplate = GenJavaTemplate
+export default GenJavaTemplate

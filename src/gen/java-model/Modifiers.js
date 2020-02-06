@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   0x01: 'private',
   0x02: 'public',
   0x04: 'protect',

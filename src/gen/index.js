@@ -10,5 +10,6 @@ export default class Generate extends BaseModel {
         insertCSS()
         document.body.innerHTML = templ
         gen()
+        
     }
 }

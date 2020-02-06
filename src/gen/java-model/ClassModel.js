@@ -1,95 +1,90 @@
-//var Class, Modifiers, async, format;
+import Modifiers from './Modifiers'
 
-//async = require('async');
-
-//format = require('string-format');
-
-//format.extend(String.prototype);
-
-const Modifiers = require('./Modifiers');
-
-var ClassModel = (function() {
-  function ClassModel() {
-    this["package"] = '';
-    this.name = 'Class';
-    this.fileds = [];
-    this.innerClass = [];
-    this.genGetter = false;
-    this.genSetter = false;
-  }
-
-  ClassModel.prototype.toSource = function(builder) {
-    this.genPackage(builder);
-    this.genClassName(builder);
-    this.genStaticFiled(builder);
-    this.genNormalFiled(builder);
-    this.insertOtherCode(builder);
-    this.genInnerClass(builder);
-    this.genGetterSetter(builder);
-    return this.genCloseClass(builder);
-  };
-
-  ClassModel.prototype.genPackage = function(builder) {
-    var tem;
-    tem = "package {0};";
-    if (this["package"] && this["package"].trim().length > 0) {
-      return builder.push(tem.format(this["package"]));
+class ClassModel {
+    constructor() {
+        this["package"] = '';
+        this.name = 'Class';
+        this.fileds = [];
+        this.innerClass = [];
+        this.genGetter = false;
+        this.genSetter = false;
     }
-  };
 
-  ClassModel.prototype.genClassName = function(builder) {
-    var tem;
-    tem = "public class {0} {";
-    return builder.push(tem.format(this.name));
-  };
+    /** @param {string[]} builder */
+    toSource(builder) {
+        this.genPackage(builder);
+        this.genClassName(builder);
+        this.genStaticFiled(builder);
+        this.genNormalFiled(builder);
+        this.insertOtherCode(builder);
+        this.genInnerClass(builder);
+        this.genGetterSetter(builder);
+        return this.genCloseClass(builder);
+    }
 
-  ClassModel.prototype.genStaticFiled = function(builder) {
-    return this.fileds.forEach(function(filed) {
-      if ((filed.modifier & Modifiers["static"]) > 0) {
-        return filed.toSource(builder);
-      }
-    });
-  };
-
-  ClassModel.prototype.genNormalFiled = function(builder) {
-    return this.fileds.forEach(function(filed) {
-      if ((filed.modifier & Modifiers["static"]) === 0) {
-        return filed.toSource(builder);
-      }
-    });
-  };
-
-  ClassModel.prototype.insertOtherCode = function(builder) {
-    return console.log("implament in sub class");
-  };
-
-  ClassModel.prototype.genInnerClass = function(builder) {
-    return this.innerClass.forEach(function(model) {
-      return model.toSource(builder);
-    });
-  };
-
-  ClassModel.prototype.genGetterSetter = function(builder) {
-    return this.fileds.forEach((function(_this) {
-      return function(filed) {
-        if ((filed.modifier & (Modifiers["static"] | Modifiers.final | Modifiers["public"])) === 0) {
-          if (_this.genSetter) {
-            filed.toSetter(builder);
-          }
-          if (_this.genGetter) {
-            return filed.toGetter(builder);
-          }
+    /** @param {string[]} builder */
+    genPackage(builder) {
+        if (this["package"] && this["package"].trim().length > 0) {
+            builder.push(`package ${this["package"]}`)
         }
-      };
-    })(this));
-  };
+    }
 
-  ClassModel.prototype.genCloseClass = function(builder) {
-    return builder.push('}');
-  };
+    /** @param {string[]} builder */
+    genClassName(builder) {
+        builder.push(`public class ${this.name} {`)
+    }
 
-  return ClassModel;
+    /** @param {string[]} builder */
+    genStaticFiled(builder) {
+        return this.fileds.forEach(function (filed) {
+            if ((filed.modifier & Modifiers["static"]) > 0) {
+                return filed.toSource(builder);
+            }
+        });
+    }
 
-})();
+    /** @param {string[]} builder */
+    genNormalFiled(builder) {
+        return this.fileds.forEach(function (filed) {
+            if ((filed.modifier & Modifiers["static"]) === 0) {
+                return filed.toSource(builder);
+            }
+        });
+    }
 
-module.exports = ClassModel
+    /** @param {string[]} builder */
+    insertOtherCode(builder) {
+        return console.log("implament in sub class");
+    }
+
+    /** @param {string[]} builder */
+    genInnerClass(builder) {
+        return this.innerClass.forEach(function (model) {
+            return model.toSource(builder);
+        });
+    }
+
+    /** @param {string[]} builder */
+    genGetterSetter(builder) {
+        return this.fileds.forEach((function (_this) {
+            return function (filed) {
+                if ((filed.modifier & (Modifiers["static"] | Modifiers.final | Modifiers["public"])) === 0) {
+                    if (_this.genSetter) {
+                        filed.toSetter(builder);
+                    }
+                    if (_this.genGetter) {
+                        return filed.toGetter(builder);
+                    }
+                }
+            }
+        })(this));
+    }
+
+    /** @param {string[]} builder */
+    genCloseClass(builder) {
+        return builder.push('}');
+    }
+
+}
+
+export default ClassModel

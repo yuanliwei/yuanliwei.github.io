@@ -1,17 +1,10 @@
-const ClassModel = require('./ClassModel');
+import ClassModel from './ClassModel'
 
-var NewModel = (function(superClass) {
-  extend(NewModel, superClass);
+class NewModel extends ClassModel {
+    insertOtherCode(builder) {
+        console.log("implament in sub class");
+        return builder.push("helllllllllllllllllllllllo");
+    }
+}
 
-  function NewModel() {
-    return NewModel.__super__.constructor.apply(this, arguments);
-  }
-
-  NewModel.prototype.insertOtherCode = function(builder) {
-    console.log("implament in sub class");
-    return builder.push("helllllllllllllllllllllllo");
-  };
-
-  return NewModel;
-
-})(ClassModel);
+export default NewModel

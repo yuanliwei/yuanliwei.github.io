@@ -1,25 +1,9 @@
-import ClassModel from "../java-model/ClassModel";
 import StringUtil from "../../js/utils/StringUtil";
 import Filed from "../java-model/Filed";
+import ClassModelUrl from "../java-model/ClassModelUrl";
 
-/*
-JSON 转 Java model
-使用：
-    j2j = new JsonJava()
-    [option]
-    opts = {
-        packageName: 'com.ylw.generate' [option]
-        className: 'TestClass'          [require]
-        genSetter: true                 [option default false]
-        genGetter: true                 [option default false]
-        genInnerClass: true             [option default true]
-    }
-    jsonStr = '{"name": "ylw", "age": "12"}'
-    javaSrc = j2j.toJava jsonStr, opts
-    console.log javaSrc
- */
+class Json2JavaUrl {
 
-class Json2Java {
     constructor() {
         this.className = 'ClassName';
         this.genSetter = false;
@@ -55,14 +39,13 @@ class Json2Java {
         }
         builder = [];
         model.toSource(builder);
-        console.dir(model);
         java_src = builder.join('\n');
         return js_beautify(java_src, {});
     }
 
     getModel(name) {
         var model;
-        model = new ClassModel();
+        model = new ClassModelUrl();
         model.name = name;
         model.genGetter = this.genGetter;
         model.genSetter = this.genSetter;
@@ -70,8 +53,6 @@ class Json2Java {
     }
 
     parseJsonToJava(jsObj, model) {
-        window.jsObj = jsObj;
-        console.dir(jsObj);
         switch (jsObj.constructor) {
             case Object:
                 return this.parseJsonObject(jsObj, model);
@@ -87,14 +68,13 @@ class Json2Java {
     }
 
     parseJsonObject(jsObj, model) {
-        var comment, filed, name, name_, results, type, value;
+        var comment, filed, name, results, type, value;
         results = [];
         for (name in jsObj) {
             value = jsObj[name];
             type = this.getType(value, name, model);
-            name_ = StringUtil.format(name, 2);
             comment = JSON.stringify(value);
-            filed = new Filed(type, name_, null, comment);
+            filed = new Filed(type, name, null, comment);
             results.push(model.fileds.push(filed));
         }
         return results;
@@ -113,8 +93,8 @@ class Json2Java {
                 }
                 return name_;
             case Array:
-                name_ = StringUtil.format(name, 2, 0);
                 if (this.genInnerClass) {
+                    name_ = StringUtil.format(name, 2, 0);
                     innerModel = this.getModel(name_);
                     model.innerClass.push(innerModel);
                     if (jsObj.length > 0) {
@@ -142,7 +122,6 @@ class Json2Java {
                 return "unkonwn type";
         }
     }
-
 }
 
-export default Json2Java
+export default Json2JavaUrl
