@@ -1,7 +1,7 @@
 import Loader from '@yuanliwei/web-loader'
 import cfg from './cfg/loaderConfig'
 import Index from './index/index'
-import Generate from './gen/index'
+import Generate from './gen/Generate.svelte'
 import Escape from './escape/index'
 import JsonTool from './json-tool/index'
 import RegExpDoc from './regexp-doc/index'
@@ -21,8 +21,9 @@ class App {
     }
 
     initPage() {
+        const load = (...args) => new Promise((resolve) => this.loader.load(...args).then(resolve))
         switch (location.hash) {
-            case '#/qrscan': return new QRScan({target: document.body})
+            case '#/qrscan': return new QRScan({ target: document.body })
             case '#/editor/diff-editor': return new EditorDiff(this)
             case '#/editor/editor': return new Editor(this)
             // case '#/three.js/particle/fireworks': return new GnuPlot(this)
@@ -31,7 +32,7 @@ class App {
             case '#/regexp-doc': return new RegExpDoc(this)
             case '#/json-tool': return new JsonTool(this)
             case '#/escape': return new Escape(this)
-            case '#/generate': return new Generate(this)
+            case '#/generate': return new Generate({ target: document.body, props: { load: load } })
             default: return new Index(this)
         }
     }
