@@ -40,7 +40,7 @@
 </script>
 
 <style>
-   mwc-textarea {
+  mwc-textarea {
     width: 100%;
   }
 </style>
@@ -69,11 +69,12 @@
         checked={classInfo.GenJavaTemplateSimple} />
     </mwc-formfield>
     <hr />
-    {#each handles as Handle}
-      <mwc-formfield label={Handle.name}>
+    {#each handles as item}
+      <mwc-formfield label={item.name}>
         <mwc-radio
           name="option"
           on:click={() => {
+            let Handle = item.handle;
             classInfo.outputData = new Handle().toJava(classInfo.inputData, classInfo);
             savePageData();
           }}
