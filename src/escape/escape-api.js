@@ -1,4 +1,6 @@
 const vkbeautify = require('vkbeautify')
+var QRCode = require('qrcode')
+var JsBarcode = require('jsbarcode')
 
 var Escape = {};
 
@@ -329,6 +331,40 @@ class HexZip {
       dest[destStart + i] = src[srcStart + i]
     }
   }
+}
+
+Escape.qrCode = function (text) {
+  return new Promise((resolve) => {
+    QRCode.toDataURL(text || ' ', function (err, url) {
+      resolve(url)
+    })
+  })
+}
+
+Escape.barCode = function (text) {
+  return new Promise((resolve, reject) => {
+    let img = document.createElement('img')
+    try {
+      JsBarcode(img, text, {
+        lineColor: "#0aa",
+      })
+      setTimeout(() => {
+        resolve(img.src)
+      }, 100);
+
+    } catch (error) {
+      console.error(error)
+      reject(new Error(error))
+    }
+  })
+}
+
+Escape.base64img = function (text) {
+  let input = text.replace(/[\r|\n]+/g, '').trim()
+  if (!input.startsWith('data:image')) {
+    input = 'data:image/png;base64,' + input
+  }
+  return input
 }
 
 window.FileBuffer = FileBuffer

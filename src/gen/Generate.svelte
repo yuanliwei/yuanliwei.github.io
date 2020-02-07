@@ -10,11 +10,14 @@
   import "@material/mwc-radio";
   import { onMount } from "svelte";
   import handles from "./Handles";
+  import Split from "../component/Split.svelte";
+  import Editor from "../component/Editor.svelte";
+  import insertCSS from "./style.scss";
 
   export let load;
 
   let classInfo = {
-    package: "",
+    packageName: "",
     className: "",
     genSetter: false,
     genGetter: false,
@@ -29,25 +32,38 @@
   } catch (error) {
     console.error(error);
   }
-
-  load("jquery", "popper", "beautify", "highlight");
+  (async () => {
+    await load("jquery", "popper", "beautify", "highlight");
+    await load("/cdn/cdn.bootcss.com/monaco-editor/0.18.0/min/vs/loader.js");
+  })();
 
   function savePageData() {
     setTimeout(() => {
       localStorage["generate_datas"] = JSON.stringify(classInfo);
     }, 10);
   }
+
+  onMount(() => {
+    insertCSS();
+  });
 </script>
 
 <style>
-  mwc-textarea {
-    width: 100%;
+  .overhide {
+    overflow: hidden;
+  }
+  .overscroll {
+    overflow: auto;
+  }
+  .h100 {
+    height: 100%;
   }
 </style>
 
-<mwc-drawer hasHeader>
-  <span slot="title">生成代码</span>
-  <div>
+<Split option={{ direction: 'horizontal' }} key="1">
+  <div slot="one" class="overscroll h100">
+    <h1>生成代码</h1>
+    <hr />
     <mwc-formfield label="genSetter">
       <mwc-checkbox
         on:change={e => (classInfo.genSetter = e.target.checked)}
@@ -82,30 +98,30 @@
       </mwc-formfield>
     {/each}
   </div>
-  <div slot="appContent">
-    <mwc-textfield
-      label="package"
-      type="text"
-      value={classInfo.package}
-      on:keyup={e => (classInfo.package = e.target.value)}
-      on:change={e => (classInfo.package = e.target.value)} />
-    <mwc-textfield
-      label="className"
-      type="text"
-      value={classInfo.className}
-      on:keyup={e => (classInfo.className = e.target.value)}
-      on:change={e => (classInfo.className = e.target.value)} />
-    <mwc-textarea
-      rows="6"
-      label="input"
-      type="text"
-      on:keyup={e => (classInfo.inputData = e.target.value)}
-      on:change={e => (classInfo.inputData = e.target.value)}
-      value={classInfo.inputData} />
-    <mwc-textarea
-      rows="15"
-      label="output"
-      type="text"
-      value={classInfo.outputData} />
+  <div slot="two" class="h100 overhide">
+    <Split option={{ direction: 'vertical' }} key="2">
+      <div slot="one" class="h100 overhide">
+        <mwc-textfield
+          label="packageName"
+          type="text"
+          value={classInfo.packageName}
+          on:keyup={e => (classInfo.packageName = e.target.value)}
+          on:change={e => (classInfo.packageName = e.target.value)} />
+        <mwc-textfield
+          label="className"
+          type="text"
+          value={classInfo.className}
+          on:keyup={e => (classInfo.className = e.target.value)}
+          on:change={e => (classInfo.className = e.target.value)} />
+        <Editor
+          value={classInfo.inputData}
+          onChange={value => {
+            classInfo.inputData = value;
+          }} />
+      </div>
+      <div slot="two" class="h100 overhide">
+        <Editor value={classInfo.outputData} language="java" />
+      </div>
+    </Split>
   </div>
-</mwc-drawer>
+</Split>
