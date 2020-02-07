@@ -5,7 +5,7 @@ import Generate from './gen/Generate.svelte'
 import Escape from './escape/Escape.svelte'
 import JsonTool from './json-tool/index'
 import RegExpDoc from './regexp-doc/index'
-import Chart from './chart/index'
+import Chart from './chart/Chart.svelte'
 import GnuPlot from './gnuplot/index'
 import Editor from './editor/index'
 import EditorDiff from './editor/index-diff'
@@ -29,7 +29,7 @@ class App {
             case '#/editor/editor': return new Editor(this)
             // case '#/three.js/particle/fireworks': return new GnuPlot(this)
             case '#/gnuplot': return new GnuPlot(this)
-            case '#/chart': return new Chart(this)
+            case '#/chart': return new Chart(svelteParam)
             case '#/regexp-doc': return new RegExpDoc(this)
             case '#/json-tool': return new JsonTool(this)
             case '#/escape': return new Escape(svelteParam)

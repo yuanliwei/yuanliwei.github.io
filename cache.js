@@ -1,4 +1,4 @@
-const VERSION = 14
+const VERSION = 15
 
 const cacheName = `asset-cache:${VERSION}`
 
