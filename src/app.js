@@ -16,7 +16,7 @@ class App {
         navigator.serviceWorker.register('/cache.js')
         Loader.config(cfg)
         this.loader = new Loader()
-        onhashchange = () => location.reload()
+        window.onhashchange = () => location.reload()
         this.initPage()
     }
 
