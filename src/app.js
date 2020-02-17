@@ -3,6 +3,7 @@ import cfg from './cfg/loaderConfig'
 import Index from './index/index'
 import Generate from './gen/Generate.svelte'
 import Escape from './escape/Escape.svelte'
+import QRCode from './escape/QRCode.svelte'
 import JsonTool from './json-tool/index'
 import RegExpDoc from './regexp-doc/index'
 import Chart from './chart/Chart.svelte'
@@ -23,8 +24,9 @@ class App {
     initPage() {
         const load = (...args) => new Promise((resolve) => this.loader.load(...args).then(resolve))
         const svelteParam = { target: document.body, props: { load: load } }
-        switch (location.hash) {
+        switch (location.hash.split('?')[0]) {
             case '#/qrscan': return new QRScan({ target: document.body })
+            case '#/qrcode': return new QRCode({ target: document.body })
             case '#/editor/diff-editor': return new EditorDiff(this)
             case '#/editor/editor': return new Editor(this)
             // case '#/three.js/particle/fireworks': return new GnuPlot(this)
