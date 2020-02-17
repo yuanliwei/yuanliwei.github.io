@@ -35,5 +35,4 @@
 
 <div class="img-container h100 overscroll">
   <img src={data.img} alt="output" />
-  <p>{data.text}</p>
 </div>
