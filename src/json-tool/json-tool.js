@@ -292,9 +292,7 @@ BookChapterList = (function () {
           generateTableHtml(chapter.childs, results, 1);
         }
       });
-      var chapterTreeTempl = `<table class="table table-bordered table-striped table-hover"> {0} </table>`;
-      // @ts-ignore
-      return chapterTreeTempl.format(results.join(''));
+      return `<table class="table table-bordered table-striped table-hover"> ${results.join('')} </table>`;
     }
 
     function generateTableHtml(chapters, results, deep) {
@@ -307,20 +305,18 @@ BookChapterList = (function () {
 
     function getTableLine(chapter, deep) {
       castChapter(chapter, deep);
-      var chapterTempl = `<tr title="taskId:{taskId}">
-          <td>{type}</td>
-          <td>{name}</td>
-          <td>{id}</td>
-          <td>{level}</td>
-          <td>{display_order}</td>
-          <td>{is_free}</td>
-          <td>{version}</td>
-          <td>{versionTest}</td>
-          <td>{chapterType}</td>
-          <td>{xotPaperId}</td>
+      return `<tr title="taskId:${chapter.taskId}">
+          <td>${chapter.type}</td>
+          <td>${chapter.name}</td>
+          <td>${chapter.id}</td>
+          <td>${chapter.level}</td>
+          <td>${chapter.display_order}</td>
+          <td>${chapter.is_free}</td>
+          <td>${chapter.version}</td>
+          <td>${chapter.versionTest}</td>
+          <td>${chapter.chapterType}</td>
+          <td>${chapter.xotPaperId}</td>
         </tr>`;
-      // @ts-ignore
-      return chapterTempl.format(chapter);
     }
 
     function castChapter(chapter, deep) {
