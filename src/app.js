@@ -1,3 +1,5 @@
+console.log('llllllllllllllllllllllll');
+
 import Loader from '@yuanliwei/web-loader'
 import cfg from './cfg/loaderConfig'
 import Index from './index/index'
@@ -14,6 +16,8 @@ import QRScan from './qr-scan/QRScan.svelte'
 
 class App {
     constructor() {
+        console.log('lplp');
+        
         navigator.serviceWorker.register('/cache.js')
         Loader.config(cfg)
         this.loader = new Loader()
@@ -22,6 +26,8 @@ class App {
     }
 
     async initPage() {
+        console.log('sdfshhhf');
+        
         const load = (...args) => new Promise((resolve) => this.loader.load(...args).then(resolve))
         await load('lib')
         const svelteParam = { target: document.body, props: { load: load } }

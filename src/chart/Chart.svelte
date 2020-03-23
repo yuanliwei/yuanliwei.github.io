@@ -5,11 +5,12 @@
   // import "@material/mwc-textarea";
   // import "@material/mwc-drawer";
   // import "@material/mwc-top-app-bar";
+
   import Split from "../component/Split.svelte";
   import Editor from "../component/Editor.svelte";
   import { onMount, afterUpdate } from "svelte";
   import insertCSS from "./style.scss";
-  //   import echarts from "echarts";
+  // import echarts from "echarts";
   // import * as echarts from "echarts/lib/echarts";
   // import "echarts/lib/chart/bar";
   // import "echarts/lib/component/tooltip";

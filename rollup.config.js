@@ -15,7 +15,16 @@ export default {
         file: './dest/bundle.js',
         format: 'iife',
         sourcemap: true,
-        globals: {}
+        globals: {
+            "echarts": "echarts",
+            "element-resize-detector": "elementResizeDetectorMaker",
+            "jsqr": "jsQR",
+            "split.js": "Split",
+            'jsbarcode': "JsBarcode",
+            'qrcode': "QRCode",
+            'vkbeautify': "vkbeautify",
+            "canvas-datagrid": "canvasDatagrid",
+        }
     },
     plugins: [svelte({
         dev: true,

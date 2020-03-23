@@ -1,5 +1,4 @@
-import canvasDatagrid from "canvas-datagrid";
-import jsQR from "jsqr";
+import "@material/mwc-button";
 import "@material/mwc-checkbox";
 import "@material/mwc-drawer";
 import "@material/mwc-formfield";
@@ -8,18 +7,19 @@ import "@material/mwc-radio";
 import "@material/mwc-textarea";
 import "@material/mwc-textfield";
 import "@material/mwc-top-app-bar";
-import "@material/mwc-button";
 
-import * as echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/bar";
-import "echarts/lib/component/tooltip";
 import "echarts/lib/component/dataZoom";
-import elementResizeDetectorMaker from "element-resize-detector";
-import Split from "split.js";
+import "echarts/lib/component/tooltip";
+import * as echarts from "echarts/lib/echarts";
 
-import vkbeautify from 'vkbeautify'
-import QRCode from 'qrcode'
 import JsBarcode from 'jsbarcode'
+import QRCode from 'qrcode'
+import Split from "split.js";
+import canvasDatagrid from "canvas-datagrid";
+import elementResizeDetectorMaker from "element-resize-detector";
+import jsQR from "jsqr";
+import vkbeautify from 'vkbeautify'
 
 window['canvasDatagrid'] = canvasDatagrid;
 window['jsQR'] = jsQR;
