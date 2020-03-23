@@ -1,6 +1,6 @@
-const vkbeautify = require('vkbeautify')
-var QRCode = require('qrcode')
-var JsBarcode = require('jsbarcode')
+// const vkbeautify = require('vkbeautify')
+// var QRCode = require('qrcode')
+// var JsBarcode = require('jsbarcode')
 
 var Escape = {};
 

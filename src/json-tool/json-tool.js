@@ -1,11 +1,11 @@
 //@ts-check
 
 const { loadConfig, saveConfig } = require('../js/utils/common')
-const vkbeautify = require('vkbeautify')
+// const vkbeautify = require('vkbeautify')
 
 var BookChapterList, BookList, CourseList, HomeworkList;
 
-function onClickPause(e) {
+function onClickPaste(e) {
   console.dir(e);
   console.log(e.clipboardData);
 }

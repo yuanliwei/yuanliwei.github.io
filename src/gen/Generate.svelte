@@ -1,13 +1,13 @@
 <script>
-  import "@material/mwc-formfield";
-  import "@material/mwc-checkbox";
-  import "@material/mwc-top-app-bar";
-  import "@material/mwc-drawer";
-  import "@material/mwc-icon-button";
-  import "@material/mwc-textarea";
-  import "@material/mwc-textfield";
-  import "@material/mwc-button";
-  import "@material/mwc-radio";
+  // import "@material/mwc-formfield";
+  // import "@material/mwc-checkbox";
+  // import "@material/mwc-top-app-bar";
+  // import "@material/mwc-drawer";
+  // import "@material/mwc-icon-button";
+  // import "@material/mwc-textarea";
+  // import "@material/mwc-textfield";
+  // import "@material/mwc-button";
+  // import "@material/mwc-radio";
   import { onMount } from "svelte";
   import handles from "./Handles";
   import Split from "../component/Split.svelte";

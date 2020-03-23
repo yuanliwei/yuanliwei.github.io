@@ -312,5 +312,8 @@ export default {
     ],
     "dat.gui": [
         "/cdn/cdn.bootcss.com/dat-gui/0.7.6/dat.gui.min.js"
+    ],
+    "lib": [
+        "/cdn/lib.js"
     ]
 }

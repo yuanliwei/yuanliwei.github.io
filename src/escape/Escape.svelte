@@ -1,10 +1,10 @@
 <script>
-  import "@material/mwc-radio";
-  import "@material/mwc-formfield";
-  import "@material/mwc-textfield";
-  import "@material/mwc-textarea";
-  import "@material/mwc-drawer";
-  import "@material/mwc-top-app-bar";
+  // import "@material/mwc-radio";
+  // import "@material/mwc-formfield";
+  // import "@material/mwc-textfield";
+  // import "@material/mwc-textarea";
+  // import "@material/mwc-drawer";
+  // import "@material/mwc-top-app-bar";
   import Split from "../component/Split.svelte";
   import Editor from "../component/Editor.svelte";
   import { onMount } from "svelte";
@@ -13,7 +13,6 @@
 
   export let load;
   (async () => {
-    await load("crypto", "pako", "jszip", "beautify");
     await load("/cdn/cdn.bootcss.com/monaco-editor/0.18.0/min/vs/loader.js");
   })();
 

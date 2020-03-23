@@ -21,8 +21,9 @@ class App {
         this.initPage()
     }
 
-    initPage() {
+    async initPage() {
         const load = (...args) => new Promise((resolve) => this.loader.load(...args).then(resolve))
+        await load('lib')
         const svelteParam = { target: document.body, props: { load: load } }
         switch (location.hash.split('?')[0]) {
             case '#/qrscan': return new QRScan({ target: document.body })

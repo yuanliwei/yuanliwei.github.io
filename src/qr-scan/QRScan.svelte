@@ -1,10 +1,10 @@
 <script>
-  import jsQR from "jsqr";
-  import "@material/mwc-formfield";
-  import "@material/mwc-checkbox";
-  import "@material/mwc-top-app-bar";
-  import "@material/mwc-drawer";
-  import "@material/mwc-icon-button";
+  // import jsQR from "jsqr";
+  // import "@material/mwc-formfield";
+  // import "@material/mwc-checkbox";
+  // import "@material/mwc-top-app-bar";
+  // import "@material/mwc-drawer";
+  // import "@material/mwc-icon-button";
   import { onMount } from 'svelte';
 
   let checked = localStorage["scan-autoJump"] == "true";

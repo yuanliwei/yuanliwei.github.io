@@ -10,7 +10,9 @@
     "start": "http-server -c-1",
     "build": "npx rollup -c",
     "watch": "npx rollup -c -w",
-    "publish": "npx rollup -c rollup.config.min.js"
+    "publish": "npx rollup -c rollup.config.min.js",
+    "build-lib": "npx rollup -c libs/rollup.config.js",
+    "build-lib-min": "npx rollup -c libs/rollup.config.min.js"
   },
   "devDependencies": {
     "@material/mwc-button": "^0.12.0",
@@ -25,6 +27,7 @@
     "@rollup/plugin-commonjs": "^11.0.0",
     "@rollup/plugin-node-resolve": "^6.0.0",
     "@rollup/plugin-url": "^4.0.0",
+    "canvas-datagrid": "^0.22.13",
     "codemirror": "^5.50.0",
     "html-minifier": "^4.0.0",
     "monaco-editor": "^0.17.1",

@@ -14,18 +14,18 @@ import Split from "./Split.svelte";
 </Split>
 */
 
-  import Split from "split.js";
+  // import Split from "split.js";
   import { onMount } from "svelte";
 
   export let key = location.href;
   export let option = {};
-  let uuid = () => `unique-${Math.random()}`.replace(".", "");
-  let rootClass = uuid();
-  let leftClass = uuid();
-  let rightClass = uuid();
-  let gutterClass = uuid();
   let container = "container";
   let gutterClassName = "gutter";
+
+  let root;
+  let left;
+  let right;
+  let gutter;
 
   onMount(() => {
     if (option["direction"] == "vertical") {
@@ -38,17 +38,12 @@ import Split from "./Split.svelte";
         localStorage.getItem("split-sizes" + location.href + key)
       );
     } catch (e) {}
-    let root = document.querySelector("." + rootClass);
     Split(
-      [
-        root.querySelector("." + leftClass),
-        root.querySelector("." + rightClass)
-      ],
+      [left, right],
       Object.assign(
         {
           sizes: sizes,
           gutter: (index, direction) => {
-            const gutter = root.querySelector("." + gutterClass);
             gutter.classList.add = `gutter gutter-${direction}`;
             return gutter;
           },
@@ -72,6 +67,7 @@ import Split from "./Split.svelte";
     width: 100%;
     height: 100%;
   }
+
   .container-col {
     display: flex;
     flex-direction: column;
@@ -89,6 +85,7 @@ import Split from "./Split.svelte";
     color: brown;
     user-select: none;
   }
+
   .gutter-col {
     cursor: row-resize;
     display: flex;
@@ -101,14 +98,14 @@ import Split from "./Split.svelte";
   }
 </style>
 
-<div class="{container} {rootClass}">
-  <div class={leftClass}>
+<div class={container} bind:this={root}>
+  <div bind:this={left}>
     <slot name="one" />
   </div>
-  <div class="{gutterClassName} {gutterClass}">
+  <div class={gutterClassName} bind:this={gutter}>
     {#if option['direction'] == 'horizontal'}┇{:else}┅{/if}
   </div>
-  <div class={rightClass}>
+  <div bind:this={right}>
     <slot name="two" />
   </div>
 </div>
