@@ -19,7 +19,7 @@ class ClassModel {
         this.insertOtherCode(builder);
         this.genInnerClass(builder);
         this.genGetterSetter(builder);
-        return this.genCloseClass(builder);
+        this.genCloseClass(builder);
     }
 
     /** @param {string[]} builder */

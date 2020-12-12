@@ -12,7 +12,8 @@
     "watch": "npx rollup -c -w",
     "publish": "npx rollup -c rollup.config.min.js",
     "build-lib": "npx rollup -c libs/rollup.config.js",
-    "build-lib-min": "npx rollup -c libs/rollup.config.min.js"
+    "build-lib-min": "npx rollup -c libs/rollup.config.min.js",
+    "update-cache": "npx rollup -c ./src/cache/rollup.config.min.js"
   },
   "devDependencies": {
     "@material/mwc-button": "^0.12.0",
