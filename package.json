@@ -47,7 +47,7 @@
   "dependencies": {
     "@yuanliwei/binder": "^1.0.0",
     "@yuanliwei/web-loader": "^1.0.2",
-    "echarts": "^4.6.0",
+    "echarts": "^5.2.1",
     "element-resize-detector": "^1.2.1",
     "he": "^1.2.0",
     "jsbarcode": "^3.11.0",
