@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>算数</title>
+    <style>
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .formula {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .formula .item {
+            background-color: antiquewhite;
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+            margin: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .option {
+            display: flex;
+            font-size: 2em;
+            margin-top: 50px;
+            justify-content: center;
+        }
+
+        .option .item {
+            background-color: antiquewhite;
+            display: flex;
+            border-radius: 5px;
+            width: 60px;
+            align-items: center;
+            height: 60px;
+            /* font-size: 1.2em; */
+            margin: 10px;
+            justify-content: center;
+        }
+
+        .count {
+            margin: 10px;
+            float: right;
+        }
+
+        .result-right {
+            background-color: green !important;
+        }
+
+        .result-wrong {
+            background-color: red !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="formula">
+        <span class="item first">2</span>
+        <span class="item operator">+</span>
+        <span class="item second">3</span>
+        <span class="item equal">=</span>
+        <span class="item result">?</span>
+    </div>
+    <div class="option">
+        <span class="item a">2</span>
+        <span class="item b">5</span>
+        <span class="item c">6</span>
+        <span class="item d">8</span>
+    </div>
+    <div class="count">
+        <span class="">正确</span>
+        <span class="right">34</span>
+        <span class="">错误</span>
+        <span class="wrong">23</span>
+    </div>
+</body>
+<script>
+
+    new class App {
+        constructor() {
+            this.right = 0
+            this.wrong = 0
+            this.count = 0
+            this.time = Date.now()
+            this.initView()
+        }
+
+        initCountView() {
+            let right = document.querySelector('.right')
+            let wrong = document.querySelector('.wrong')
+            right.innerText = this.right
+            wrong.innerText = this.wrong
+        }
+
+        initView() {
+            let data = this.getData()
+            this.setViewData(data)
+            this.initCountView()
+        }
+
+        getData() {
+            let first = parseInt(Math.random() * 80)
+            let second = parseInt(Math.random() * 80)
+            let operator = '+'
+            let result = first + second
+            let arr = [0, 0, 0, 0]
+            for (let i = 0; i < arr.length; i++) {
+                arr[i] = parseInt(Math.random() * 100)
+            }
+            if (arr.indexOf(result) < 0) {
+                arr[parseInt(Math.random() * 4)] = result
+            }
+            let [a, b, c, d] = arr
+
+            return {
+                first: first,
+                operator: operator,
+                second: second,
+                a: a,
+                b: b,
+                c: c,
+                d: d,
+                result: result
+            }
+        }
+
+        setViewData(data) {
+            let first = document.querySelector('.first')
+            let operator = document.querySelector('.operator')
+            let second = document.querySelector('.second')
+            let a = document.querySelector('.a')
+            let b = document.querySelector('.b')
+            let c = document.querySelector('.c')
+            let d = document.querySelector('.d')
+
+            a.classList.remove('result-right', 'result-wrong')
+            b.classList.remove('result-right', 'result-wrong')
+            c.classList.remove('result-right', 'result-wrong')
+            d.classList.remove('result-right', 'result-wrong')
+
+            first.innerText = data.first
+            operator.innerText = data.operator
+            second.innerText = data.second
+            a.innerText = data.a
+            b.innerText = data.b
+            c.innerText = data.c
+            d.innerText = data.d
+
+            let listener = (e) => {
+                let v = parseInt(e.target.innerText)
+                if (v == data.result) {
+                    e.target.classList.add('result-right')
+                    this.right++
+                } else {
+                    e.target.classList.add('result-wrong')
+                    this.wrong++
+                }
+                this.count++
+                if (this.count == 20) {
+                    let useTime = Date.now() - this.time
+                    alert(`正确：${this.right} 错误：${this.wrong} 用时：${(useTime / 1000).toFixed(3)}`)
+                    this.right = 0
+                    this.wrong = 0
+                    this.count = 0
+                    this.time = Date.now()
+                    this.initView()
+                    return
+                }
+                setTimeout(() => {
+                    this.initView()
+                }, 300);
+            }
+            a.onclick = listener
+            b.onclick = listener
+            c.onclick = listener
+            d.onclick = listener
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game</title>
+    <style>
+        * {
+            user-select: none;
+            padding: 0px;
+            marging: 0px;
+        }
+
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 40px;
+        }
+
+        .item {
+            margin: 5px;
+            background-color: antiquewhite;
+            width: 55px;
+            height: 55px;
+            font-size: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .active {
+            background-color: bisque;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></canvas>
+</body>
+<script>
+    /** @type{HTMLDivElement} */
+    const container = document.getElementById('container')
+
+    let cur = 0
+    let date = Date.now()
+
+    function start() {
+        let datas = []
+        for (let i = 0; i < 25; i++) {
+            datas[i] = i + 1
+        }
+        datas.sort((l, h) => Math.random() - 0.5)
+        for (let i = 0; i < 25; i++) {
+            let div = document.createElement('div')
+            div.innerText = datas[i]
+            div.classList.add('item')
+            div.onclick = () => {
+                console.log(div.innerText, cur);
+                div.classList.add('active')
+                let n = parseInt(div.innerText)
+                if (cur == 0) {
+                    startTime = Date.now()
+                }
+                if (n - 1 != cur) {
+                    alert('挑战失败！')
+                    restart()
+                    return
+                }
+                if (n == 25) {
+                    let usedTime = Date.now() - startTime
+                    alert(`挑战成功，用时${(usedTime / 1000).toFixed(3)}秒`)
+                    restart()
+                    return
+                }
+                cur = n
+            }
+            container.append(div)
+        }
+    }
+
+    function restart() {
+        startTime = 0
+        cur = 0
+        container.innerHTML = ''
+        start()
+    }
+
+    start()
+
+</script>
+
+</html>
